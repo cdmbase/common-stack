@@ -1,6 +1,9 @@
 import { IReducerRegistry } from '../interfaces';
 import { ReducersMapObject, AnyAction, Reducer } from 'redux';
+import { injectable } from 'inversify';
 
+
+@injectable()
 class ReducerRegistry implements IReducerRegistry<any> {
     private _emitChange;
     private _reducers: ReducersMapObject;

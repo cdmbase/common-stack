@@ -1,14 +1,10 @@
-# Full Stack Packages
+# Common Stack Packages
 
-*Fullstack packages to develop and test end to end; to use as packages or work independently.*
+*Helper packages to support Fullstack-pro project.*
 
 Purpose: 
 ---
-The idea is to create modules for each package so it can work independently as well as integrated to another project as packages. 
-
-## Screenshot
-![screencast](./ScreenShot.png)
-
+It has all the common packages that are useful for other microservice projects. 
 
 Useful commands:
 ---
@@ -29,17 +25,9 @@ Files explained:
 It uses `lerna.json` for creating the packages structure. Under packages you can create different modules based on its usage. For example:
 
      packages                    - Has the packages to organize the codebase into multi-package repositories.
-         sample-core             - Core interfaces of the packages which can be shared between server and client.
-         sample-server-core      - Core interfaces and its implementation code for Server.   
-         sample-client-core      - Core interfaces and its implementation code for Client.
-         sample-client-redux     - Redux's reducers and actions are defined. Which may use `@common-stack\client-core` or `@common-stack\core`
-         sample-client-react     - React pure components and containers are defined. 
-         sample-graphql-client   - Graphql Quries and Mutation for Client.
-         sample-graphql-schema   - Graphql Schema for Server.
-     servers                     - Has the packages to organize the codebase into multi-package repositories.
-         frontend-server         - Frontend Client Server. This is useful to show demo of this package.
-         backend-server          - Backend apollo server. 
-    
+         common-core             - Core interfaces of the packages which can be shared between server and client.
+         common-client-core      - Core interfaces and its implementation code for Client.
+         common-client-redux     - Redux's reducers and actions are defined. Which may use `@common-stack\client-core` or `@common-stack\core`    
 
 ## Getting Started
 
@@ -48,30 +36,14 @@ If you want to develop FullStack locally you must follow the following instructi
 * Fork or Clone this repository
 
 * Install the project in your computer
-1. Clone fullstack-pro locally
+1. Clone common-stack locally
 ```
-git clone https://github.com/cdmbase/fullstack-pro
-cd fullstack-pro
+git clone https://github.com/cdmbase/common-stack
+cd common-stack
 ```
 2. Install dependencies.
 ```
 npm install
-```
-3. Seed development database data
-```
-npm run db:seed
-```
-4. Start both client and server together
-```
-npm start
-```
-The graphql server endpoints are
->http://localhost:8080/graphql
-
->http://localhost:8080/graphiql
-
-The browser server endopoint is
->http://localhost:3000
 
 To run build with watch. Useful for auto reloading changes into the server to be productive during development.
 ```
@@ -79,57 +51,3 @@ npm run watch
 ```
 [lerna-clean]: https://github.com/lerna/lerna#clean
 
-### Server Side Rendering
-Useful to run Frontend and Backend in two seperate servers. 
-
-to start frontend server
-```
-cd frontend-server
-npm run build
-npm start
-```
-to start backend server
-```
-cd backend-server
-npm run db:seed
-npm run build
-npm start
-```
-
-### Docker build
-Prior to it you need to run `npm install` from root directory.
-
-Build three docker images by following the steps:
-- Frontend Server
-```
-cd frontend-server
-npm run docker:build
-```
-- Backend Server
-```
-cd backend-server
-npm run docker:build
-```
-- hemera-server
-```
-cd hemera-server
-npm run docker:build
-```
-
-### Environment settings for non-development
-```
-GRAPHQL_URL
-CLIENT_URL
-NATS_URL
-NATS_USER
-NATS_PW
-```
-## Troubleshoot
-To troubleshoot webpack configuration run
-```
-npm run spin:watch:debug
-```
-
-## resource
-Jest
-https://www.youtube.com/watch?v=HAuXJVI_bUs&t=1053s

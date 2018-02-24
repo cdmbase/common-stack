@@ -235,8 +235,6 @@
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
-    "react-fela": "6.2.4",
-    "react-helmet": "^5.2.0",
     "react-redux": "^5.0.6",
     "react-redux-typescript": "^2.3.0",
     "reactstrap": "^4.6.2",

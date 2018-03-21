@@ -64,18 +64,18 @@ class Feature {
   get constructFetchOptions(): any {
     return this.createFetchOptions.length
       ? (...args) => {
-          try {
-            let result = {};
-            for (let func of this.createFetchOptions) {
-              result = { ...result, ...func(...args) };
-            }
-            return result;
-          } catch (e) {
-            console.log(e.stack);
+        try {
+          let result = {};
+          for (let func of this.createFetchOptions) {
+            result = { ...result, ...func(...args) };
           }
+          return result;
+        } catch (e) {
+          console.log(e.stack);
         }
+      }
       : null;
   }
 }
 
-export default Feature;
+export { Feature };

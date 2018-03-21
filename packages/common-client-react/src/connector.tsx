@@ -3,7 +3,7 @@ import * as React from 'react';
 import { AbstractFeature, IFeature } from '@common-stack/client-core';
 
 
-export default class Feature extends AbstractFeature implements IFeature {
+export class Feature extends AbstractFeature implements IFeature {
     public routes() {
         return this.route.map((component, idx) => React.cloneElement(component, { key: idx + this.route.length }));
     }

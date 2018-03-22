@@ -18,12 +18,12 @@ export type FeatureParams = {
 };
 
 class Feature {
-  public schema: DocumentNode[];
-  public createResolversFunc: Function[];
-  public createContextFunc: Function[];
-  public createFetchOptions: Function[];
-  public beforeware: Function[];
-  public middleware: Function[];
+  private schema: DocumentNode[];
+  private createResolversFunc: Function[];
+  private createContextFunc: Function[];
+  private createFetchOptions: Function[];
+  private beforeware: Function[];
+  private middleware: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     // console.log(feature.schema[0] instanceof DocumentNode);

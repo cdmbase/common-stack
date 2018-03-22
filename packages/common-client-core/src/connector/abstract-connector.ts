@@ -59,37 +59,37 @@ export abstract class AbstractFeature implements IFeature {
             .pop();
     }
 
-    public router() {
+    get router() {
         return this.routerFactory();
     }
 
-    public abstract routes();
+    public abstract get routes();
 
-    public abstract navItems();
+    public abstract get navItems();
 
-    public abstract navItemsRight();
+    public abstract get navItemsRight();
 
-    public reducers() {
+    get reducers() {
         return merge(...this.reducer);
     }
 
-    public resolvers() {
+    get resolvers() {
         return merge(...this.resolver);
     }
 
-    public middlewares() {
+    get middlewares() {
         return this.middleware;
     }
 
-    public afterwares() {
+    get afterwares() {
         return this.afterware;
     }
 
-    public connectionParams() {
+    get connectionParams() {
         return this.connectionParam;
     }
 
-    public constructFetchOptions() {
+    get constructFetchOptions() {
         return this.createFetchOptions.length
             ? (...args) => {
                 try {
@@ -105,11 +105,11 @@ export abstract class AbstractFeature implements IFeature {
             : null;
     }
 
-    public stylesInserts() {
+    get stylesInserts() {
         return this.stylesInsert;
     }
 
-    public scriptsInserts() {
+    get scriptsInserts() {
         return this.scriptsInsert;
     }
 

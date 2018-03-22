@@ -23,7 +23,7 @@ class Feature {
   public createContextFunc: Function[];
   public createFetchOptions: Function[];
   public beforeware: Function[];
-  private middleware: Function[];
+  public middleware: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     // console.log(feature.schema[0] instanceof DocumentNode);

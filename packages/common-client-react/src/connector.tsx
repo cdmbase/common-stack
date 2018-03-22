@@ -4,11 +4,11 @@ import { AbstractFeature, IFeature } from '@common-stack/client-core';
 
 
 export class Feature extends AbstractFeature implements IFeature {
-    public routes() {
+    get routes() {
         return this.route.map((component, idx) => React.cloneElement(component, { key: idx + this.route.length }));
     }
 
-    public navItems() {
+    get navItems() {
         return this.navItem.map((component, idx) =>
             React.cloneElement(component, {
                 key: component.key ? component.key : idx + this.navItem.length,
@@ -16,7 +16,7 @@ export class Feature extends AbstractFeature implements IFeature {
         );
     }
 
-    public navItemsRight() {
+    get navItemsRight() {
         return this.navItemRight.map((component, idx) =>
             React.cloneElement(component, {
                 key: component.key ? component.key : idx + this.navItem.length,

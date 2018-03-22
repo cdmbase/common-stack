@@ -1,60 +1,47 @@
-import { IFeature } from '../interfaces';
+import { IFeature, FeatureParams, ClientStateParams } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 
 const combine = (features, extractor) => without(union(...map(features, res => castArray(extractor(res)))), undefined);
 export const featureCatalog = {};
 
+
 export abstract class AbstractFeature implements IFeature {
-    protected route;
-    protected navItem;
-    protected navItemRight;
-    protected reducer;
-    protected resolver;
-    protected middleware;
-    protected afterware;
-    protected connectionParam;
-    protected createFetchOptions;
-    protected stylesInsert;
-    protected scriptsInsert;
-    protected rootComponentFactory;
-    protected routerFactory;
+    public route: any[];
+    public navItem: any[];
+    public navItemRight: any[];
+    public reducer: any[];
+    public clientStateParams: ClientStateParams[];
+    public middleware: any[];
+    public afterware: any[];
+    public connectionParam: any[];
+    public createFetchOptions: any[];
+    public stylesInsert: any[];
+    public scriptsInsert: any[];
+    public rootComponentFactory: any[];
+    public routerFactory: any;
+    public catalogInfo: any[];
 
     constructor(
-        {
-          route,
-            navItem,
-            navItemRight,
-            reducer,
-            resolver,
-            middleware,
-            afterware,
-            connectionParam,
-            createFetchOptions,
-            stylesInsert,
-            scriptsInsert,
-            rootComponentFactory,
-            routerFactory,
-            catalogInfo,
-        },
+        feature?: FeatureParams,
         ...features,
     ) {
         /* eslint-enable no-unused-vars */
         combine(arguments, arg => arg.catalogInfo).forEach(info =>
-            Object.keys(info).forEach(key => (featureCatalog[key] = info[key]))
+            Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
         );
-        this.route = combine(arguments, arg => arg.route);
-        this.navItem = combine(arguments, arg => arg.navItem);
-        this.navItemRight = combine(arguments, arg => arg.navItemRight);
-        this.reducer = combine(arguments, arg => arg.reducer);
-        this.resolver = combine(arguments, arg => arg.resolver);
-        this.middleware = combine(arguments, arg => arg.middleware);
-        this.afterware = combine(arguments, arg => arg.afterware);
-        this.connectionParam = combine(arguments, arg => arg.connectionParam);
-        this.createFetchOptions = combine(arguments, arg => arg.createFetchOptions);
-        this.stylesInsert = combine(arguments, arg => arg.stylesInsert);
-        this.scriptsInsert = combine(arguments, arg => arg.scriptsInsert);
-        this.rootComponentFactory = combine(arguments, arg => arg.rootComponentFactory);
-        this.routerFactory = combine(arguments, arg => arg.routerFactory)
+        this.route = combine(arguments, (arg: FeatureParams) => arg.route);
+        this.navItem = combine(arguments, (arg: FeatureParams) => arg.navItem);
+        this.navItemRight = combine(arguments, (arg: FeatureParams) => arg.navItemRight);
+        this.reducer = combine(arguments, (arg: FeatureParams) => arg.reducer);
+        this.clientStateParams = combine(arguments, (arg: FeatureParams) => arg.clientStateParams);
+        this.middleware = combine(arguments, (arg: FeatureParams) => arg.middleware);
+        this.afterware = combine(arguments, (arg: FeatureParams) => arg.afterware);
+        this.connectionParam = combine(arguments, (arg: FeatureParams) => arg.connectionParam);
+        this.createFetchOptions = combine(arguments, (arg: FeatureParams) => arg.createFetchOptions);
+        this.stylesInsert = combine(arguments, (arg: FeatureParams) => arg.stylesInsert);
+        this.scriptsInsert = combine(arguments, (arg: FeatureParams) => arg.scriptsInsert);
+        this.rootComponentFactory = combine(arguments, (arg: FeatureParams) => arg.rootComponentFactory);
+        this.routerFactory = combine(arguments, (arg: FeatureParams) => arg.routerFactory)
             .slice(-1)
             .pop();
     }
@@ -73,8 +60,8 @@ export abstract class AbstractFeature implements IFeature {
         return merge(...this.reducer);
     }
 
-    get resolvers() {
-        return merge(...this.resolver);
+    get getStateParams() {
+        return merge({}, ...this.clientStateParams);
     }
 
     get middlewares() {

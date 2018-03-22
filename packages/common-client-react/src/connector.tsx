@@ -5,11 +5,13 @@ import { AbstractFeature, IFeature } from '@common-stack/client-core';
 
 export class Feature extends AbstractFeature implements IFeature {
     get routes() {
-        return this.route.map((component, idx) => React.cloneElement(component, { key: idx + this.route.length }));
+        return this.route.map((component: React.ReactElement<any>, idx: number) =>
+            React.cloneElement(component, { key: idx + this.route.length }),
+        );
     }
 
     get navItems() {
-        return this.navItem.map((component, idx) =>
+        return this.navItem.map((component: React.ReactElement<any>, idx: number) =>
             React.cloneElement(component, {
                 key: component.key ? component.key : idx + this.navItem.length,
             }),
@@ -17,14 +19,14 @@ export class Feature extends AbstractFeature implements IFeature {
     }
 
     get navItemsRight() {
-        return this.navItemRight.map((component, idx) =>
+        return this.navItemRight.map((component: React.ReactElement<any>, idx: number) =>
             React.cloneElement(component, {
                 key: component.key ? component.key : idx + this.navItem.length,
             }),
         );
     }
 
-    public getWrappedRoot(root, req) {
+    public getWrappedRoot(root: React.ReactNode, req?: any): React.ReactNode {
         let nestedRoot = root;
         for (const componentFactory of this.rootComponentFactory) {
             nestedRoot = React.cloneElement(componentFactory(req), {}, nestedRoot);

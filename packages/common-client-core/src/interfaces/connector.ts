@@ -1,23 +1,47 @@
 
+export interface ClientStateParams {
+    resolvers: any;
+    defaults?: any;
+    typeDefs?: string | string[];
+}
+
+export interface FeatureParams {
+    route?: any;
+    navItem?: any;
+    navItemRight?: any;
+    reducer?: any;
+    clientStateParams?: ClientStateParams | ClientStateParams[];
+    middleware?: any;
+    afterware?: any;
+    connectionParam?: any;
+    createFetchOptions?: any;
+    stylesInsert?: any;
+    scriptsInsert?: any;
+    rootComponentFactory?: any;
+    routerFactory?: any;
+    catalogInfo?: any;
+}
+
+
 export interface IFeature {
 
-    router();
+    router;
 
-    routes();
-    navItems();
-    navItemsRight();
+    routes;
+    navItems;
+    navItemsRight;
 
-    reducers();
-    resolvers();
+    reducers;
+    getStateParams;
 
-    middlewares();
-    afterwares();
-    connectionParams();
+    middlewares;
+    afterwares;
+    connectionParams;
 
-    constructFetchOptions();
+    constructFetchOptions;
 
-    stylesInserts();
-    scriptsInserts();
+    stylesInserts;
+    scriptsInserts;
 
     getWrappedRoot(root: any, req?: any): any;
 }

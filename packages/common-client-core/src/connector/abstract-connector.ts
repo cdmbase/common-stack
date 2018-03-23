@@ -47,7 +47,7 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get router() {
-        return this.routerFactory();
+        return this.routerFactory(this.routes);
     }
 
     public abstract get routes();

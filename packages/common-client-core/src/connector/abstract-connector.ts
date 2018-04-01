@@ -6,21 +6,21 @@ export const featureCatalog = {};
 
 
 export abstract class AbstractFeature implements IFeature {
-    public link: any[];
-    public createFetch: any[];
-    public connectionParam: any[];
-    public reducer: any[];
-    public resolver: ClientStateParams[];
+    public link: any;
+    public createFetch: any;
+    public connectionParam: any;
+    public reducer: any;
+    public resolver: ClientStateParams;
     public routerFactory: any;
     public route: any;
     public navItem: any;
     public navItemRight: any;
-    public rootComponentFactory: any[];
-    public dataRootComponent: any[];
-    public createFetchOptions: any[];
-    public stylesInsert: any[];
-    public scriptsInsert: any[];
-    public catalogInfo: any[];
+    public rootComponentFactory: any;
+    public dataRootComponent: any;
+    public createFetchOptions: any;
+    public stylesInsert: any;
+    public scriptsInsert: any;
+    public catalogInfo: any;
 
     constructor(
         feature?: FeatureParams,

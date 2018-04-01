@@ -34,4 +34,11 @@ export class Feature extends AbstractFeature implements IFeature {
         return nestedRoot;
     }
 
+    public getDataRoot(root) {
+        let nestedRoot = root;
+        for (const component of this.dataRootComponent) {
+            nestedRoot = React.createElement(component, {}, nestedRoot);
+        }
+        return nestedRoot;
+    }
 }

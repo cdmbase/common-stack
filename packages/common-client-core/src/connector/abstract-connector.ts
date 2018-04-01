@@ -9,7 +9,7 @@ export abstract class AbstractFeature implements IFeature {
     public link: any;
     public createFetch: any;
     public connectionParam: any;
-    public reducer: any[];
+    public reducer: any;
     public resolver: ClientStateParams;
     public routerFactory: any;
     public route: any;

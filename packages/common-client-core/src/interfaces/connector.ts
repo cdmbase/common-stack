@@ -6,20 +6,20 @@ export interface ClientStateParams {
 }
 
 export interface FeatureParams {
-    link?: any[];
-    createFetch?: any[];
-    connectionParam?: any[];
-    reducer?: any[];
-    resolver?: ClientStateParams[];
+    link?: any;
+    createFetch?: any;
+    connectionParam?: any;
+    reducer?: any;
+    resolver?: any;
     routerFactory?: any;
     route?: any;
     navItem?: any;
     navItemRight?: any;
-    rootComponentFactory?: any[];
-    dataRootComponent?: any[];
-    createFetchOptions?: any[];
-    stylesInsert?: any[];
-    scriptsInsert?: any[];
+    rootComponentFactory?: any;
+    dataRootComponent?: any;
+    createFetchOptions?: any;
+    stylesInsert?: any;
+    scriptsInsert?: any;
     catalogInfo?: any;
 }
 

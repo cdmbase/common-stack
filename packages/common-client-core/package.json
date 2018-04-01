@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-core",
-  "version": "0.0.14-2",
+  "version": "0.0.14-3",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {

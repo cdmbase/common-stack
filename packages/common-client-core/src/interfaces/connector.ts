@@ -6,25 +6,25 @@ export interface ClientStateParams {
 }
 
 export interface FeatureParams {
+    link?: any[];
+    createFetch?: any[];
+    connectionParam?: any[];
+    reducer?: any[];
+    resolver?: ClientStateParams[];
+    routerFactory?: any;
     route?: any;
     navItem?: any;
     navItemRight?: any;
-    reducer?: any;
-    clientStateParams?: ClientStateParams | ClientStateParams[];
-    middleware?: any;
-    afterware?: any;
-    connectionParam?: any;
-    createFetchOptions?: any;
-    stylesInsert?: any;
-    scriptsInsert?: any;
-    rootComponentFactory?: any;
-    routerFactory?: any;
+    rootComponentFactory?: any[];
+    dataRootComponent?: any[];
+    createFetchOptions?: any[];
+    stylesInsert?: any[];
+    scriptsInsert?: any[];
     catalogInfo?: any;
 }
 
 
 export interface IFeature {
-
     router;
 
     routes;
@@ -32,16 +32,13 @@ export interface IFeature {
     navItemsRight;
 
     reducers;
-    getStateParams;
+    resolvers;
 
-    middlewares;
-    afterwares;
     connectionParams;
-
-    constructFetchOptions;
 
     stylesInserts;
     scriptsInserts;
 
     getWrappedRoot(root: any, req?: any): any;
+    getDataRoot(root: any): any;
 }

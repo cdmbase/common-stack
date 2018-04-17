@@ -8,7 +8,7 @@ const combine = (features, extractor): any =>
   without(union(...map(features, res => castArray(extractor(res)))), undefined);
 
 export type FeatureParams = {
-  schema: DocumentNode | DocumentNode[],
+  schema?: DocumentNode | DocumentNode[],
   createResolversFunc?: Function | Function[],
   createContextFunc?: Function | Function[],
   beforeware?: any | any[],

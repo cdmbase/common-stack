@@ -21,6 +21,7 @@ export abstract class AbstractFeature implements IFeature {
     public stylesInsert: any[];
     public scriptsInsert: any[];
     public catalogInfo: any[];
+    public languagesFuncs: any[];
 
     constructor(
         feature?: FeatureParams,
@@ -49,6 +50,9 @@ export abstract class AbstractFeature implements IFeature {
         // UI provider-components
         this.rootComponentFactory = combine(arguments, arg => arg.rootComponentFactory);
         this.dataRootComponent = combine(arguments, arg => arg.dataRootComponent);
+
+         // UI provider-components
+         this.languagesFuncs = combine(arguments, arg => arg.languagesFuncs);
 
 
         // TODO: Use React Helmet for those. Low level DOM manipulation
@@ -94,4 +98,6 @@ export abstract class AbstractFeature implements IFeature {
     public abstract getWrappedRoot(root, req);
 
     public abstract getDataRoot(root);
+
+    public abstract registerLanguages(monaco);
 }

@@ -21,6 +21,7 @@ export interface FeatureParams {
     stylesInsert?: any;
     scriptsInsert?: any;
     catalogInfo?: any;
+    languagesFuncs?: any;
 }
 
 
@@ -41,4 +42,5 @@ export interface IFeature {
 
     getWrappedRoot(root: any, req?: any): any;
     getDataRoot(root: any): any;
+    registerLanguages(monaco): void;
 }

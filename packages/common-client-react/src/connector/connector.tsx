@@ -41,4 +41,10 @@ export class Feature extends AbstractFeature implements IFeature {
         }
         return nestedRoot;
     }
+
+    public registerLanguages(monaco) {
+        for (const func of this.languagesFuncs) {
+            func(monaco);
+        }
+    }
 }

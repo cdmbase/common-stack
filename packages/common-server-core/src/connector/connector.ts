@@ -1,5 +1,5 @@
 import { DocumentNode } from 'graphql';
-
+import { IResolverOptions, IDirectiveOptions } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 
 export const featureCatalog: any = {};
@@ -14,7 +14,6 @@ export type FeatureParams = {
   createContextFunc?: Function | Function[],
   beforeware?: any | any[],
   middleware?: any | any[],
-  createFetchOptions?: Function | Function[],
   catalogInfo?: any | any[],
 };
 
@@ -23,7 +22,6 @@ class Feature {
   public createDirectivesFunc: Function[];
   public createResolversFunc: Function[];
   public createContextFunc: Function[];
-  public createFetchOptions: Function[];
   public beforeware: Function[];
   public middleware: Function[];
 
@@ -38,7 +36,6 @@ class Feature {
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
     this.middleware = combine(arguments, arg => arg.middleware);
-    this.createFetchOptions = combine(arguments, arg => arg.createFetchOptions);
   }
 
   get schemas(): DocumentNode[] {
@@ -52,12 +49,12 @@ class Feature {
     return merge({}, ...results);
   }
 
-  public createResolvers(pubsub: any) {
-    return merge({}, ...this.createResolversFunc.map(createResolvers => createResolvers(pubsub)));
+  public createResolvers(options?: IResolverOptions) {
+    return merge({}, ...this.createResolversFunc.map(createResolvers => createResolvers(options)));
   }
 
-  public createDirectives() {
-    return merge({}, ...this.createDirectivesFunc.map(createDirectives => createDirectives()));
+  public createDirectives(options?: IDirectiveOptions) {
+    return merge({}, ...this.createDirectivesFunc.map(createDirectives => createDirectives(options)));
   }
 
   get beforewares(): any[] {
@@ -66,22 +63,6 @@ class Feature {
 
   get middlewares(): any[] {
     return this.middleware;
-  }
-
-  get constructFetchOptions(): any {
-    return this.createFetchOptions.length
-      ? (...args) => {
-        try {
-          let result = {};
-          for (let func of this.createFetchOptions) {
-            result = { ...result, ...func(...args) };
-          }
-          return result;
-        } catch (e) {
-          console.log(e.stack);
-        }
-      }
-      : null;
   }
 }
 

@@ -9,6 +9,7 @@ const combine = (features, extractor): any =>
 
 export type FeatureParams = {
   schema?: DocumentNode | DocumentNode[],
+  createDirectivesFunc?: Function | Function[],
   createResolversFunc?: Function | Function[],
   createContextFunc?: Function | Function[],
   beforeware?: any | any[],
@@ -19,6 +20,7 @@ export type FeatureParams = {
 
 class Feature {
   public schema: DocumentNode[];
+  public createDirectivesFunc: Function[];
   public createResolversFunc: Function[];
   public createContextFunc: Function[];
   public createFetchOptions: Function[];
@@ -31,6 +33,7 @@ class Feature {
       Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
     );
     this.schema = combine(arguments, arg => arg.schema);
+    this.createDirectivesFunc = combine(arguments, arg => arg.createDirectivesFunc);
     this.createResolversFunc = combine(arguments, arg => arg.createResolversFunc);
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
@@ -51,6 +54,10 @@ class Feature {
 
   public createResolvers(pubsub: any) {
     return merge({}, ...this.createResolversFunc.map(createResolvers => createResolvers(pubsub)));
+  }
+
+  public createDirectives() {
+    return merge({}, ...this.createDirectivesFunc.map(createDirectives => createDirectives()));
   }
 
   get beforewares(): any[] {

@@ -9,6 +9,7 @@ const combine = (features, extractor): any =>
 
 export type FeatureParams = {
   schema?: DocumentNode | DocumentNode[],
+  createRemoteSchemas?: Function | Function[],
   createDirectivesFunc?: Function | Function[],
   createResolversFunc?: Function | Function[],
   createContextFunc?: Function | Function[],
@@ -19,6 +20,7 @@ export type FeatureParams = {
 
 class Feature {
   public schema: DocumentNode[];
+  public createRemoteSchemas?: Function | Function[];
   public createDirectivesFunc: Function[];
   public createResolversFunc: Function[];
   public createContextFunc: Function[];

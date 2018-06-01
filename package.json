@@ -27,6 +27,7 @@
     "db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:seed": "npm run db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "test": "jest",
+    "test:watch": "npm test -- --watch",
     "posttest": "npm run lint",
     "coverage": "jest --coverage",
     "pretravis": "npm run compile",
@@ -46,6 +47,8 @@
       "js"
     ],
     "transform": {
+      "\\.(gql|graphql)$": "jest-transform-graphql",
+      ".*": "babel-jest",
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"

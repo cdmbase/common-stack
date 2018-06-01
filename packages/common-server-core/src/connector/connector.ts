@@ -1,4 +1,3 @@
-import { DocumentNode } from 'graphql';
 import { IResolverOptions, IDirectiveOptions } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { mergeTypes } from 'merge-graphql-schemas';
@@ -9,7 +8,7 @@ const combine = (features, extractor): any =>
   without(union(...map(features, res => castArray(extractor(res)))), undefined);
 
 export type FeatureParams = {
-  schema?: DocumentNode | DocumentNode[],
+  schema?: string | string[],
   createRemoteSchemas?: Function | Function[],
   createDirectivesFunc?: Function | Function[],
   createResolversFunc?: Function | Function[],
@@ -20,7 +19,7 @@ export type FeatureParams = {
 };
 
 class Feature {
-  public schema: DocumentNode[];
+  public schema: string[];
   public createRemoteSchemas?: Function | Function[];
   public createDirectivesFunc: Function[];
   public createResolversFunc: Function[];
@@ -29,7 +28,7 @@ class Feature {
   public middleware: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
-    // console.log(feature.schema[0] instanceof DocumentNode);
+    // console.log(feature.schema[0] instanceof string);
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
       Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
     );
@@ -41,7 +40,7 @@ class Feature {
     this.middleware = combine(arguments, arg => arg.middleware);
   }
 
-  get schemas(): DocumentNode[] {
+  get schemas(): string[] {
     return this.schema;
   }
 

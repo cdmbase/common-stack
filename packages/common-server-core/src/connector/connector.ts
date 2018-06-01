@@ -1,4 +1,3 @@
-import { string } from 'graphql';
 import { IResolverOptions, IDirectiveOptions } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { mergeTypes } from 'merge-graphql-schemas';
@@ -29,6 +28,7 @@ class Feature {
   public middleware: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
+    // console.log(feature.schema[0] instanceof string);
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
       Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
     );

@@ -33,7 +33,7 @@ class Feature {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
       Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
     );
-    this.schema = mergeTypes(arguments, arg => arg.schema);
+    this.schema = combine(arguments, arg => arg.schema);
     this.createDirectivesFunc = combine(arguments, arg => arg.createDirectivesFunc);
     this.createResolversFunc = combine(arguments, arg => arg.createResolversFunc);
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);

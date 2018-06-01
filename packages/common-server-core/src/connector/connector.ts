@@ -20,7 +20,7 @@ export type FeatureParams = {
 };
 
 class Feature {
-  public schema: DocumentNode[];
+  public schema: string[];
   public createRemoteSchemas?: Function | Function[];
   public createDirectivesFunc: Function[];
   public createResolversFunc: Function[];
@@ -29,7 +29,6 @@ class Feature {
   public middleware: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
-    // console.log(feature.schema[0] instanceof DocumentNode);
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
       Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
     );
@@ -41,7 +40,7 @@ class Feature {
     this.middleware = combine(arguments, arg => arg.middleware);
   }
 
-  get schemas(): DocumentNode[] {
+  get schemas(): string[] {
     return this.schema;
   }
 

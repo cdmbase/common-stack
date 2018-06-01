@@ -1,4 +1,4 @@
-import { DocumentNode } from 'graphql';
+import { string } from 'graphql';
 import { IResolverOptions, IDirectiveOptions } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { mergeTypes } from 'merge-graphql-schemas';
@@ -9,7 +9,7 @@ const combine = (features, extractor): any =>
   without(union(...map(features, res => castArray(extractor(res)))), undefined);
 
 export type FeatureParams = {
-  schema?: DocumentNode | DocumentNode[],
+  schema?: string | string[],
   createRemoteSchemas?: Function | Function[],
   createDirectivesFunc?: Function | Function[],
   createResolversFunc?: Function | Function[],

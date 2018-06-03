@@ -1,19 +1,28 @@
 import * as React from 'react';
-
+import { Route } from 'react-router-dom';
 import { AbstractFeature, IFeature } from '@common-stack/client-core';
 import { getRoutes } from '../utils';
-import { deprecate } from 'util';
 
 
 export class Feature extends AbstractFeature implements IFeature {
     /**
      * Get the routes
-     * @deprecated
      */
     get routes() {
-        return this.route.map((component: React.ReactElement<any>, idx: number) =>
-            React.cloneElement(component, { key: idx + this.route.length }),
-        );
+        const configuredRoutes = this.configuredRoutes;
+
+        return [
+            ...this.route.map((component: React.ReactElement<any>, idx: number) =>
+                React.cloneElement(component, { key: idx + this.route.length }),
+            ), ...configuredRoutes.map(item => (
+                <Route
+                    key={item.key}
+                    path={item.path}
+                    component={item.component}
+                    exact={item.exact}
+                />
+            )),
+        ];
     }
 
     /**
@@ -23,7 +32,7 @@ export class Feature extends AbstractFeature implements IFeature {
      */
     get configuredRoutes() {
         const routes = Object.assign({}, ...this.routeConfig);
-        return  getRoutes('', {...routes});
+        return getRoutes('', { ...routes });
     }
 
     get navItems() {

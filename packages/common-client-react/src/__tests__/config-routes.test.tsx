@@ -159,8 +159,21 @@ describe('connector routes', () => {
         ],
     };
 
-    test('getRoutes based on index path', async () => {
+    test('check static routes', async () => {
+        const connector = new Feature(staticRoutes);
+
+        expect(connector.routes).toMatchSnapshot();
+    });
+
+    test('merge static routes and configurable routes', async () => {
         const connector = new Feature({ routeConfig: routerConfig() }, new Feature(staticRoutes));
+
+        expect(connector.routes).toMatchSnapshot();
+    });
+
+
+    test('check configurable routes', async () => {
+        const connector = new Feature({ routeConfig: routerConfig() });
 
         expect(connector.routes).toMatchSnapshot();
     });

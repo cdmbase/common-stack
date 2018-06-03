@@ -1,15 +1,8 @@
 import * as React from 'react';
-import * as Loadable from 'react-loadable';
 
 import { AbstractFeature, IFeature } from '@common-stack/client-core';
 import { getRoutes } from '../utils';
 import { deprecate } from 'util';
-
-const dynamicWrapper = (component: () => any, loading) => Loadable({
-    loader: component,
-    loading: loading || <div> Loading...</div>,
-});
-
 
 
 export class Feature extends AbstractFeature implements IFeature {

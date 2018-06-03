@@ -3,6 +3,7 @@ import * as renderer from 'react-test-renderer';
 import * as Loadable from 'react-loadable';
 import { getRoutes } from '../utils';
 import { Feature } from '../connector';
+import { IRouteData } from '../interfaces';
 import 'jest';
 
 
@@ -60,27 +61,27 @@ test('loading success', async () => {
     expect(component2.toJSON()).toMatchSnapshot(); // reload
 });
 
-const routerConfig = {
+const routerConfig: IRouteData = {
     ['/a']: {
-        component: createLoader(400, () => MyComponent),
+        component: () => MyComponent,
     },
     ['/a/1']: {
-        component: createLoader(400, () => MyComponent),
+        component: () => MyComponent,
     },
     ['/a/2']: {
-        component: createLoader(400, () => MyComponent),
+        component: () => MyComponent,
     },
     ['/a/2/1']: {
-        component: createLoader(400, () => MyComponent),
+        component: () => MyComponent,
     },
     ['/ab/2/1']: {
-        component: createLoader(400, () => MyComponent),
+        component: () => MyComponent,
     },
     ['/b/1']: {
-        component: createLoader(400, () => MyComponent),
+        component: () => MyComponent,
     },
     ['/b/login/register']: {
-        component: createLoader(400, () => MyComponent),
+        component: () => MyComponent,
     },
 };
 
@@ -139,7 +140,7 @@ describe('routeConfig configuredRoutes', () => {
         const connector = new Feature({ routeConfig: routerConfig });
         const result = [{ key: '/a', path: '/a', exact: false },
         { key: '/a/1', path: '/a/1', exact: true },
-        {  key: '/a/2', path: '/a/2', exact: false },
+        { key: '/a/2', path: '/a/2', exact: false },
         {
             key: '/a/2/1',
             path: '/a/2/1',

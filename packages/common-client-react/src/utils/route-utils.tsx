@@ -1,3 +1,12 @@
+import * as React from 'react';
+import * as Loadable from 'react-loadable';
+import { IRouteData } from '../interfaces';
+
+export const dynamicWrapper = (component: () => any, loading?: any) => Loadable({
+    loader: component,
+    loading: loading || <div> Loading...</div>,
+});
+
 
 
 
@@ -51,7 +60,7 @@ export function getRenderArr(routes: string[]) {
  * @param path
  * @param routerData
  */
-export function getRoutes(path: string, routerData) {
+export function getRoutes(path: string, routerData: IRouteData) {
     if (path[path.length - 1] !== '/') {
         path += '/'; //  Add a '/' to exclude incomplete paths
     }
@@ -65,10 +74,12 @@ export function getRoutes(path: string, routerData) {
     // Conversion and stitching parameters.
     const renderRoutes = routes.map(item => {
         const exact = !routes.some(route => route !== item && getRelation(route, item) === 1);
+        const routeObject = { ...routerData[`${path}${item}`] };
         return {
-            ...routerData[`${path}${item}`],
+            ...routeObject,
             key: `${path}${item}`,
             path: `${path}${item}`,
+            component: dynamicWrapper(routeObject.component, routeObject.loading),
             exact,
         };
     });

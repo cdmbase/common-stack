@@ -13,6 +13,7 @@ export abstract class AbstractFeature implements IFeature {
     public resolver: any;
     public routerFactory: any;
     public route: any;
+    public routeConfig: any;
     public navItem: any;
     public navItemRight: any;
     public rootComponentFactory: any[];
@@ -22,6 +23,7 @@ export abstract class AbstractFeature implements IFeature {
     public scriptsInsert: any[];
     public catalogInfo: any[];
     public languagesFuncs: any[];
+    public data: any[];
 
     constructor(
         feature?: FeatureParams,
@@ -46,21 +48,25 @@ export abstract class AbstractFeature implements IFeature {
         this.route = combine(arguments, arg => arg.route);
         this.navItem = combine(arguments, arg => arg.navItem);
         this.navItemRight = combine(arguments, arg => arg.navItemRight);
+        this.routeConfig = combine(arguments, arg => arg.routeConfig);
 
         // UI provider-components
         this.rootComponentFactory = combine(arguments, arg => arg.rootComponentFactory);
         this.dataRootComponent = combine(arguments, arg => arg.dataRootComponent);
 
-         // UI provider-components
-         this.languagesFuncs = combine(arguments, arg => arg.languagesFuncs);
+        // UI provider-components
+        this.languagesFuncs = combine(arguments, arg => arg.languagesFuncs);
 
 
         // TODO: Use React Helmet for those. Low level DOM manipulation
         this.stylesInsert = combine(arguments, arg => arg.stylesInsert);
         this.scriptsInsert = combine(arguments, arg => arg.scriptsInsert);
 
-        combine(arguments, arg => arg.catalogInfo).forEach(info =>
-            Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
+        // Shared modules data
+        this.data = combine([{}].concat(Array.from(arguments)), arg => arg.data)
+            .reduce(
+                (acc, el) => [{ ...acc[0], ...el }],
+                [{}],
         );
     }
 
@@ -69,6 +75,8 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     public abstract get routes();
+
+    public abstract get configuredRoutes();
 
     public abstract get navItems();
 

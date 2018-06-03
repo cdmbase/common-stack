@@ -1,13 +1,29 @@
 import * as React from 'react';
 
 import { AbstractFeature, IFeature } from '@common-stack/client-core';
+import { getRoutes } from '../utils';
+import { deprecate } from 'util';
 
 
 export class Feature extends AbstractFeature implements IFeature {
+    /**
+     * Get the routes
+     * @deprecated
+     */
     get routes() {
         return this.route.map((component: React.ReactElement<any>, idx: number) =>
             React.cloneElement(component, { key: idx + this.route.length }),
         );
+    }
+
+    /**
+     * get configured routes.
+     * Note: It overwrites the any duplicate key with latest loaded key.
+     * TODO: Find a way to warn when there are duplicate keys.
+     */
+    get configuredRoutes() {
+        const routes = Object.assign({}, ...this.routeConfig);
+        return  getRoutes('', {...routes});
     }
 
     get navItems() {

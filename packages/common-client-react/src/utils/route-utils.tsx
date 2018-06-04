@@ -79,7 +79,7 @@ export function getRoutes(path: string, routerData: IRouteData) {
             ...routeObject,
             key: `${path}${item}`,
             path: `${path}${item}`,
-            component: dynamicWrapper(routeObject.component, routeObject.loading),
+            // component: dynamicWrapper(routeObject.component, routeObject.loading),
             exact,
         };
     });

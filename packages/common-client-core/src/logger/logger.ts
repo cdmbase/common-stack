@@ -1,6 +1,8 @@
 import { ClientLogger } from '@cdm-logger/client';
 import * as Logger from 'bunyan';
 
-const logger = ClientLogger.create('FullStack', { level: 'trace'});
+const appName = process.env.APP_NAME || 'FullStack';
+const logLevel = process.env.LOG_LEVEL || 'info';
+const logger = ClientLogger.create(appName, { level: logLevel });
 
 export { logger };

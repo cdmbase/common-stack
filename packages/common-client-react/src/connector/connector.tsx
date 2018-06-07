@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { AbstractFeature, IFeature } from '@common-stack/client-core';
 import { getRoutes } from '../utils';
-
+import { renderRoutes } from 'react-router-config';
 
 export class Feature extends AbstractFeature implements IFeature {
     /**
@@ -14,14 +14,7 @@ export class Feature extends AbstractFeature implements IFeature {
         return [
             ...this.route.map((component: React.ReactElement<any>, idx: number) =>
                 React.cloneElement(component, { key: idx + this.route.length }),
-            ), ...configuredRoutes.map(item => (
-                <Route
-                    key={item.key}
-                    path={item.path}
-                    component={item.component}
-                    exact={item.exact}
-                />
-            )),
+            ), renderRoutes(configuredRoutes),
         ];
     }
 

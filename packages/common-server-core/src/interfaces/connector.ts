@@ -4,6 +4,7 @@ import { PubSub } from 'graphql-subscriptions';
 export interface IResolverOptions {
     pubsub: any;
     logger?: Logger;
+    [key: string]: any;
 }
 
 export interface IDirectiveOptions {

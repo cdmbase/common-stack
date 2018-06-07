@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/utils",
-  "version": "0.0.14-17",
+  "version": "0.0.14-18",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {

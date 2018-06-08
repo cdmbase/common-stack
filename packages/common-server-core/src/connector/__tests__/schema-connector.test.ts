@@ -1,5 +1,4 @@
 
-import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
 import { Feature } from '../connector';
 import vendorType from './samples/graphql/types/vendor_type';
 import personEntityType from './samples/graphql/types/person_entity_type';
@@ -13,7 +12,6 @@ describe('schema merge test', function () {
 
     it('returns minimal schema', () => {
         const types = [vendorType];
-        const mergedTypes = mergeTypes(types);
         const feature = new Feature({schema: vendorType});
         const feature2 = new Feature({schema: personEntityType}, feature);
         console.log(feature2.schemas);
@@ -31,9 +29,7 @@ describe('schema merge test', function () {
             dob: Date
           }
         `);
-        const schema = normalizeWhitespace(mergedTypes);
 
-        expect(schema).toContain(expectedSchemaType);
     });
 
 });

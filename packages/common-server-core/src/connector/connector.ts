@@ -1,6 +1,5 @@
 import { IResolverOptions, IDirectiveOptions } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
-import { mergeTypes } from 'merge-graphql-schemas';
 
 export const featureCatalog: any = {};
 

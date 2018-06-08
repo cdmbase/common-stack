@@ -2,50 +2,41 @@
 
 exports[`connector routes check configurable routes 1`] = `
 Array [
-  <Switch>
-    <Route
-      exact={false}
-      path="/a"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/a/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={false}
-      path="/a/2"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/a/2/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/ab/2/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/b/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/b/login/register"
-      render={[Function]}
-      strict={undefined}
-    />
-  </Switch>,
+  <Route
+    component={[Function]}
+    exact={false}
+    path="/a"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/a/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={false}
+    path="/a/2"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/a/2/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/ab/2/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/b/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/b/login/register"
+  />,
 ]
 `;
 
@@ -61,7 +52,56 @@ Array [
     exact={true}
     path="/static2"
   />,
-  <Switch />,
+]
+`;
+
+exports[`connector routes getRoutes based on index path 1`] = `
+Array [
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static2"
+  />,
+  <Route
+    component={[Function]}
+    exact={false}
+    path="/a"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/a/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={false}
+    path="/a/2"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/a/2/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/ab/2/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/b/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/b/login/register"
+  />,
 ]
 `;
 
@@ -77,50 +117,41 @@ Array [
     exact={true}
     path="/static2"
   />,
-  <Switch>
-    <Route
-      exact={false}
-      path="/a"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/a/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={false}
-      path="/a/2"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/a/2/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/ab/2/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/b/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/b/login/register"
-      render={[Function]}
-      strict={undefined}
-    />
-  </Switch>,
+  <Route
+    component={[Function]}
+    exact={false}
+    path="/a"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/a/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={false}
+    path="/a/2"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/a/2/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/ab/2/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/b/1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/b/login/register"
+  />,
 ]
 `;
 

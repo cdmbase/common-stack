@@ -1,6 +1,6 @@
 # Common Stack Packages
 
-*Helper packages to support Fullstack-pro project.*
+*Helper packages to support Fullstack-pro project.* This project doesn't not have any example server for any demo, to use server you can use https://github.com/cdmbase/fullstack-pro/tree/next
 
 Purpose: 
 ---

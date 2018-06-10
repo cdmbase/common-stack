@@ -13,10 +13,10 @@ Useful commands:
 |`lerna clean`|                 - removes the node_modules directory from all packages. |
 |`npm run watch`|               - build the packages in watchmode (Useful for development)|
 |`npm run lerna`|               - install external dependencies at the repo root so they're |`lable to all packages.|
-|`npm run build`|               - build all the packages|
+|`npm run build`|               - build all the packages. You don't need to run as `npm run lerna` runs anyways|
 |`npm install`|                - runs `lerna` and `build`|
 |`npm run test`|                - to run test using jest
-|`npm run test:watch`|          - to run test in watch mode. You can additionally use `-w` and use regex expression to test only specific test.
+|`npm run test:watch`|          - to run test in watch mode. You can additionally use `-w` and use regex expression to test only specific test.|
 |`lerna publish`|               - publishes packages in the current Lerna project. |
 
 Files explained:

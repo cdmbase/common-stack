@@ -11,9 +11,6 @@ Useful commands:
 |command|Description|
 |--------------------------|-----------|    
 |`lerna clean`|                 - removes the node_modules directory from all packages. |
-|`npm start`(deprecated)|       - starts the web server and backend server. Use `npm run spin:watch`|
-|`npm run spin:watch`|         - starts the web server and backend server in watch mode.|
-|`npm run spin:watch:debug`|    - starts the web server and backend server in debug and watch mode.|
 |`npm run watch`|               - build the packages in watchmode (Useful for development)|
 |`npm run lerna`|               - install external dependencies at the repo root so they're |`lable to all packages.|
 |`npm run build`|               - build all the packages|

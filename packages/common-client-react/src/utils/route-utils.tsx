@@ -1,7 +1,12 @@
 import * as React from 'react';
 import * as Loadable from 'react-loadable';
 import { IRouteData } from '../interfaces';
-
+import { matchRoutes } from 'react-router-config';
+import * as _ from 'lodash';
+import { ConsoleLogger, IConsoleLoggerSettings } from '@cdm-logger/server';
+import { LoggerLevel } from '@cdm-logger/core';
+import * as Logger from 'bunyan';
+export const logger: Logger = ConsoleLogger.create('test', { level: 'trace' });
 export const dynamicWrapper = (component: () => any, loading?: any) => Loadable({
     loader: component,
     loading: loading || <div> Loading...</div>,
@@ -69,19 +74,70 @@ export function getRoutes(path: string, routerData: IRouteData) {
     });
     // Replace path to '' eg. path='user' /user/name => name.
     routes = routes.map(item => item.replace(path, ''));
-    // Get the route to be rendered to remove the deep rendering.
-    // const renderArr = getRenderArr(routes);
     // Conversion and stitching parameters.
+    let mergedData = {};
     const renderRoutes = routes.map(item => {
         const exact = !routes.some(route => route !== item && getRelation(route, item) === 1);
         const routeObject = { ...routerData[`${path}${item}`] };
+
+        if (exact) {
+            // split and merge
+            // if we receive /a/1/2 it should merge as 
+            // { path: '/a', routes: [{ path: '/1', routes: [{ path: '/a/1/2'}]}]}
+            const arr = (`${path}${item}`).split('/').filter(x => x);
+            console.log(`${path}${item}`)
+            arr.map((value, i) => {
+                console.log(value);
+                let newVal = '';
+                let newK = {};
+
+                let newMerge: { path?: string, routes?: any[] } = {};
+                for (let st = 0; st <= i; st++) {
+                    newVal = newVal.concat(`/${arr[st]}`);
+                    if (_.isEmpty(newMerge)) {
+                        // creates initial object
+                        newMerge = _.merge(newMerge, { path: newVal });
+                    } else {
+                        // probably > first loop
+                        // if (sub) {
+                        // newK = _.merge(newK, { addToSub(sub, { path: newVal }) });
+                        // newK = _.merge(newK, { addToSub(sub, { path: newVal }) });
+                        newK = _.merge(newK, { ...addToSub(newMerge, { path: newVal }) });
+                        // } else {
+                        //     newK = { path: newVal };
+                        // }
+                        newMerge = _.merge(newMerge, { ...newK });
+                    }
+
+                }
+                logger.debug('with [%s] == [%j]', newVal, newMerge);
+                mergedData = _.merge(mergedData, {});
+            });
+        }
         return {
             ...routeObject,
             key: `${path}${item}`,
             path: `${path}${item}`,
-            // component: dynamicWrapper(routeObject.component, routeObject.loading),
             exact,
         };
     });
     return renderRoutes;
 }
+
+const addToSub = (sub, val) => {
+    logger.debug('addToSub %j => %j', val, sub);
+    if (sub && sub.routes) {
+        logger.debug('...looping..');
+        let c = addToSub({ ...sub.routes[0] }, val);
+        logger.debug('merge source %j with %j', sub, c);
+        sub = _.merge(sub, { routes: [c] });
+    } else {
+        logger.debug('expecting no router => %j', sub);
+        sub = { ...(sub), routes: [val] };
+        logger.debug('moidifed by adding %j => %j', val, sub);
+    }
+
+    return sub;
+};
+
+

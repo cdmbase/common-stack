@@ -99,13 +99,7 @@ export function getRoutes(path: string, routerData: IRouteData) {
                         newMerge = _.merge(newMerge, { path: newVal });
                     } else {
                         // probably > first loop
-                        // if (sub) {
-                        // newK = _.merge(newK, { addToSub(sub, { path: newVal }) });
-                        // newK = _.merge(newK, { addToSub(sub, { path: newVal }) });
                         newK = _.merge(newK, { ...addToSub(newMerge, { path: newVal }) });
-                        // } else {
-                        //     newK = { path: newVal };
-                        // }
                         newMerge = _.merge(newMerge, { ...newK });
                     }
 

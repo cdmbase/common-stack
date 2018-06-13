@@ -53,5 +53,5 @@ describe('container merge test', function () {
         expect(settings2).toEqual('settings2');
 
     });
-    
+
 });

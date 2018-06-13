@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { ContainerModule, interfaces, Container, injectable, inject, tagged } from 'inversify';
 import { Feature } from '../connector';
 

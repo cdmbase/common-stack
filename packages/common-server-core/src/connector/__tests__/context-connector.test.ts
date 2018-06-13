@@ -6,7 +6,7 @@ import 'jest';
 
 describe('context merge test', function () {
 
-    it('Should be able load context module',async () => {
+    it('Should be able load context module', async () => {
 
 
         const TYPES = {
@@ -31,7 +31,7 @@ describe('context merge test', function () {
             });
 
 
-        const serviceFunc = (cont) =>  ({
+        const serviceFunc = (cont) => ({
             service1: cont.get(TYPES.someType1),
         });
 
@@ -42,7 +42,7 @@ describe('context merge test', function () {
         });
 
 
-        const service = await feature.createServiceContext({ settings1: 'settings1', settings2: 'settings2' });
+        const service = feature.createServiceContext({ settings1: 'settings1', settings2: 'settings2' });
         const contextService = await service(null, null);
 
         expect(contextService.service1).toEqual(1);

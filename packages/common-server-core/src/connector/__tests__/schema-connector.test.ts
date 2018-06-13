@@ -14,7 +14,6 @@ describe('schema merge test', function () {
         const types = [vendorType];
         const feature = new Feature({schema: vendorType});
         const feature2 = new Feature({schema: personEntityType}, feature);
-        console.log(feature2.schemas);
         const expectedSchemaType = normalizeWhitespace(`
         schema {
             query: Query

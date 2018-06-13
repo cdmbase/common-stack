@@ -1,1 +1,1 @@
-export * from './hemera-settings';
+export * from './common-settings';

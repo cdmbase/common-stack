@@ -1,8 +1,8 @@
 
-export interface IHemeraSettings {
+export interface ICommonSettings {
     namespace?: string;
     connectionId?: string;
-    topic: string;
+    topic?: string;
     [key: string]: string | number | any;
 }
 

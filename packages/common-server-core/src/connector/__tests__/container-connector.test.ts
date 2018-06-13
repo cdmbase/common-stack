@@ -53,8 +53,5 @@ describe('container merge test', function () {
         expect(settings2).toEqual('settings2');
 
     });
-
-    const service = feature.createService({ settings1: 'settings1', settings2: 'settings2' });
-
     
 });

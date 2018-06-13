@@ -29,6 +29,7 @@ class Feature {
   public createContainerFunc: Function[];
   public beforeware: Function[];
   public middleware: Function[];
+  private createSettings: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
@@ -42,6 +43,7 @@ class Feature {
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
     this.middleware = combine(arguments, arg => arg.middleware);
+    this.createSettings = combine(arguments, arg => arg.createSettings);
   }
 
   get schemas(): string[] {
@@ -97,6 +99,10 @@ class Feature {
     const container = new Container();
     this.createContainerFunc.map(createModule => container.load(createModule(options)));
     return container;
+  }
+
+  public createDefaultSettings() {
+    return this.createSettings;
   }
 
   get beforewares(): any[] {

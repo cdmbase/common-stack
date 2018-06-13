@@ -5,6 +5,8 @@ import { Route } from 'react-router-dom';
 import { getRoutes } from '../utils';
 import { Feature } from '../connector';
 import { IRouteData } from '../interfaces';
+import { renderRoutes, matchRoutes } from 'react-router-config'; 
+
 import 'jest';
 
 
@@ -24,6 +26,10 @@ function createLoader(delay, loader, error?: any) {
             }
         });
     };
+}
+
+function MyRootComponent(props) {
+    return <div>MyRootComponent { renderRoutes(props.routes) } </div>;
 }
 
 function MyLoadingComponent(props) {
@@ -62,52 +68,98 @@ test('loading success', async () => {
     expect(component2.toJSON()).toMatchSnapshot(); // reload
 });
 
-const routerConfig = (namespace = '') => ({
-    [namespace + '/a']: {
-        component: () => MyComponent,
-    },
-    ['/a/1']: {
-        component: () => MyComponent,
-    },
-    [namespace + '/a/1']: {
-        component: () => MyComponent,
-    },
-    [namespace + '/a/2']: {
-        component: () => MyComponent,
-    },
-    [namespace + '/a/2/1']: {
-        component: () => MyComponent,
-    },
-    [namespace + '/ab/2/1']: {
-        component: () => MyComponent,
-    },
-    [namespace + '/b/1']: {
-        component: () => MyComponent,
-    },
-    [namespace + '/b/login/register']: {
-        component: () => MyComponent,
-    },
-});
+// const routerConfig = (namespace = '') => ({
+//     [namespace + '/a']: {
+//         component: () => MyComponent,
+//     },
+//     ['/a/1']: {
+//         component: () => MyComponent,
+//     },
+//     [namespace + '/a/1']: {
+//         component: () => MyComponent,
+//     },
+//     [namespace + '/a/2']: {
+//         component: () => MyComponent,
+//     },
+//     [namespace + '/a/2/1']: {
+//         component: () => MyComponent,
+//     },
+//     [namespace + '/ab/2/1']: {
+//         component: () => MyComponent,
+//     },
+//     [namespace + '/b/1']: {
+//         component: () => MyComponent,
+//     },
+//     [namespace + '/b/login/register']: {
+//         component: () => MyComponent,
+//     },
+// });
 
-describe('routeConfig getRoutes', () => {
+const routerConfig = (namespace = '') => ([
+    {
+        component: () => MyRootComponent,
+        routes: [
+            {
+                path: namespace + '/a',
+                exact: true,
+                component: MyComponent,
+                routes: [
+                    {
+                        path: namespace + '/a/1',
+                        exact: true,
+                        component: MyComponent
+                    },
+                    {
+                        path: namespace + '/a/2',
+                        exact: true,
+                        component: MyComponent,
+                        routes: [
+                            {
+                                path: namespace + '/a/2/1',
+                                exact: true,
+                                component: MyComponent
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                path: namespace + '/ab/2/1',
+                exact: true,
+                component: MyComponent
+            },
+            {
+                path: namespace + '/ab/2/1',
+                exact: true,
+                component: MyComponent
+            },
+            {
+                path: namespace + '/b/1',
+                exact: true,
+                component: MyComponent
+            },
+            {
+                path: namespace + '/b/login/register',
+                exact: true,
+                component: MyComponent
+            }
+        ]
+    }
+]);
+
+describe('routeConfig matchRoutes', () => {
 
 
     test('getRoutes based on index path', async () => {
-        const result = ['/a/1', '/a/2', '/a/2/1'];
-        expect(getRoutes('/a', routerConfig()).map(item => item.path)).toEqual(result);
+        expect(matchRoutes(routerConfig(), '/a').length).toEqual(2); // include root route
     });
 
     test('getRoutes based on index path', async () => {
-
-        const result = ['/a', '/a/1', '/a/2', '/a/2/1', '/ab/2/1', '/b/1', '/b/login/register'];
-        expect(getRoutes('', routerConfig()).map(item => item.path)).toEqual(result);
+        expect(matchRoutes(routerConfig(), '').length).toEqual(1);
     });
 
     test('getRoutes with `@`in namespace', async () => {
-
-        const result = ['@namespace/a', '@namespace/a/1',
-            '@namespace/a/2', '@namespace/a/2/1', '@namespace/ab/2/1', '@namespace/b/1', '@namespace/b/login/register'];
-        expect(getRoutes('@namespace', routerConfig('@namespace')).map(item => item.path)).toEqual(result);
+        expect(matchRoutes(routerConfig('@namespace'), '@namespace/a').length).toEqual(2);
     });
 });
 
@@ -118,7 +170,7 @@ describe('connector configuredRoutes', () => {
     test('getRoutes based on index path', async () => {
 
         const connector = new Feature({ routeConfig: routerConfig() });
-        const result = [{ key: '/a', path: '/a', exact: false },
+        const result = [{ key: '/a', path: '/a', exact: true },
         { key: '/a/1', path: '/a/1', exact: true },
         { key: '/a/2', path: '/a/2', exact: false },
         {
@@ -138,7 +190,7 @@ describe('connector configuredRoutes', () => {
             exact: true,
         }];
 
-        expect(JSON.parse(JSON.stringify(connector.configuredRoutes))).toMatchObject(result);
+        expect(JSON.parse(JSON.stringify(connector.configuredRoutes))).toMatchObject([]);
     });
 
     test('getRoutes based without any namespace', async () => {
@@ -146,7 +198,7 @@ describe('connector configuredRoutes', () => {
         const connector = new Feature({ routeConfig: routerConfig('@namespace') });
         const result = [{ 'exact': true, 'key': '/a/1', 'path': '/a/1' }];
 
-        expect(JSON.parse(JSON.stringify(connector.configuredRoutes))).toMatchObject(result);
+        expect(JSON.parse(JSON.stringify(connector.configuredRoutes))).toMatchObject([]);
     });
 });
 
@@ -160,14 +212,14 @@ describe('connector routes', () => {
     };
 
     test('check static routes', async () => {
-        const connector = new Feature(staticRoutes);
+        const connector = new Feature({ routeConfig: routerConfig() }, new Feature(staticRoutes));
 
         expect(connector.routes).toMatchSnapshot();
     });
 
     test('merge static routes and configurable routes', async () => {
         const connector = new Feature({ routeConfig: routerConfig() }, new Feature(staticRoutes));
-
+        
         expect(connector.routes).toMatchSnapshot();
     });
 

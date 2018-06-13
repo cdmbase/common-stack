@@ -1,6 +1,6 @@
 import { IResolverOptions, IDirectiveOptions } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
-
+import { Container, interfaces } from 'inversify';
 export const featureCatalog: any = {};
 
 const combine = (features, extractor): any =>
@@ -12,6 +12,8 @@ export type FeatureParams = {
   createDirectivesFunc?: Function | Function[],
   createResolversFunc?: Function | Function[],
   createContextFunc?: Function | Function[],
+  createServiceFunc?: Function | Function[],
+  createContainerFunc?: Function | Function[],
   beforeware?: any | any[],
   middleware?: any | any[],
   catalogInfo?: any | any[],
@@ -23,11 +25,12 @@ class Feature {
   public createDirectivesFunc: Function[];
   public createResolversFunc: Function[];
   public createContextFunc: Function[];
+  public createServiceFunc: Function[];
+  public createContainerFunc: Function[];
   public beforeware: Function[];
   public middleware: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
-    // console.log(feature.schema[0] instanceof string);
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
       Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
     );
@@ -35,6 +38,8 @@ class Feature {
     this.createDirectivesFunc = combine(arguments, arg => arg.createDirectivesFunc);
     this.createResolversFunc = combine(arguments, arg => arg.createResolversFunc);
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
+    this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
+    this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
     this.middleware = combine(arguments, arg => arg.middleware);
   }
@@ -43,11 +48,41 @@ class Feature {
     return this.schema;
   }
 
+  /**
+   * Creates context
+   * @param req
+   * @param connectionParams
+   * @param webSocket
+   * @deprecated
+   */
   public async createContext(req: any, connectionParams: any, webSocket?: any) {
     const results = await Promise.all(
       this.createContextFunc.map(createContext => createContext(req, connectionParams, webSocket)),
     );
     return merge({}, ...results);
+  }
+
+  /**
+   * If you need to attach service to Graphql Context, you can use this function.
+   * It should be called twice to get the context.
+   */
+  public createServiceContext =  (options) => async (req: any, connectionParams: any, webSocket?: any) => {
+
+    const services = this.createService(options);
+    const results = await Promise.all(
+      this.createContextFunc.map(createContext => createContext(req, connectionParams, webSocket)),
+    );
+    return merge({}, ...results, {...services});
+  }
+
+
+  /**
+   * Its wrapper to container to get services
+   * @param container
+   */
+  public createService(options) {
+    const container = this.createContainers(options);
+    return merge({}, ...this.createServiceFunc.map(createService => createService(container)));
   }
 
   public createResolvers(options?: IResolverOptions) {
@@ -56,6 +91,12 @@ class Feature {
 
   public createDirectives(options?: IDirectiveOptions) {
     return merge({}, ...this.createDirectivesFunc.map(createDirectives => createDirectives(options)));
+  }
+
+  public createContainers(options) {
+    const container = new Container();
+    this.createContainerFunc.map(createModule => container.load(createModule(options)));
+    return container;
   }
 
   get beforewares(): any[] {

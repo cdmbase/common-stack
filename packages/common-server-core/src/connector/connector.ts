@@ -66,15 +66,16 @@ class Feature {
    * If you need to attach service to Graphql Context, you can use this function.
    * It should be called twice to get the context.
    */
-  public createServiceContext =  (options) => async (req: any, connectionParams: any, webSocket?: any) => {
-
+  public createServiceContext(options) {
     const services = this.createService(options);
-    const results = await Promise.all(
-      this.createContextFunc.map(createContext => createContext(req, connectionParams, webSocket)),
-    );
-    return merge({}, ...results, {...services});
-  }
+    return async (req: any, connectionParams: any, webSocket?: any) => {
+      const results = await Promise.all(
+        this.createContextFunc.map(createContext => createContext(req, connectionParams, webSocket)),
+      );
+      return merge({}, ...results, { ...services });
+    };
 
+  }
 
   /**
    * Its wrapper to container to get services

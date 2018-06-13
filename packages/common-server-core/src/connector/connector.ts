@@ -29,7 +29,7 @@ class Feature {
   public createContainerFunc: Function[];
   public beforeware: Function[];
   public middleware: Function[];
-  private createSettings: Function[];
+  public createPreference: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
@@ -43,7 +43,7 @@ class Feature {
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
     this.middleware = combine(arguments, arg => arg.middleware);
-    this.createSettings = combine(arguments, arg => arg.createSettings);
+    this.createPreference = combine(arguments, arg => arg.createPreference);
   }
 
   get schemas(): string[] {
@@ -101,8 +101,8 @@ class Feature {
     return container;
   }
 
-  public createDefaultSettings() {
-    return this.createSettings;
+  public createDefaultPreferences() {
+    return this.createPreference;
   }
 
   get beforewares(): any[] {

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { AbstractFeature, IFeature } from '@common-stack/client-core';
-import { getRoutes } from '../utils';
-import { renderRoutes } from 'react-router-config';
+import { renderRoutes, getRoutes } from '../utils';
 
 export class Feature extends AbstractFeature implements IFeature {
     /**
@@ -14,7 +13,7 @@ export class Feature extends AbstractFeature implements IFeature {
         return [
             ...this.route.map((component: React.ReactElement<any>, idx: number) =>
                 React.cloneElement(component, { key: idx + this.route.length }),
-            ), renderRoutes(configuredRoutes),
+            ), renderRoutes(this.flattenRoutes(this.routeConfig)),
         ];
     }
 
@@ -24,8 +23,8 @@ export class Feature extends AbstractFeature implements IFeature {
      * TODO: Find a way to warn when there are duplicate keys.
      */
     get configuredRoutes() {
-        const routes = Object.assign({}, ...this.routeConfig);
-        return getRoutes('', { ...routes });
+        const routes = [ ...this.routeConfig ];
+        return getRoutes('', routes );
     }
 
     get navItems() {
@@ -64,5 +63,31 @@ export class Feature extends AbstractFeature implements IFeature {
         for (const func of this.languagesFuncs) {
             func(monaco);
         }
+    }
+
+    public flattenRoutes(routeConfig) {
+        const flatRoutes = [];
+
+        return (function flatten(routes) {
+            routes.map(route => {
+                const lroute = {
+                    path: route.path,
+                    component: route.component,
+                    exact: route.exact,
+                };
+
+                if (route.path) {
+                    flatRoutes.push(lroute);
+                }
+
+                if (!route.routes) {
+                    return routes;
+                }
+
+                flatten(route.routes);
+            });
+
+            return flatRoutes;
+        })(routeConfig);
     }
 }

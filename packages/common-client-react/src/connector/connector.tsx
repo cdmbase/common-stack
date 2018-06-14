@@ -9,12 +9,12 @@ export class Feature extends AbstractFeature implements IFeature {
      * Get the routes
      */
     get routes() {
-        const configuredRoutes = this.configuredRoutes;
+        const configuredRoutes = this.getConfiguredRoutes();
 
+        console.log('routes', configuredRoutes);
         return [
-            ...this.route.map((component: React.ReactElement<any>, idx: number) =>
-                React.cloneElement(component, { key: idx + this.route.length }),
-            ), renderRoutes(configuredRoutes),
+
+            renderRoutes(configuredRoutes.routes),
         ];
     }
 
@@ -23,9 +23,9 @@ export class Feature extends AbstractFeature implements IFeature {
      * Note: It overwrites the any duplicate key with latest loaded key.
      * TODO: Find a way to warn when there are duplicate keys.
      */
-    get configuredRoutes() {
+    public getConfiguredRoutes(searchRoot = '/') {
         const routes = Object.assign({}, ...this.routeConfig);
-        return getRoutes('', { ...routes });
+        return getRoutes(searchRoot, { ...routes });
     }
 
     get navItems() {

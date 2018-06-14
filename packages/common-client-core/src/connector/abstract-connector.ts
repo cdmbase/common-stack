@@ -76,7 +76,7 @@ export abstract class AbstractFeature implements IFeature {
 
     public abstract get routes();
 
-    public abstract get configuredRoutes();
+    public abstract getConfiguredRoutes(routeSearch?: string);
 
     public abstract get navItems();
 

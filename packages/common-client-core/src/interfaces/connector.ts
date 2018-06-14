@@ -51,7 +51,7 @@ export interface IFeature {
     readonly router;
 
     readonly routes;
-    readonly configuredRoutes;
+    readonly getConfiguredRoutes;
     readonly navItems;
     readonly navItemsRight;
 

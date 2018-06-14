@@ -2,9 +2,8 @@ import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import * as Loadable from 'react-loadable';
 import { Route } from 'react-router-dom';
-import { getRoutes } from '../utils';
+import { getRoutes, buildRouteTree } from '../utils';
 import { Feature } from '../connector';
-import { IRouteData } from '../interfaces';
 import 'jest';
 
 function waitFor(delay) {
@@ -60,56 +59,38 @@ test('loading success', async () => {
     expect(component2.toJSON()).toMatchSnapshot(); // reload
 });
 
-const routerConfig = (namespace = '') => ([{
-    component: () => MyComponent,
-    routes: [{
-            path: namespace + '/a',
-            exact: true,
-            component: MyComponent,
-            routes: [{
-                    path: namespace + '/a/1',
-                    exact: true,
-                    component: MyComponent,
-                },
-                {
-                    path: namespace + '/a/2',
-                    exact: true,
-                    component: MyComponent,
-                    routes: [{
-                        path: namespace + '/a/2/1',
-                        exact: true,
-                        component: MyComponent,
-                    }],
-                },
-            ],
-        },
-        {
-            path: namespace + '/ab/2/1',
-            exact: true,
-            component: MyComponent,
-        },
-        {
-            path: namespace + '/ab/2/1',
-            exact: true,
-            component: MyComponent,
-        },
-        {
-            path: namespace + '/b/1',
-            exact: true,
-            component: MyComponent,
-        },
-        {
-            path: namespace + '/b/login/register',
-            exact: true,
-            component: MyComponent,
-        },
-    ],
-}]);
+const routerConfig = (namespace = '') => ({
+    [namespace + '/a']: {
+        component: () => MyComponent,
+    },
+    ['/a/1']: {
+        component: () => MyComponent,
+    },
+    [namespace + '/a/1']: {
+        component: () => MyComponent,
+    },
+    [namespace + '/a/2']: {
+        component: () => MyComponent,
+    },
+    [namespace + '/a/2/1']: {
+        component: () => MyComponent,
+    },
+    [namespace + '/ab/2/1']: {
+        component: () => MyComponent,
+    },
+    [namespace + '/b/1']: {
+        component: () => MyComponent,
+    },
+    [namespace + '/b/login/register']: {
+        component: () => MyComponent,
+    },
+});
 
 describe('routeConfig getRoutes', () => {
     test('getRoutes based on index path', async () => {
-        const result = ['/a/1', '/a/2', '/a/2/1'];
-        const branch = getRoutes('/a', routerConfig());
+		const result = ['/a/1', '/a/2', '/a/2/1'];
+		const routeTree = buildRouteTree(routerConfig());
+        const branch = getRoutes('/a', routeTree);
 
         expect(branch.length).toEqual(2);
 
@@ -126,8 +107,9 @@ describe('routeConfig getRoutes', () => {
     });
 
     test('getRoutes based on index path', async () => {
-        const result = ['/a', '/a/1', '/a/2', '/a/2/1', '/ab/2/1', '/b/1', '/b/login/register'];
-        const branch = getRoutes('', routerConfig());
+		const result = ['/a', '/a/1', '/a/2', '/a/2/1', '/ab/2/1', '/b/1', '/b/login/register'];
+		const routeTree = buildRouteTree(routerConfig());
+        const branch = getRoutes('', routeTree);
         // expect().map(item => item.path)).toEqual(result);
 
         expect(branch.length).toEqual(1);
@@ -137,14 +119,15 @@ describe('routeConfig getRoutes', () => {
         expect(branch[0].route.routes[0].routes[1]).toEqual(expect.objectContaining({path: '/a/2'}));
         expect(branch[0].route.routes[0].routes[1].routes[0]).toEqual(expect.objectContaining({path: '/a/2/1'}));
         expect(branch[0].route.routes[1]).toEqual(expect.objectContaining({path: '/ab/2/1'}));
-        expect(branch[0].route.routes[3]).toEqual(expect.objectContaining({path: '/b/1'}));
-        expect(branch[0].route.routes[4]).toEqual(expect.objectContaining({path: '/b/login/register'}));
+        expect(branch[0].route.routes[2]).toEqual(expect.objectContaining({path: '/b/1'}));
+        expect(branch[0].route.routes[3]).toEqual(expect.objectContaining({path: '/b/login/register'}));
     });
 
     test('getRoutes with `@`in namespace', async () => {
         const result = ['@namespace/a', '@namespace/a/1',
-              '@namespace/a/2', '@namespace/a/2/1', '@namespace/ab/2/1', '@namespace/b/1', '@namespace/b/login/register'];
-        const branch = getRoutes('@namespace', routerConfig('@namespace'));
+			  '@namespace/a/2', '@namespace/a/2/1', '@namespace/ab/2/1', '@namespace/b/1', '@namespace/b/login/register'];
+		const routeTree = buildRouteTree(routerConfig('@namespace'));
+        const branch = getRoutes('@namespace', routeTree);
 
         expect(branch.length).toEqual(1);
 
@@ -152,7 +135,7 @@ describe('routeConfig getRoutes', () => {
         expect(branch[0].route.routes[0].routes[0]).toEqual(expect.objectContaining({path: '@namespace/a/1'}));
         expect(branch[0].route.routes[0].routes[1]).toEqual(expect.objectContaining({path: '@namespace/a/2'}));
         expect(branch[0].route.routes[0].routes[1].routes[0]).toEqual(expect.objectContaining({path: '@namespace/a/2/1'}));
-        expect(branch[0].route.routes[1]).toEqual(expect.objectContaining({path: '@namespace/ab/2/1'}));
+        expect(branch[0].route.routes[2]).toEqual(expect.objectContaining({path: '@namespace/ab/2/1'}));
         expect(branch[0].route.routes[3]).toEqual(expect.objectContaining({path: '@namespace/b/1'}));
         expect(branch[0].route.routes[4]).toEqual(expect.objectContaining({path: '@namespace/b/login/register'}));
     });
@@ -161,7 +144,8 @@ describe('routeConfig getRoutes', () => {
 describe('connector configuredRoutes', () => {
 
     test('getRoutes based on index path', async () => {
-        const connector = new Feature({ routeConfig: routerConfig() });
+		const routeTree = buildRouteTree(routerConfig());
+        const connector = new Feature({ routeConfig: routeTree });
         const result = [
              { path: '/a', exact: true },
              { path: '/a/1', exact: true },
@@ -177,13 +161,13 @@ describe('connector configuredRoutes', () => {
         expect(connector.configuredRoutes[0].route.routes[0].routes[1]).toMatchObject(result[2]);
         expect(connector.configuredRoutes[0].route.routes[0].routes[1].routes[0]).toMatchObject(result[3]);
         expect(connector.configuredRoutes[0].route.routes[1]).toMatchObject(result[4]);
-        expect(connector.configuredRoutes[0].route.routes[3]).toMatchObject(result[5]);
-        expect(connector.configuredRoutes[0].route.routes[4]).toMatchObject(result[6]);
+        expect(connector.configuredRoutes[0].route.routes[2]).toMatchObject(result[5]);
+        expect(connector.configuredRoutes[0].route.routes[3]).toMatchObject(result[6]);
     });
 
     test('getRoutes based without any namespace', async () => {
-
-        const connector = new Feature({ routeConfig: routerConfig('@namespace') });
+		const routeTree = buildRouteTree(routerConfig('@namespace'));
+        const connector = new Feature({ routeConfig: routeTree });
         const result = [{ 'exact': true, 'path': '@namespace/a/1' }];
 
         expect(connector.configuredRoutes[0].route.routes[0].routes[0]).toMatchObject(result[0]);
@@ -205,14 +189,15 @@ describe('connector routes', () => {
     });
 
     test('merge static routes and configurable routes', async () => {
-        const connector = new Feature({ routeConfig: routerConfig() }, new Feature(staticRoutes));
+		const routeTree = buildRouteTree(routerConfig());
+        const connector = new Feature({ routeConfig: routeTree }, new Feature(staticRoutes));
 
         expect(connector.routes).toMatchSnapshot();
     });
 
-
     test('check configurable routes', async () => {
-        const connector = new Feature({ routeConfig: routerConfig() });
+		const routeTree = buildRouteTree(routerConfig());
+        const connector = new Feature({ routeConfig: routeTree });
 
         expect(connector.routes).toMatchSnapshot();
     });

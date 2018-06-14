@@ -3,6 +3,7 @@ import Route from 'react-router/Route';
 import * as Loadable from 'react-loadable';
 import { renderRoutes, matchRoutes } from 'react-router-config';
 import { IRouteData } from '../interfaces';
+import RouteTree from './routeTree';
 
 export const dynamicWrapper = (component: () => any, loading?: any) => Loadable({
     loader: component,
@@ -103,4 +104,34 @@ export function renderRoutes(routes, extraProps = {}) {
 export function getRoutes(path: string, routerData: Array<IRouteData> | IRouteData) {
     const routes = matchRoutes(routerData, path);
     return routes;
+}
+
+export function buildRouteTree(routes) {
+
+	const routeTree = new RouteTree({
+		path: '/',
+		routes: [],
+	});
+
+	for (const [path, value] of Object.entries(routes)) {
+		const routeArray = path.split('/');
+
+		const depth = (path.match(/\//g) || []).length;
+		let parentPath;
+
+		for (let idx = depth; idx >= 0; idx -= 1) {
+			parentPath = routeArray.slice(0, idx).join('/');
+			parentPath = parentPath === '' ? '/' : parentPath;
+			routeTree.addNode(path, { ...value,
+				exact: true,
+			}, parentPath);
+
+			if (routeTree.addStatus) break;
+		}
+	}
+
+	// to confront to the rect-router-config input json structure
+	delete routeTree.root.path;
+
+	return [routeTree.root];
 }

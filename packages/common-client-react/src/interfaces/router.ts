@@ -1,7 +1,7 @@
 import { LoadingComponentProps } from 'react-loadable';
 
 export interface IRouteData {
-    component: () => any | any;
+    component?: () => any | any;
     path?: String;
     routes?: Array<IRouteData> | IRouteData;
     exact?: boolean;

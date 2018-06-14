@@ -2,41 +2,43 @@
 
 exports[`connector routes check configurable routes 1`] = `
 Array [
-  <Route
-    component={[Function]}
-    exact={false}
-    path="/a"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/a/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={false}
-    path="/a/2"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/a/2/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/ab/2/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/b/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/b/login/register"
-  />,
+  Array [
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/a"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/a/1"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/a/2"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/a/2/1"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/ab/2/1"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/b/1"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/b/login/register"
+    />,
+  ],
 ]
 `;
 
@@ -52,56 +54,7 @@ Array [
     exact={true}
     path="/static2"
   />,
-]
-`;
-
-exports[`connector routes getRoutes based on index path 1`] = `
-Array [
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/static1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/static2"
-  />,
-  <Route
-    component={[Function]}
-    exact={false}
-    path="/a"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/a/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={false}
-    path="/a/2"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/a/2/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/ab/2/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/b/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/b/login/register"
-  />,
+  Array [],
 ]
 `;
 
@@ -117,41 +70,43 @@ Array [
     exact={true}
     path="/static2"
   />,
-  <Route
-    component={[Function]}
-    exact={false}
-    path="/a"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/a/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={false}
-    path="/a/2"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/a/2/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/ab/2/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/b/1"
-  />,
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/b/login/register"
-  />,
+  Array [
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/a"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/a/1"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/a/2"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/a/2/1"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/ab/2/1"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/b/1"
+    />,
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/b/login/register"
+    />,
+  ],
 ]
 `;
 

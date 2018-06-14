@@ -1,14 +1,14 @@
 import * as React from 'react';
+import Route from 'react-router/Route';
 import * as Loadable from 'react-loadable';
+import { renderRoutes, matchRoutes } from 'react-router-config';
 import { IRouteData } from '../interfaces';
+import RouteTree from './routeTree';
 
 export const dynamicWrapper = (component: () => any, loading?: any) => Loadable({
     loader: component,
     loading: loading || <div> Loading...</div>,
 });
-
-
-
 
 export function getRelation(str1: string, str2: string) {
     if (str1 === str2) {
@@ -38,6 +38,21 @@ export function getRenderArr(routes: string[]) {
     return renderArr;
 }
 
+export function renderRoutes(routes, extraProps = {}) {
+    return routes ? (
+        routes.map((route, i) => (
+            <Route
+                component={
+                    props => (
+				        <route.component {...props} {...extraProps} route={route} />
+			        )}
+			    exact={route.exact}
+			    path={route.path}
+			/>
+		))
+	) : null;
+}
+
 /**
  * Provides the routes based on the index search path.
  * For example, for routerData = {
@@ -60,28 +75,63 @@ export function getRenderArr(routes: string[]) {
  * @param path
  * @param routerData
  */
-export function getRoutes(path: string, routerData: IRouteData) {
-    if (path[path.length - 1] !== '/') {
-        path += '/'; //  Add a '/' to exclude incomplete paths
-    }
-    let routes = Object.keys(routerData).filter(routePath => {
-        return routePath.indexOf(path) === 0 && routePath !== path;
-    });
-    // Replace path to '' eg. path='user' /user/name => name.
-    routes = routes.map(item => item.replace(path, ''));
-    // Get the route to be rendered to remove the deep rendering.
-    // const renderArr = getRenderArr(routes);
-    // Conversion and stitching parameters.
-    const renderRoutes = routes.map(item => {
-        const exact = !routes.some(route => route !== item && getRelation(route, item) === 1);
-        const routeObject = { ...routerData[`${path}${item}`] };
-        return {
-            ...routeObject,
-            key: `${path}${item}`,
-            path: `${path}${item}`,
-            // component: dynamicWrapper(routeObject.component, routeObject.loading),
-            exact,
-        };
-    });
-    return renderRoutes;
+// export function getRoutes(path: string, routerData: IRouteData) {
+//     if (path[path.length - 1] !== '/') {
+//         path += '/'; //  Add a '/' to exclude incomplete paths
+//     }
+//     let routes = Object.keys(routerData).filter(routePath => {
+//         return routePath.indexOf(path) === 0 && routePath !== path;
+//     });
+//     // Replace path to '' eg. path='user' /user/name => name.
+//     routes = routes.map(item => item.replace(path, ''));
+//     // Get the route to be rendered to remove the deep rendering.
+//     // const renderArr = getRenderArr(routes);
+//     // Conversion and stitching parameters.
+//     const renderRoutes = routes.map(item => {
+//         const exact = !routes.some(route => route !== item && getRelation(route, item) === 1);
+//         const routeObject = { ...routerData[`${path}${item}`] };
+//         return {
+//             ...routeObject,
+//             key: `${path}${item}`,
+//             path: `${path}${item}`,
+//             // component: dynamicWrapper(routeObject.component, routeObject.loading),
+//             exact,
+//         };
+//     });
+//     return renderRoutes;
+// }
+
+export function getRoutes(path: string, routerData: Array<IRouteData> | IRouteData) {
+    const routes = matchRoutes(routerData, path);
+    return routes;
+}
+
+export function buildRouteTree(routes) {
+
+	const routeTree = new RouteTree({
+		path: '/',
+		routes: [],
+	});
+
+	for (const [path, value] of Object.entries(routes)) {
+		const routeArray = path.split('/');
+
+		const depth = (path.match(/\//g) || []).length;
+		let parentPath;
+
+		for (let idx = depth; idx >= 0; idx -= 1) {
+			parentPath = routeArray.slice(0, idx).join('/');
+			parentPath = parentPath === '' ? '/' : parentPath;
+			routeTree.addNode(path, { ...value,
+				exact: true,
+			}, parentPath);
+
+			if (routeTree.addStatus) break;
+		}
+	}
+
+	// to confront to the rect-router-config input json structure
+	delete routeTree.root.path;
+
+	return [routeTree.root];
 }

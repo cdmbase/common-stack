@@ -6,5 +6,6 @@ const settings: IConsoleLoggerSettings = {
     level: process.env.LOG_LEVEL as LoggerLevel  || 'trace',
 };
 
-export const logger: Logger = ConsoleLogger.create('@common-stack-server', settings);
+const appName = process.env.APP_NAME || 'CDMBASE_APP';
 
+export const logger: Logger = ConsoleLogger.create(appName, settings);

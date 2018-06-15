@@ -19,6 +19,18 @@ Object {
         },
         Object {
           "component": [Function],
+          "exact": true,
+          "path": "/a/:b/1",
+          "routes": Array [],
+        },
+        Object {
+          "component": [Function],
+          "exact": true,
+          "path": "/a/:c/1",
+          "routes": Array [],
+        },
+        Object {
+          "component": [Function],
           "exact": false,
           "path": "/a/2",
           "routes": Array [
@@ -66,6 +78,63 @@ exports[`connector routes check configurable routes 1`] = `
 `;
 
 exports[`connector routes check static routes 1`] = `
+<Switch>
+  <Route
+    exact={true}
+    path="/static1"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={true}
+    path="/static2"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={false}
+    path="/"
+    render={[Function]}
+    strict={undefined}
+  />
+</Switch>
+`;
+
+exports[`connector routes connector router check configurable routes 1`] = `
+<Switch>
+  <Route
+    exact={false}
+    path="/"
+    render={[Function]}
+    strict={undefined}
+  />
+</Switch>
+`;
+
+exports[`connector routes connector router check static routes 1`] = `
+<Switch>
+  <Route
+    exact={true}
+    path="/static1"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={true}
+    path="/static2"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={false}
+    path="/"
+    render={[Function]}
+    strict={undefined}
+  />
+</Switch>
+`;
+
+exports[`connector routes connector router merge static routes and configurable routes 1`] = `
 <Switch>
   <Route
     exact={true}
@@ -153,6 +222,18 @@ Object {
     },
     Object {
       "component": [Function],
+      "exact": true,
+      "path": "/a/:b/1",
+      "routes": Array [],
+    },
+    Object {
+      "component": [Function],
+      "exact": true,
+      "path": "/a/:c/1",
+      "routes": Array [],
+    },
+    Object {
+      "component": [Function],
       "exact": false,
       "path": "/a/2",
       "routes": Array [
@@ -189,6 +270,18 @@ Object {
           "component": [Function],
           "exact": true,
           "path": "/a/1",
+          "routes": Array [],
+        },
+        Object {
+          "component": [Function],
+          "exact": true,
+          "path": "/a/:b/1",
+          "routes": Array [],
+        },
+        Object {
+          "component": [Function],
+          "exact": true,
+          "path": "/a/:c/1",
           "routes": Array [],
         },
         Object {

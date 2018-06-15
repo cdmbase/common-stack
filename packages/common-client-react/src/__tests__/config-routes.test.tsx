@@ -49,7 +49,7 @@ test('loading success', async () => {
     loading: MyLoadingComponent,
   });
 
-  let component1 = renderer.create(<LoadableMyComponent prop="foo"/>);
+  let component1 = renderer.create(<LoadableMyComponent prop="foo" />);
 
   expect(component1.toJSON()).toMatchSnapshot(); // initial
   await waitFor(200);
@@ -57,7 +57,7 @@ test('loading success', async () => {
   await waitFor(200);
   expect(component1.toJSON()).toMatchSnapshot(); // loaded
 
-  let component2 = renderer.create(<LoadableMyComponent prop="bar"/>);
+  let component2 = renderer.create(<LoadableMyComponent prop="bar" />);
 
   expect(component2.toJSON()).toMatchSnapshot(); // reload
 });
@@ -69,7 +69,13 @@ const routerConfig = (namespace = '') => ({
   ['/a/1']: {
     component: () => MyComponent,
   },
+  ['/a/:b/1']: {
+    component: () => MyComponent,
+  },
   [namespace + '/a/1']: {
+    component: () => MyComponent,
+  },
+  [namespace + '/a/:c/1']: {
     component: () => MyComponent,
   },
   [namespace + '/a/2']: {
@@ -99,8 +105,9 @@ describe('routeConfig getRoutes', () => {
       root: true,
       routes:
         [{ path: '/a/1', exact: true, routes: [] },
-          { path: '/a/2', exact: false, routes: [{ 'exact': true, 'path': '/a/2/1', 'routes': [] }] },
-          { path: '/ab/2/1', exact: true, routes: [] }],
+        { path: '/a/:b/1', exact: true, routes: [] },
+        { path: '/a/2', exact: false, routes: [{ 'exact': true, 'path': '/a/2/1', 'routes': [] }] },
+        { path: '/ab/2/1', exact: true, routes: [] }],
     };
 
     const routes = getRoutes('/a', routerConfig());
@@ -120,6 +127,8 @@ describe('routeConfig getRoutes', () => {
               path: '/a/1',
               routes: [],
             },
+            { path: '/a/:b/1', exact: true, routes: [] },
+            { path: '/a/:c/1', exact: true, routes: [] },
             {
               exact: false,
               path: '/a/2',
@@ -133,9 +142,9 @@ describe('routeConfig getRoutes', () => {
             },
           ],
         },
-          { path: '/ab/2/1', exact: true, routes: [] },
-          { path: '/b/1', exact: true, routes: [] },
-          { path: '/b/login/register', exact: true, routes: [] }],
+        { path: '/ab/2/1', exact: true, routes: [] },
+        { path: '/b/1', exact: true, routes: [] },
+        { path: '/b/login/register', exact: true, routes: [] }],
     };
     const routes = getRoutes('/', routerConfig());
     expect(routes).toMatchSnapshot();
@@ -161,7 +170,9 @@ describe('connector configuredRoutes', () => {
       exact: false, path: '/', root: true,
       routes: [{
         exact: false, path: '/a',
-        routes: [{ exact: true, path: '/a/1', routes: [] },
+        routes: [
+          { exact: true, path: '/a/1', routes: [] },
+          { path: '/a/:b/1', exact: true, routes: [] },
           {
             exact: false, path: '/a/2',
             routes: [
@@ -169,9 +180,9 @@ describe('connector configuredRoutes', () => {
             ],
           }],
       },
-        { exact: true, path: '/ab/2/1', routes: [] },
-        { exact: true, path: '/b/1', routes: [] },
-        { exact: true, path: '/b/login/register', routes: [] }],
+      { exact: true, path: '/ab/2/1', routes: [] },
+      { exact: true, path: '/b/1', routes: [] },
+      { exact: true, path: '/b/login/register', routes: [] }],
     };
 
 
@@ -197,8 +208,8 @@ describe('connector configuredRoutes', () => {
 describe('connector routes', () => {
   const staticRoutes = {
     route: [
-      <Route key={'static1'} exact={true} path="/static1" component={MyComponent}/>,
-      <Route key={'static2'} exact={true} path="/static2" component={MyComponent}/>,
+      <Route key={'static1'} exact={true} path="/static1" component={MyComponent} />,
+      <Route key={'static2'} exact={true} path="/static2" component={MyComponent} />,
     ],
   };
 
@@ -219,6 +230,36 @@ describe('connector routes', () => {
     const connector = new Feature({ routeConfig: routerConfig() });
 
     expect(connector.routes).toMatchSnapshot();
+  });
+
+
+  describe('connector router', () => {
+    const staticRoutes = {
+      route: [
+        <Route key={'static1'} exact={true} path="/static1" component={MyComponent} />,
+        <Route key={'static2'} exact={true} path="/static2" component={MyComponent} />,
+      ],
+    };
+
+    test('check static routes', async () => {
+      const connector = new Feature(staticRoutes);
+
+      expect(connector.routes).toMatchSnapshot();
+    });
+
+    test('merge static routes and configurable routes', async () => {
+      const connector = new Feature({ routeConfig: routerConfig() }, new Feature(staticRoutes));
+
+      expect(connector.routes).toMatchSnapshot();
+    });
+
+
+    test('check configurable routes', async () => {
+      const connector = new Feature({ routeConfig: routerConfig() });
+
+      expect(connector.routes).toMatchSnapshot();
+    });
+
   });
 
 });

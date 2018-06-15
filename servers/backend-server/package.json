@@ -1,5 +1,5 @@
 {
-	"name": "sample-stack-backend-server",
+	"name": "common-stack-backend-server",
 	"version": "0.0.1",
 	"description": "Starter kit for apollo server using webpack and typescript",
 	"main": "dist/index.js",

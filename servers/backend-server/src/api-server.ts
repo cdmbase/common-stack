@@ -15,12 +15,8 @@ import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { errorMiddleware } from './middleware/error';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { SETTINGS } from './config';
-<<<<<<< HEAD:experimental/servers/backend-server/src/api-server.ts
-import { logger } from '@common-stack/utils';
-=======
 import { logger } from '@common-stack/utils';
 import modules from './modules';
->>>>>>> f4ab7cd01d19552faea5da1c006ed4e0322af3bd:servers/backend-server/src/api-server.ts
 
 let server;
 const app = express();

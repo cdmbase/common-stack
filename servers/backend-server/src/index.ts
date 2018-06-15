@@ -1,12 +1,7 @@
 ///<reference types="webpack-env" />
 process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
 import 'reflect-metadata';
-<<<<<<< HEAD:experimental/servers/backend-server/src/index.ts
-
 import { logger } from '@common-stack/utils';
-=======
-import { logger } from '@common-stack/utils';
->>>>>>> f4ab7cd01d19552faea5da1c006ed4e0322af3bd:servers/backend-server/src/index.ts
 import './api-server';
 
 process.on('uncaughtException', (ex) => {

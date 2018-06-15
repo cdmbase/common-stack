@@ -59,25 +59,7 @@ Array [
   <Switch>
     <Route
       exact={false}
-      path="/a"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/ab/2/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/b/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/b/login/register"
+      path="/"
       render={[Function]}
       strict={undefined}
     />
@@ -87,34 +69,43 @@ Array [
 
 exports[`connector routes check static routes 1`] = `
 Array [
-  <Switch />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static2"
+  />,
+  <Switch>
+    <Route
+      exact={false}
+      path="/"
+      render={[Function]}
+      strict={undefined}
+    />
+  </Switch>,
 ]
 `;
 
 exports[`connector routes merge static routes and configurable routes 1`] = `
 Array [
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static1"
+  />,
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static2"
+  />,
   <Switch>
     <Route
       exact={false}
-      path="/a"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/ab/2/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/b/1"
-      render={[Function]}
-      strict={undefined}
-    />
-    <Route
-      exact={true}
-      path="/b/login/register"
+      path="/"
       render={[Function]}
       strict={undefined}
     />

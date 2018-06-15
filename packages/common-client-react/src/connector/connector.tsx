@@ -13,8 +13,10 @@ export class Feature extends AbstractFeature implements IFeature {
 
         console.log('routes', configuredRoutes);
         return [
-
-            renderRoutes(configuredRoutes.routes),
+            ...this.route.map((component: React.ReactElement<any>, idx: number) =>
+                React.cloneElement(component, { key: idx + this.route.length }),
+            ),
+            renderRoutes([configuredRoutes]),
         ];
     }
 

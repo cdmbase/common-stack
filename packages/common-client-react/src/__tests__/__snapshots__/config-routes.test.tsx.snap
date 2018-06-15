@@ -55,62 +55,60 @@ Object {
 `;
 
 exports[`connector routes check configurable routes 1`] = `
-Array [
-  <Switch>
-    <Route
-      exact={false}
-      path="/"
-      render={[Function]}
-      strict={undefined}
-    />
-  </Switch>,
-]
+<Switch>
+  <Route
+    exact={false}
+    path="/"
+    render={[Function]}
+    strict={undefined}
+  />
+</Switch>
 `;
 
 exports[`connector routes check static routes 1`] = `
-Array [
+<Switch>
   <Route
-    component={[Function]}
     exact={true}
     path="/static1"
-  />,
+    render={[Function]}
+    strict={undefined}
+  />
   <Route
-    component={[Function]}
     exact={true}
     path="/static2"
-  />,
-  <Switch>
-    <Route
-      exact={false}
-      path="/"
-      render={[Function]}
-      strict={undefined}
-    />
-  </Switch>,
-]
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={false}
+    path="/"
+    render={[Function]}
+    strict={undefined}
+  />
+</Switch>
 `;
 
 exports[`connector routes merge static routes and configurable routes 1`] = `
-Array [
+<Switch>
   <Route
-    component={[Function]}
     exact={true}
     path="/static1"
-  />,
+    render={[Function]}
+    strict={undefined}
+  />
   <Route
-    component={[Function]}
     exact={true}
     path="/static2"
-  />,
-  <Switch>
-    <Route
-      exact={false}
-      path="/"
-      render={[Function]}
-      strict={undefined}
-    />
-  </Switch>,
-]
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={false}
+    path="/"
+    render={[Function]}
+    strict={undefined}
+  />
+</Switch>
 `;
 
 exports[`loading success 1`] = `

@@ -2,15 +2,16 @@ var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-var libPath = require('../../tools/webpack-util');
 
 var webpack_opts = {
+  mode: 'development',
   entry: {
     index: './src/index.ts',
   },
   target: 'node',
   output: {
-    filename: libPath("[name].js"),
+    path: path.join(__dirname, 'lib'),
+    filename: "[name].js",
     library: '@common-stack/server-core',
     libraryTarget: "commonjs2"
   },

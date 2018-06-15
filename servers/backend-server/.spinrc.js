@@ -13,7 +13,7 @@ const config = {
             defines: {
                 __SERVER__: true
             },
-            enabled: true
+            enabled: false
         },
         test: {
             stack: ['server'],

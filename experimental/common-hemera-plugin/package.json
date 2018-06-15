@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD:experimental/common-hemera-plugin/package.json
-  "name": "@common-stack/hemera-counter",
-=======
   "name": "@common-stack/hemera-plugin",
->>>>>>> f4ab7cd01d19552faea5da1c006ed4e0322af3bd:packages/sample-hemera-plugin/package.json
   "version": "0.0.1",
   "description": "This is Container Configuration Service hemera plugin",
   "main": "lib/index.js",
@@ -47,13 +43,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-<<<<<<< HEAD:experimental/common-hemera-plugin/package.json
-    "@common-stack/utils": "*"
-=======
     "@common-stack/core": "*",
     "@common-stack/server-core": "*",
     "@common-stack/utils": "*"
->>>>>>> f4ab7cd01d19552faea5da1c006ed4e0322af3bd:packages/sample-hemera-plugin/package.json
   },
   "peerDependencies": {
     "nats-hemera": "1.x",

@@ -6,10 +6,6 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
-import {
-    reducers,
-    Store as StoreState,
-} from '@common-stack/client-redux';
 import modules from '../modules';
 
 export const history = require('./router-history');
@@ -31,9 +27,8 @@ const composeEnhancers: any = (
     typeof window === 'object' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-export const storeReducer = combineReducers<StoreState.Counter | StoreState.Sample>({
+export const storeReducer = combineReducers<any>({
     router: routerReducer,
-    ...reducers,
     ...modules.reducers,
 });
 /**
@@ -41,10 +36,10 @@ export const storeReducer = combineReducers<StoreState.Counter | StoreState.Samp
  * `combineReducers`
  */
 export const createReduxStore = () => {
-    const store: Store<StoreState.Counter | StoreState.Sample> =
-        createStore<StoreState.Counter | StoreState.Sample, any, any, any>(
+    const store: Store<any> =
+        createStore(
             storeReducer,
-            {} as StoreState.Sample,
+            {},
             composeEnhancers(...enhancers()),
         );
     return store;

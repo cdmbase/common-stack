@@ -12,14 +12,14 @@ const config = {
             tsLoaderOptions: {
                 configFileName: "./tsconfig.json"
             },
-            webpackDevPort: 3000,
+            webpackDevPort: 3030,
             openBrowser: true,
             defines: {
                 __CLIENT__: true,
             },
             htmlTemplate: "../../tools/html-plugin-template.ejs",
             // Wait for backend to start prior to letting webpack load frontend page
-            waitOn: ['tcp:localhost:8080'],
+            // waitOn: ['tcp:localhost:8080'],
             enabled: true
         },
         server: {

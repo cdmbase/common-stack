@@ -1,6 +1,6 @@
 {
-	"name": "common-stack-backend-server",
-	"version": "0.0.10",
+	"name": "sample-stack-backend-server",
+	"version": "0.0.1",
 	"description": "Starter kit for apollo server using webpack and typescript",
 	"main": "dist/index.js",
 	"private": true,
@@ -51,27 +51,12 @@
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
 		"@cdm-logger/server": "^3.0.2",
-<<<<<<< HEAD:experimental/servers/backend-server/package.json
 		"@common-stack/core": "*",
-		"@common-stack/graphql-gql": "*",
-		"@common-stack/graphql-schema": "*",
 		"@common-stack/server-core": "*",
-		"@common-stack/store": "*",
-		"@common-stack/utils": "*",
-		"apollo-link": "^1.0.7",
-		"apollo-logger": "^0.1.0",
-=======
-		"@common-stack/core": "*",
-		"@common-stack/graphql-gql": "*",
-		"@common-stack/graphql-schema": "*",
-		"@common-stack/server-core": "*",
-		"@common-stack/store": "*",
-		"@common-stack/microservice-nats": "*",
 		"@common-stack/utils": "*",
 		"@common-stack/counter": "*",
 		"apollo-link": "^1.2.2",
 		"apollo-logger": "^0.3.0",
->>>>>>> f4ab7cd01d19552faea5da1c006ed4e0322af3bd:servers/backend-server/package.json
 		"app-root-path": "^2.0.1",
 		"body-parser": "^1.18.3",
 		"cors": "^2.8.4",

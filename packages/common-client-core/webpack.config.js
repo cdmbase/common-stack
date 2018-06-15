@@ -4,15 +4,16 @@ var path = require('path');
 var fs = require('fs');
 
 
-var webpack_opts = {
+
+var webpack_opts = {   
   mode: 'development',
   entry: './src/index.ts',
   target: 'node',
   output: {
     path: path.join(__dirname, 'lib'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2',
-    library: '@common-stack/client-core',
+    libraryTarget: "commonjs2",
+    library: '@common-stack/client-core'
   },
   resolve: {
     extensions: ['.ts', '.js'],

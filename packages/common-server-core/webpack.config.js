@@ -3,7 +3,8 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 
-var webpack_opts = {
+
+var webpack_opts = {   
   mode: 'development',
   entry: {
     index: './src/index.ts',

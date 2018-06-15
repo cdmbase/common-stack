@@ -5,64 +5,73 @@ import { getRoutes } from '../utils';
 import { renderRoutes } from 'react-router-config';
 
 export class Feature extends AbstractFeature implements IFeature {
-    /**
-     * Get the routes
-     */
-    get routes() {
-        const configuredRoutes = this.getConfiguredRoutes();
+  /**
+   * Get the routes
+   */
+  get routes() {
+    const configuredRoutes = this.getConfiguredRoutes();
 
-        console.log('routes', configuredRoutes);
-        return [
 
-            renderRoutes(configuredRoutes.routes),
-        ];
+    const mergedRoutes = [
+      ...this.route.map((component: React.ReactElement<any>, idx: number) => {
+          const element = React.cloneElement(component, { key: idx + this.route.length });
+          return {
+            path: component.props.path,
+            exact: component.props.exact,
+            component: element,
+          };
+        },
+      ),
+      configuredRoutes,
+    ];
+    return renderRoutes(mergedRoutes);
+  }
+
+  /**
+   * get configured routes.
+   * Note: It overwrites the any duplicate key with latest loaded key.
+   * TODO: Find a way to warn when there are duplicate keys.
+   */
+  public getConfiguredRoutes(searchRoot = '/') {
+    const routes = Object.assign({}, ...this.routeConfig);
+    return getRoutes(searchRoot, { ...routes });
+  }
+
+  get navItems() {
+    return this.navItem.map((component: React.ReactElement<any>, idx: number) =>
+      React.cloneElement(component, {
+        key: component.key ? component.key : idx + this.navItem.length
+      })
+    );
+  }
+
+  get navItemsRight() {
+    return this.navItemRight.map((component: React.ReactElement<any>, idx: number) =>
+      React.cloneElement(component, {
+        key: component.key ? component.key : idx + this.navItem.length
+      })
+    );
+  }
+
+  public getWrappedRoot(root: React.ReactNode, req?: any): React.ReactNode {
+    let nestedRoot = root;
+    for (const componentFactory of this.rootComponentFactory) {
+      nestedRoot = React.cloneElement(componentFactory(req), {}, nestedRoot);
     }
+    return nestedRoot;
+  }
 
-    /**
-     * get configured routes.
-     * Note: It overwrites the any duplicate key with latest loaded key.
-     * TODO: Find a way to warn when there are duplicate keys.
-     */
-    public getConfiguredRoutes(searchRoot = '/') {
-        const routes = Object.assign({}, ...this.routeConfig);
-        return getRoutes(searchRoot, { ...routes });
+  public getDataRoot(root) {
+    let nestedRoot = root;
+    for (const component of this.dataRootComponent) {
+      nestedRoot = React.createElement(component, {}, nestedRoot);
     }
+    return nestedRoot;
+  }
 
-    get navItems() {
-        return this.navItem.map((component: React.ReactElement<any>, idx: number) =>
-            React.cloneElement(component, {
-                key: component.key ? component.key : idx + this.navItem.length,
-            }),
-        );
+  public registerLanguages(monaco) {
+    for (const func of this.languagesFuncs) {
+      func(monaco);
     }
-
-    get navItemsRight() {
-        return this.navItemRight.map((component: React.ReactElement<any>, idx: number) =>
-            React.cloneElement(component, {
-                key: component.key ? component.key : idx + this.navItem.length,
-            }),
-        );
-    }
-
-    public getWrappedRoot(root: React.ReactNode, req?: any): React.ReactNode {
-        let nestedRoot = root;
-        for (const componentFactory of this.rootComponentFactory) {
-            nestedRoot = React.cloneElement(componentFactory(req), {}, nestedRoot);
-        }
-        return nestedRoot;
-    }
-
-    public getDataRoot(root) {
-        let nestedRoot = root;
-        for (const component of this.dataRootComponent) {
-            nestedRoot = React.createElement(component, {}, nestedRoot);
-        }
-        return nestedRoot;
-    }
-
-    public registerLanguages(monaco) {
-        for (const func of this.languagesFuncs) {
-            func(monaco);
-        }
-    }
+  }
 }

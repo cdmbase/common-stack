@@ -204,40 +204,40 @@ describe('getRoutes utility with basic routes', () => {
 
       const genRoutes = [
         {
-            ['/ghost']: { component: MyComponent },
-            ['/pepper']: { component: MyComponent, exact: false },
-            ['/pepper/:type']: { component: MyComponent,  exact: false},
-            ['/pepper/:type/scoville']: { component: MyComponent, exact: false },
+          ['/ghost']: { component: MyComponent },
+          ['/pepper']: { component: MyComponent, exact: false },
+          ['/pepper/:type']: { component: MyComponent, exact: false },
+          ['/pepper/:type/scoville']: { component: MyComponent, exact: false },
         },
-    ];
-    const result = [
+      ];
+      const result = [
         {
-            path: '/ghost',
-            component: MyComponent,
+          path: '/ghost',
+          component: MyComponent,
         },
         {
-            path: '/pepper',
-            component: MyComponent,
-            exact: false,
-            routes: [
+          path: '/pepper',
+          component: MyComponent,
+          exact: false,
+          routes: [
+            {
+              path: '/pepper/:type',
+              component: MyComponent,
+              exact: false,
+              routes: [
                 {
-                    path: '/pepper/:type',
-                    component: MyComponent,
-                    exact: false,
-                    routes: [
-                        {
-                            path: '/pepper/:type/scoville',
-                            component: MyComponent,
-                            exact: false,
-                        },
-                    ],
+                  path: '/pepper/:type/scoville',
+                  component: MyComponent,
+                  exact: false,
                 },
-            ],
+              ],
+            },
+          ],
         },
-    ];
-    const connector = new Feature({ routeConfig: genRoutes });
-    const connectorRoutes = connector.getConfiguredRoutes();
-    expect(connectorRoutes).toMatchObject(result);
+      ];
+      const connector = new Feature({ routeConfig: genRoutes });
+      const connectorRoutes = connector.getConfiguredRoutes();
+      expect(connectorRoutes).toMatchObject(result);
     })
   });
 
@@ -293,6 +293,12 @@ describe('connector getRoutes', () => {
       <Route key={'static2'} exact={true} path="/static2" component={MyComponent} />,
     ],
   };
+  const staticRoutes2 = {
+    route: [
+      <Route key={'static3'} exact={true} path="/static3" component={MyComponent} />,
+      <Route key={'static4'} exact={true} path="/static4" component={MyComponent} />,
+    ],
+  };
 
   test('with only static routes', async () => {
     const connector = new Feature(staticRoutes, FeatureWithRouterFactory);
@@ -312,6 +318,19 @@ describe('connector getRoutes', () => {
 
     expect(connector.getRoutes()).toMatchSnapshot();
   });
+
+  test('with multiple Features', async () => {
+    const connector = new Feature(
+      { routeConfig: routerConfig() },
+      new Feature(staticRoutes),
+      new Feature(staticRoutes2),
+      { routeConfig: routerConfig('/ac') },
+    );
+
+    const routes = connector.getRoutes();
+    expect(routes).toMatchSnapshot();
+  });
+
 
 
   // describe('connector router', () => {

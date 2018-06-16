@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { AbstractFeature, IFeature } from '@common-stack/client-core';
 import { getRoutes } from '../utils';
 // import { renderRoutes } from 'react-router-config';
@@ -10,16 +10,16 @@ export class Feature extends AbstractFeature implements IFeature {
    */
   public getRoutes(withRoot?: boolean, rootComponent?: any) {
     const configuredRoutes = this.getConfiguredRoutes();
-    const solidRoutes = this.route.map((component: React.ReactElement<any>, idx: number) => 
+    const solidRoutes = this.route.map((component: React.ReactElement<any>, idx: number) =>
       React.cloneElement(component, { key: idx + this.route.length }));
-      // return {
-      //   path: component.props.path,
-      //   exact: component.props.exact,
-      //   component: element,
-      // };
+    // return {
+    //   path: component.props.path,
+    //   exact: component.props.exact,
+    //   component: element,
+    // };
     // },
     // );
-    const renderedRoutes = this.renderRoutes(configuredRoutes, solidRoutes) || '';
+    const renderedRoutes = this.renderRoutes(configuredRoutes, solidRoutes);
     // console.log('solidRoutes', solidRoutes);
     // console.log('renderedRoutes', renderedRoutes.concat(solidRoutes));
     // const mergedRoutes = { ...solidRoutes, ...renderedRoutes};
@@ -28,22 +28,23 @@ export class Feature extends AbstractFeature implements IFeature {
   }
 
   private renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps = {}) =>
-  routes ? (
-    <Switch {...switchProps}>
-      {...solidRoutes}
-      {routes.map((route, i) => (
-        <Route
-          key={route.key || i}
-          path={route.path}
-          exact={route.exact}
-          strict={route.strict}
-          render={props => (
-            <route.component {...props} {...extraProps} route={route} />
-          )}
-        />
-      ))}
-    </Switch>
-  ) : null;
+    routes ? (
+      <Switch {...switchProps}>
+        {[
+          ...solidRoutes, ...routes.map((route, i) => (
+            <Route
+              key={route.key || i}
+              path={route.path}
+              exact={route.exact}
+              strict={route.strict}
+              render={props => (
+                <route.component {...props} {...extraProps} route={route} />
+              )}
+            />
+          )),
+        ]}
+      </Switch>
+    ) : null
 
   /**
    * get configured routes.

@@ -54,6 +54,79 @@ Array [
 ]
 `;
 
+exports[`connector getRoutes with multiple Features 1`] = `
+<Switch>
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static1"
+  />
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static2"
+  />
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static3"
+  />
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static4"
+  />
+  <Route
+    exact={false}
+    path="/a"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={true}
+    path="/ab/2/1"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={true}
+    path="/b/1"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={true}
+    path="/b/login/register"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={false}
+    path="/ac/a"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={true}
+    path="/ac/ab/2/1"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={true}
+    path="/ac/b/1"
+    render={[Function]}
+    strict={undefined}
+  />
+  <Route
+    exact={true}
+    path="/ac/b/login/register"
+    render={[Function]}
+    strict={undefined}
+  />
+</Switch>
+`;
+
 exports[`connector getRoutes with only configurable routes 1`] = `
 <Switch>
   <Route

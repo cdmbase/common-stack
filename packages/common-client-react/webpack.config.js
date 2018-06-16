@@ -49,13 +49,19 @@ var webpack_opts = {
       exclude: /node_modules/,
       loader: 'graphql-tag/loader'
     },
+    { test: /\.svg$/, loader: 'url-loader?limit=10000' },
     {
       test: /\.css$/,
-      loaders: 'css-loader'
-    },]
+      use: [
+        { loader: 'css-loader', options: { importLoaders: 1 } },
+      ]
+    },
+    ]
   },
   externals: [
-    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals({
+      modulesDir: "../../node_modules"
+    }),
     nodeExternals()
   ]
 };

@@ -70,11 +70,11 @@ export abstract class AbstractFeature implements IFeature {
         );
     }
 
-    get router() {
-        return this.routerFactory(this.routes);
+    public getRouter(withRoot?: boolean, rootComponent?: any) {
+        return this.routerFactory(this.getRoutes(withRoot, rootComponent));
     }
 
-    public abstract get routes();
+    public abstract getRoutes(withRoot?: boolean, rootComponent?: any);
 
     public abstract getConfiguredRoutes(routeSearch?: string);
 

@@ -3,7 +3,8 @@ var path = require('path');
 var fs = require('fs');
 var nodeExternals = require('webpack-node-externals');
 
-var webpack_opts = {
+
+var webpack_opts = {   
   mode: 'development',
   entry: './src/index.ts',
   target: 'node',

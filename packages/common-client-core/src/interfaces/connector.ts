@@ -48,9 +48,9 @@ export interface IFeature {
     readonly data: any[];
 
     // methods
-    readonly router;
+    readonly getRouter;
 
-    readonly routes;
+    readonly getRoutes;
     readonly getConfiguredRoutes;
     readonly navItems;
     readonly navItemsRight;

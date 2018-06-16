@@ -1,55 +1,73 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 import { AbstractFeature, IFeature } from '@common-stack/client-core';
 import { getRoutes } from '../utils';
-import { renderRoutes } from 'react-router-config';
+// import { renderRoutes } from 'react-router-config';
 
 export class Feature extends AbstractFeature implements IFeature {
   /**
    * Get the routes
    */
-  get routes() {
+  public getRoutes(withRoot?: boolean, rootComponent?: any) {
     const configuredRoutes = this.getConfiguredRoutes();
-
-
-    const mergedRoutes = [
-      ...this.route.map((component: React.ReactElement<any>, idx: number) => {
-          const element = React.cloneElement(component, { key: idx + this.route.length });
-          return {
-            path: component.props.path,
-            exact: component.props.exact,
-            component: element,
-          };
-        },
-      ),
-      configuredRoutes,
-    ];
-    return renderRoutes(mergedRoutes);
+    const solidRoutes = this.route.map((component: React.ReactElement<any>, idx: number) => 
+      React.cloneElement(component, { key: idx + this.route.length }));
+      // return {
+      //   path: component.props.path,
+      //   exact: component.props.exact,
+      //   component: element,
+      // };
+    // },
+    // );
+    const renderedRoutes = this.renderRoutes(configuredRoutes, solidRoutes) || '';
+    // console.log('solidRoutes', solidRoutes);
+    // console.log('renderedRoutes', renderedRoutes.concat(solidRoutes));
+    // const mergedRoutes = { ...solidRoutes, ...renderedRoutes};
+    // console.log('mergedRoutes', mergedRoutes);
+    return renderedRoutes;
   }
+
+  private renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps = {}) =>
+  routes ? (
+    <Switch {...switchProps}>
+      {...solidRoutes}
+      {routes.map((route, i) => (
+        <Route
+          key={route.key || i}
+          path={route.path}
+          exact={route.exact}
+          strict={route.strict}
+          render={props => (
+            <route.component {...props} {...extraProps} route={route} />
+          )}
+        />
+      ))}
+    </Switch>
+  ) : null;
 
   /**
    * get configured routes.
    * Note: It overwrites the any duplicate key with latest loaded key.
    * TODO: Find a way to warn when there are duplicate keys.
    */
-  public getConfiguredRoutes(searchRoot = '/') {
+  public getConfiguredRoutes(searchPath = '/') {
     const routes = Object.assign({}, ...this.routeConfig);
-    return getRoutes(searchRoot, { ...routes });
+    return getRoutes(searchPath, { ...routes });
   }
 
   get navItems() {
     return this.navItem.map((component: React.ReactElement<any>, idx: number) =>
       React.cloneElement(component, {
-        key: component.key ? component.key : idx + this.navItem.length
-      })
+        key: component.key ? component.key : idx + this.navItem.length,
+      }),
     );
   }
 
   get navItemsRight() {
     return this.navItemRight.map((component: React.ReactElement<any>, idx: number) =>
       React.cloneElement(component, {
-        key: component.key ? component.key : idx + this.navItem.length
-      })
+        key: component.key ? component.key : idx + this.navItem.length,
+      }),
     );
   }
 

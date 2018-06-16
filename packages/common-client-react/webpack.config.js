@@ -52,19 +52,14 @@ var webpack_opts = {
     { test: /\.svg$/, loader: 'url-loader?limit=10000' },
     {
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          { loader: 'css-loader', options: { importLoaders: 1 } },
-          { loader: 'postcss-loader', options: { config: { path: './src/postcss.config.js' } } }
-        ]
-      })
+      use: [
+        { loader: 'css-loader', options: { importLoaders: 1 } },
+      ]
     },
     ]
   },
   externals: [
     nodeExternals({
-      whitelist: [/.*\.css$/],
       modulesDir: "../../node_modules"
     }),
     nodeExternals()

@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 export default class TopNav extends React.Component<{ route: any }> {
     public render() {
-        console.log('props.route.path = ' + this.props.route.path);
+        // console.log('props.route.path = ' + this.props.route.path);
         let selected = '';
-        if (typeof this.props.route.path === 'string') {
+        if (this.props.route && typeof this.props.route.path === 'string') {
             selected = this.props.route.path.split('/').pop();
         }
         return (

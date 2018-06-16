@@ -17,7 +17,7 @@ import { Switch } from 'react-router-dom';
 import RedBox from './RedBox';
 import createHistory from 'history/createBrowserHistory';
 import { ServerError } from './Error';
-
+import { renderRoutes } from 'react-router-config';
 
 
 import '../index.css';
@@ -49,6 +49,12 @@ export interface MainState {
   info?: any;
 }
 
+const All = ({ routes }) => (
+  <div>
+    {renderRoutes(routes)}
+  </div>
+);
+
 export class Main extends React.Component<any, MainState> {
   constructor(props: any) {
     super(props);
@@ -74,7 +80,7 @@ export class Main extends React.Component<any, MainState> {
             <ApolloProvider client={client}>
               <ReactFela.Provider renderer={renderer}>
                 <ConnectedRouter history={history}>
-                  {modules.router}
+                  {modules.getRoutes()}
                 </ConnectedRouter>
               </ReactFela.Provider>
             </ApolloProvider>

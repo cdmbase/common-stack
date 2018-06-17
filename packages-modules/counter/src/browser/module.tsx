@@ -12,6 +12,7 @@ import StaticPage from './components/StaticPage';
 import Child from './components/Child';
 import GrandChild from './components/GrandChild';
 import { Feature } from '@common-stack/client-react';
+import SiderMenu from './components/SiderMenu';
 
 export default new Feature({
   routeConfig: [

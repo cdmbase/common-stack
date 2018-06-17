@@ -79,7 +79,6 @@ export default class SiderMenu extends React.PureComponent<ISiderMenu.Props, ISi
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.menus = props.menuData;
         this.flatMenuKeys = getFlatMenuKeys(props.menuData);
         this.state = {

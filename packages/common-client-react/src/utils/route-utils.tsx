@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IRouteData, IMappedData, IMenuData, IMenuItem } from '../interfaces';
+import { IRouteData, IMappedData, IMenuData, IMenuItem, IMenuPosition } from '../interfaces';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 import { RouteProps } from 'react-router';
 
@@ -84,11 +84,15 @@ export function getMenus(path: string, menuData: IMenuData) {
   const mappedMenuPaths: Array<IMenuItem & { route?: string }> = routes.map(mPath => {
     return {
       route: mPath,
+      position: IMenuPosition.MIDDLE,
       ...menuData[mPath],
     };
   });
   const root: IMenuItem & { route?: string } = {
+    // just to satisfy types added following
+    // TOOD need to correct types so we don't have to enter them.
     name: 'root',
+    position: IMenuPosition.LOGO,
   };
   mappedMenuPaths.forEach(menutItem => {
     const children = menutItem.route.split('/');

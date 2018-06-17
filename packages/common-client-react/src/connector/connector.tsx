@@ -1,32 +1,13 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { AbstractFeature, IFeature } from '@common-stack/client-core';
-import { getRoutes } from '../utils';
+import { AbstractFeature } from '@common-stack/client-core';
+import { IReactFeature, IMenuItem } from '../interfaces';
+import { getRoutes, getMenus } from '../utils';
 // import { renderRoutes } from 'react-router-config';
 
-export class Feature extends AbstractFeature implements IFeature {
-  /**
-   * Get the routes
-   */
-  public getRoutes(withRoot?: boolean, rootComponent?: any) {
-    const configuredRoutes = this.getConfiguredRoutes();
-    const solidRoutes = this.route.map((component: React.ReactElement<any>, idx: number) =>
-      React.cloneElement(component, { key: idx + this.route.length }));
-    // return {
-    //   path: component.props.path,
-    //   exact: component.props.exact,
-    //   component: element,
-    // };
-    // },
-    // );
-    const renderedRoutes = this.renderRoutes(configuredRoutes, solidRoutes);
-    // console.log('solidRoutes', solidRoutes);
-    // console.log('renderedRoutes', renderedRoutes.concat(solidRoutes));
-    // const mergedRoutes = { ...solidRoutes, ...renderedRoutes};
-    // console.log('mergedRoutes', mergedRoutes);
-    return renderedRoutes;
-  }
+export class Feature extends AbstractFeature implements IReactFeature {
 
+  /* tslint:disable:jsx-no-lambda */
   private renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps = {}) =>
     routes ? (
       <Switch {...switchProps}>
@@ -47,6 +28,25 @@ export class Feature extends AbstractFeature implements IFeature {
     ) : null
 
   /**
+   * Get the routes
+   */
+  public getRoutes(withRoot?: boolean, rootComponent?: any) {
+    const configuredRoutes = this.getConfiguredRoutes();
+    const solidRoutes = this.route.map((component: React.ReactElement<any>, idx: number) =>
+      React.cloneElement(component, { key: component.props.path }));
+    const renderedRoutes = this.renderRoutes(configuredRoutes, solidRoutes);
+    return renderedRoutes;
+  }
+
+
+  /**
+   * Get menus
+   */
+  public getMenus(withRoot?: boolean, rootComponent?: any) {
+    return this.getConfiguredMenus();
+  }
+
+  /**
    * get configured routes.
    * Note: It overwrites the any duplicate key with latest loaded key.
    * TODO: Find a way to warn when there are duplicate keys.
@@ -54,6 +54,17 @@ export class Feature extends AbstractFeature implements IFeature {
   public getConfiguredRoutes(searchPath = '/') {
     const routes = Object.assign({}, ...this.routeConfig);
     return getRoutes(searchPath, { ...routes });
+  }
+
+
+  /**
+   * get configured menus.
+   * Note: It overwrites the any duplicate key with latest loaded key.
+   * TODO: Find a way to warn when there are duplicate keys.
+   */
+  public getConfiguredMenus(searchPath = '/') {
+    const routes = Object.assign({}, ...this.menuConfig);
+    return getMenus(searchPath, { ...routes });
   }
 
   get navItems() {

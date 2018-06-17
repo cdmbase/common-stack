@@ -1,0 +1,313 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getMenu utility with basic paths with /a 1`] = `
+Array [
+  Object {
+    "authority": "guest",
+    "children": Array [
+      Object {
+        "exact": true,
+        "icon": "1",
+        "name": "1",
+        "path": "/a/1",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "category": "middle",
+            "exact": true,
+            "icon": "a1",
+            "name": "a1",
+            "path": "/a/m/a1",
+          },
+          Object {
+            "category": "top",
+            "exact": true,
+            "icon": "a2",
+            "name": "a2",
+            "path": "/a/m/a2",
+          },
+        ],
+        "exact": false,
+        "icon": "m",
+        "name": "m",
+        "path": "/a/m",
+      },
+    ],
+    "exact": false,
+    "icon": "a",
+    "name": "a",
+    "path": "/a",
+  },
+  Object {
+    "exact": true,
+    "icon": "b1",
+    "name": "b1",
+    "path": "/b/b1",
+  },
+  Object {
+    "exact": true,
+    "icon": "b2",
+    "name": "b2",
+    "path": "/b/b2",
+  },
+]
+`;
+
+exports[`getMenu utility with basic paths with /a 2`] = `
+Array [
+  Object {
+    "authority": "guest",
+    "children": Array [
+      Object {
+        "authority": "guest",
+        "exact": true,
+        "icon": "1",
+        "name": "1",
+        "path": "/a/1",
+      },
+      Object {
+        "authority": "guest",
+        "children": Array [
+          Object {
+            "authority": "guest",
+            "category": "middle",
+            "exact": true,
+            "icon": "a1",
+            "name": "a1",
+            "path": "/a/m/a1",
+          },
+          Object {
+            "authority": "guest",
+            "category": "top",
+            "exact": true,
+            "icon": "a2",
+            "name": "a2",
+            "path": "/a/m/a2",
+          },
+        ],
+        "exact": false,
+        "icon": "m",
+        "name": "m",
+        "path": "/a/m",
+      },
+    ],
+    "exact": false,
+    "icon": "a",
+    "name": "a",
+    "path": "/a",
+  },
+  Object {
+    "authority": undefined,
+    "exact": true,
+    "icon": "b1",
+    "name": "b1",
+    "path": "/b/b1",
+  },
+  Object {
+    "authority": undefined,
+    "exact": true,
+    "icon": "b2",
+    "name": "b2",
+    "path": "/b/b2",
+  },
+]
+`;
+
+exports[`getMenu utility with basic paths with /a 3`] = `
+Object {
+  "/a": Object {
+    "authority": "guest",
+    "children": Array [
+      Object {
+        "authority": "guest",
+        "exact": true,
+        "icon": "1",
+        "name": "1",
+        "path": "/a/1",
+      },
+      Object {
+        "authority": "guest",
+        "children": Array [
+          Object {
+            "authority": "guest",
+            "category": "middle",
+            "exact": true,
+            "icon": "a1",
+            "name": "a1",
+            "path": "/a/m/a1",
+          },
+          Object {
+            "authority": "guest",
+            "category": "top",
+            "exact": true,
+            "icon": "a2",
+            "name": "a2",
+            "path": "/a/m/a2",
+          },
+        ],
+        "exact": false,
+        "icon": "m",
+        "name": "m",
+        "path": "/a/m",
+      },
+    ],
+    "exact": false,
+    "icon": "a",
+    "name": "a",
+    "path": "/a",
+  },
+  "/a/1": Object {
+    "authority": "guest",
+    "exact": true,
+    "icon": "1",
+    "name": "1",
+    "path": "/a/1",
+  },
+  "/a/m": Object {
+    "authority": "guest",
+    "children": Array [
+      Object {
+        "authority": "guest",
+        "category": "middle",
+        "exact": true,
+        "icon": "a1",
+        "name": "a1",
+        "path": "/a/m/a1",
+      },
+      Object {
+        "authority": "guest",
+        "category": "top",
+        "exact": true,
+        "icon": "a2",
+        "name": "a2",
+        "path": "/a/m/a2",
+      },
+    ],
+    "exact": false,
+    "icon": "m",
+    "name": "m",
+    "path": "/a/m",
+  },
+  "/a/m/a1": Object {
+    "authority": "guest",
+    "category": "middle",
+    "exact": true,
+    "icon": "a1",
+    "name": "a1",
+    "path": "/a/m/a1",
+  },
+  "/a/m/a2": Object {
+    "authority": "guest",
+    "category": "top",
+    "exact": true,
+    "icon": "a2",
+    "name": "a2",
+    "path": "/a/m/a2",
+  },
+  "/b/b1": Object {
+    "authority": undefined,
+    "exact": true,
+    "icon": "b1",
+    "name": "b1",
+    "path": "/b/b1",
+  },
+  "/b/b2": Object {
+    "authority": undefined,
+    "exact": true,
+    "icon": "b2",
+    "name": "b2",
+    "path": "/b/b2",
+  },
+}
+`;
+
+exports[`getMenu utility with connector with connector 1`] = `
+Array [
+  Object {
+    "authority": "guest",
+    "children": Array [
+      Object {
+        "exact": true,
+        "icon": "1",
+        "name": "1",
+        "path": "/a/1",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "category": "middle",
+            "exact": true,
+            "icon": "a1",
+            "name": "a1",
+            "path": "/a/m/a1",
+          },
+          Object {
+            "category": "top",
+            "exact": true,
+            "icon": "a2",
+            "name": "a2",
+            "path": "/a/m/a2",
+          },
+        ],
+        "exact": false,
+        "icon": "m",
+        "name": "m",
+        "path": "/a/m",
+      },
+    ],
+    "exact": false,
+    "icon": "a",
+    "name": "a",
+    "path": "/a",
+  },
+  Object {
+    "exact": true,
+    "icon": "b1",
+    "name": "b1",
+    "path": "/b/b1",
+  },
+  Object {
+    "exact": true,
+    "icon": "b2",
+    "name": "b2",
+    "path": "/b/b2",
+  },
+  Object {
+    "authority": "guest",
+    "children": Array [
+      Object {
+        "exact": true,
+        "icon": "1",
+        "name": "1",
+        "path": "/test/a/1",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "category": "top",
+            "exact": true,
+            "icon": "a2",
+            "name": "a2",
+            "path": "/test/a/m/a2",
+          },
+        ],
+        "exact": false,
+        "icon": "m",
+        "name": "m",
+        "path": "/test/a/m",
+      },
+    ],
+    "exact": false,
+    "icon": "a",
+    "name": "a",
+    "path": "/test/a",
+  },
+  Object {
+    "exact": true,
+    "icon": "b1",
+    "name": "b1",
+    "path": "/test/b/b1",
+  },
+]
+`;

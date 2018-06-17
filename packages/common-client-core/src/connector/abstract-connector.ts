@@ -14,6 +14,7 @@ export abstract class AbstractFeature implements IFeature {
     public routerFactory: any;
     public route: any;
     public routeConfig: any;
+    public menuConfig: any;
     public navItem: any;
     public navItemRight: any;
     public rootComponentFactory: any[];
@@ -46,9 +47,11 @@ export abstract class AbstractFeature implements IFeature {
             .slice(-1)
             .pop();
         this.route = combine(arguments, arg => arg.route);
+        this.routeConfig = combine(arguments, arg => arg.routeConfig);
+
+        this.menuConfig = combine(arguments, arg => arg.menuConfig);
         this.navItem = combine(arguments, arg => arg.navItem);
         this.navItemRight = combine(arguments, arg => arg.navItemRight);
-        this.routeConfig = combine(arguments, arg => arg.routeConfig);
 
         // UI provider-components
         this.rootComponentFactory = combine(arguments, arg => arg.rootComponentFactory);
@@ -77,6 +80,10 @@ export abstract class AbstractFeature implements IFeature {
     public abstract getRoutes(withRoot?: boolean, rootComponent?: any);
 
     public abstract getConfiguredRoutes(routeSearch?: string);
+
+    public abstract getMenus(withRoot?: boolean, rootComponent?: any);
+
+    public abstract getConfiguredMenus(routeSearch?: string);
 
     public abstract get navItems();
 

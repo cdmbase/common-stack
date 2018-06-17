@@ -1,9 +1,8 @@
 {
-  "name": "@common-stack/counter",
+  "name": "@common-stack/components",
   "version": "0.0.1",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
-  "private": true,
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "test": "cross-env ENV_FILE=../../config/test/test.env jest",
@@ -17,6 +16,9 @@
     "build:lib:watch": "npm run build:lib -- --watch",
     "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
     "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "jest": {
     "testEnvironment": "node",
@@ -47,8 +49,10 @@
     "webpack": "^4.7.0"
   },
   "dependencies": {
-    "graphql-iso-date": "^3.5.0",
-    "graphql-tag": "^2.9.2"
+    "@common-stack/client-core": "*",
+    "@common-stack/client-react": "*",
+    "@common-stack/core": "*",
+    "antd": "^3.5.0"
   },
   "peerDependencies": {},
   "typings": "lib/index.d.ts",

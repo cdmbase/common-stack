@@ -1,5 +1,0 @@
-subscription subscribeToCount{
-  subscribeToCount {
-        amount
-    }
-}

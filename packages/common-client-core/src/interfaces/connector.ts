@@ -14,6 +14,7 @@ export interface FeatureParams {
     readonly routerFactory?: any;
     readonly route?: any;
     readonly routeConfig?: any;
+    readonly menuConfig?: any;
     readonly navItem?: any;
     readonly navItemRight?: any;
     readonly rootComponentFactory?: any;
@@ -36,6 +37,7 @@ export interface IFeature {
     readonly routerFactory: any;
     readonly route: any;
     readonly routeConfig: any;
+    readonly menuConfig?: any;
     readonly navItem: any;
     readonly navItemRight: any;
     readonly rootComponentFactory: any[];
@@ -52,6 +54,9 @@ export interface IFeature {
 
     readonly getRoutes;
     readonly getConfiguredRoutes;
+
+    readonly getMenus;
+    readonly getConfiguredMenus;
     readonly navItems;
     readonly navItemsRight;
 

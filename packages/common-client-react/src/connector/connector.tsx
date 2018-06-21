@@ -104,4 +104,5 @@ export class Feature extends AbstractFeature implements IReactFeature {
       func(monaco);
     }
   }
+
 }

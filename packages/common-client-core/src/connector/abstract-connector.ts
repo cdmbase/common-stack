@@ -25,6 +25,7 @@ export abstract class AbstractFeature implements IFeature {
     public catalogInfo: any[];
     public languagesFuncs: any[];
     public data: any[];
+    public panels: any;
 
     constructor(
         feature?: FeatureParams,
@@ -41,6 +42,8 @@ export abstract class AbstractFeature implements IFeature {
         // State management
         this.reducer = combine(arguments, arg => arg.reducer);
         this.resolver = combine(arguments, arg => arg.resolver);
+console.log('this.panels', this.panels);
+        this.panels = combine(arguments, arg => arg.panels);
 
         // Navigation
         this.routerFactory = combine(arguments, arg => arg.routerFactory)
@@ -64,6 +67,7 @@ export abstract class AbstractFeature implements IFeature {
         // TODO: Use React Helmet for those. Low level DOM manipulation
         this.stylesInsert = combine(arguments, arg => arg.stylesInsert);
         this.scriptsInsert = combine(arguments, arg => arg.scriptsInsert);
+
 
         // Shared modules data
         this.data = combine([{}].concat(Array.from(arguments)), arg => arg.data)
@@ -108,6 +112,10 @@ export abstract class AbstractFeature implements IFeature {
 
     get scriptsInserts() {
         return this.scriptsInsert;
+    }
+
+    get panelsComponents() {
+        return merge(...this.panels);
     }
 
     public abstract getWrappedRoot(root, req);

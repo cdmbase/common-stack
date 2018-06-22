@@ -26,6 +26,7 @@ export abstract class AbstractFeature implements IFeature {
     public languagesFuncs: any[];
     public data: any[];
     public panels: any;
+    public rightComponents: any;
 
     constructor(
         feature?: FeatureParams,
@@ -42,8 +43,9 @@ export abstract class AbstractFeature implements IFeature {
         // State management
         this.reducer = combine(arguments, arg => arg.reducer);
         this.resolver = combine(arguments, arg => arg.resolver);
-console.log('this.panels', this.panels);
+
         this.panels = combine(arguments, arg => arg.panels);
+        this.rightComponents = combine(arguments, arg => arg.rightComponents);
 
         // Navigation
         this.routerFactory = combine(arguments, arg => arg.routerFactory)
@@ -116,6 +118,10 @@ console.log('this.panels', this.panels);
 
     get panelsComponents() {
         return merge(...this.panels);
+    }
+
+    get rightLayoutComponents() {
+        return merge(...this.rightComponents);
     }
 
     public abstract getWrappedRoot(root, req);

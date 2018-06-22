@@ -51,7 +51,7 @@ export interface IFeature {
     readonly data: any[];
 
     readonly leftMainPanelItems: any;
-    readonly rightMainPanelItems: any;
+    readonly middleMainPanelItems: any;
     readonly leftFooterItems: any;
     readonly rightFooterItems: any;
     readonly middleLowerPanelItems: any;

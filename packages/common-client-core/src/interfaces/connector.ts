@@ -50,8 +50,10 @@ export interface IFeature {
     readonly languagesFuncs: any[];
     readonly data: any[];
 
-    readonly panels: any;
+    readonly leftComponents: any;
     readonly rightComponents: any;
+    readonly leftFooterComponents: any;
+    readonly rightFooterComponents: any;
 
     // methods
     readonly getRouter;
@@ -71,8 +73,10 @@ export interface IFeature {
 
     readonly stylesInserts;
     readonly scriptsInserts;
-    readonly panelsComponents;
+    readonly leftLayoutComponents;
     readonly rightLayoutComponents;
+    readonly leftFooterLayoutComponents;
+    readonly rightFooterLayoutComponents;
 
     getWrappedRoot(root: any, req?: any): any;
     getDataRoot(root: any): any;

@@ -25,8 +25,12 @@ export abstract class AbstractFeature implements IFeature {
     public catalogInfo: any[];
     public languagesFuncs: any[];
     public data: any[];
-    public panels: any;
+    public leftComponents: any;
     public rightComponents: any;
+    public footerLeftComponents: any;
+    public footerRightComponents: any;
+    public leftFooterComponents: any;
+    public rightFooterComponents: any;
 
     constructor(
         feature?: FeatureParams,
@@ -44,8 +48,10 @@ export abstract class AbstractFeature implements IFeature {
         this.reducer = combine(arguments, arg => arg.reducer);
         this.resolver = combine(arguments, arg => arg.resolver);
 
-        this.panels = combine(arguments, arg => arg.panels);
+        this.leftComponents = combine(arguments, arg => arg.leftComponents);
         this.rightComponents = combine(arguments, arg => arg.rightComponents);
+        this.leftFooterComponents = combine(arguments, arg => arg.leftFooterComponents);
+        this.rightFooterComponents = combine(arguments, arg => arg.rightFooterComponents);
 
         // Navigation
         this.routerFactory = combine(arguments, arg => arg.routerFactory)
@@ -116,12 +122,20 @@ export abstract class AbstractFeature implements IFeature {
         return this.scriptsInsert;
     }
 
-    get panelsComponents() {
-        return merge(...this.panels);
+    get leftLayoutComponents() {
+        return merge(...this.leftComponents);
     }
 
     get rightLayoutComponents() {
         return merge(...this.rightComponents);
+    }
+
+    get leftFooterLayoutComponents() {
+        return merge(...this.leftFooterComponents);
+    }
+
+    get rightFooterLayoutComponents() {
+        return merge(...this.rightFooterComponents);
     }
 
     public abstract getWrappedRoot(root, req);

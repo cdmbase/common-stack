@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/core",
-  "version": "0.0.14-35",
+  "version": "0.0.14-36",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {

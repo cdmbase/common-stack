@@ -25,6 +25,8 @@ export function getRoutes(path: string, routerData: IRouteData) {
   if (path[path.length - 1] !== '/') {
     searchPath = path + '/';
   }
+  // console.log(searchPath);
+
   const routes = Object.keys(routerData).filter(routePath => {
     return routePath.indexOf(searchPath) === 0 || routePath === path;
   });
@@ -35,11 +37,17 @@ export function getRoutes(path: string, routerData: IRouteData) {
     };
   });
   // console.log('mappedRoutes', mappedRoutes);
-  const root: RouteProps & { routes?: any} = {
+  const root: RouteProps & { routes?: any } = {
   };
   mappedRoutes.forEach(eachRoute => {
     const children = eachRoute.route.split('/');
     children.shift();
+    // children.shift();
+    if (eachRoute.route === '/') {
+      children.shift();
+      children.push('/');
+    }
+    // console.log('children', children);
     const depth = children.length;
     let lastNode = root;
     for (let i = 0; i < depth; i++) {

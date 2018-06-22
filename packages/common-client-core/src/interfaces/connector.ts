@@ -50,11 +50,11 @@ export interface IFeature {
     readonly languagesFuncs: any[];
     readonly data: any[];
 
-    readonly leftComponents: any;
-    readonly rightComponents: any;
-    readonly leftFooterComponents: any;
-    readonly rightFooterComponents: any;
-    readonly middleLowerComponents: any;
+    readonly leftMainPanelItems: any;
+    readonly rightMainPanelItems: any;
+    readonly leftFooterItems: any;
+    readonly rightFooterItems: any;
+    readonly middleLowerPanelItems: any;
 
     // methods
     readonly getRouter;

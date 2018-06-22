@@ -27,7 +27,7 @@ export abstract class AbstractFeature implements IFeature {
     public data: any[];
 
     public leftMainPanelItems: any;
-    public rightMainPanelItems: any;
+    public middleMainPanelItems: any;
     public leftFooterItems: any;
     public rightFooterItems: any;
     public middleLowerPanelItems: any;
@@ -49,7 +49,7 @@ export abstract class AbstractFeature implements IFeature {
         this.resolver = combine(arguments, arg => arg.resolver);
 
         this.leftMainPanelItems = combine(arguments, arg => arg.leftMainPanelItems);
-        this.rightMainPanelItems = combine(arguments, arg => arg.rightMainPanelItems);
+        this.middleMainPanelItems = combine(arguments, arg => arg.middleMainPanelItems);
         this.leftFooterItems = combine(arguments, arg => arg.leftFooterItems);
         this.rightFooterItems = combine(arguments, arg => arg.rightFooterItems);
         this.middleLowerPanelItems = combine(arguments, arg => arg.middleLowerPanelItems);
@@ -128,7 +128,7 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get middleMainPanel() {
-        return merge(...this.rightMainPanelItems);
+        return merge(...this.middleMainPanelItems);
     }
 
     get leftFooter() {

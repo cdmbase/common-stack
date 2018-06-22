@@ -24,6 +24,7 @@ export interface FeatureParams {
     readonly scriptsInsert?: any;
     readonly catalogInfo?: any;
     readonly languagesFuncs?: any;
+    readonly panels?: any;
 }
 
 
@@ -49,6 +50,12 @@ export interface IFeature {
     readonly languagesFuncs: any[];
     readonly data: any[];
 
+    readonly leftMainPanelItems: any;
+    readonly rightMainPanelItems: any;
+    readonly leftFooterItems: any;
+    readonly rightFooterItems: any;
+    readonly middleLowerPanelItems: any;
+
     // methods
     readonly getRouter;
 
@@ -67,6 +74,12 @@ export interface IFeature {
 
     readonly stylesInserts;
     readonly scriptsInserts;
+
+    readonly leftMainPanel;
+    readonly middleMainPanel;
+    readonly leftFooter;
+    readonly rightFooter;
+    readonly middleLowerPanel;
 
     getWrappedRoot(root: any, req?: any): any;
     getDataRoot(root: any): any;

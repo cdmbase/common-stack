@@ -26,6 +26,12 @@ export abstract class AbstractFeature implements IFeature {
     public languagesFuncs: any[];
     public data: any[];
 
+    public leftMainPanelItems: any;
+    public rightMainPanelItems: any;
+    public leftFooterItems: any;
+    public rightFooterItems: any;
+    public middleLowerPanelItems: any;
+
     constructor(
         feature?: FeatureParams,
         ...features,
@@ -41,6 +47,12 @@ export abstract class AbstractFeature implements IFeature {
         // State management
         this.reducer = combine(arguments, arg => arg.reducer);
         this.resolver = combine(arguments, arg => arg.resolver);
+
+        this.leftMainPanelItems = combine(arguments, arg => arg.leftMainPanelItems);
+        this.rightMainPanelItems = combine(arguments, arg => arg.rightMainPanelItems);
+        this.leftFooterItems = combine(arguments, arg => arg.leftFooterItems);
+        this.rightFooterItems = combine(arguments, arg => arg.rightFooterItems);
+        this.middleLowerPanelItems = combine(arguments, arg => arg.middleLowerPanelItems);
 
         // Navigation
         this.routerFactory = combine(arguments, arg => arg.routerFactory)
@@ -64,6 +76,7 @@ export abstract class AbstractFeature implements IFeature {
         // TODO: Use React Helmet for those. Low level DOM manipulation
         this.stylesInsert = combine(arguments, arg => arg.stylesInsert);
         this.scriptsInsert = combine(arguments, arg => arg.scriptsInsert);
+
 
         // Shared modules data
         this.data = combine([{}].concat(Array.from(arguments)), arg => arg.data)
@@ -108,6 +121,26 @@ export abstract class AbstractFeature implements IFeature {
 
     get scriptsInserts() {
         return this.scriptsInsert;
+    }
+
+    get leftMainPanel() {
+        return merge(...this.leftMainPanelItems);
+    }
+
+    get middleMainPanel() {
+        return merge(...this.rightMainPanelItems);
+    }
+
+    get leftFooter() {
+        return merge(...this.leftFooterItems);
+    }
+
+    get rightFooter() {
+        return merge(...this.rightFooterItems);
+    }
+
+    get middleLowerPanel() {
+        return merge(...this.middleLowerPanelItems);
     }
 
     public abstract getWrappedRoot(root, req);

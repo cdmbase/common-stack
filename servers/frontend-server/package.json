@@ -1,6 +1,6 @@
 {
 	"name": "common-stack-frontend-server",
-	"version": "0.0.14-38",
+	"version": "0.0.140",
 	"description": "Sample Client server",
 	"private": true,
 	"main": "index.js",
@@ -52,7 +52,7 @@
 		"@common-stack/client-react": "*",
 		"@common-stack/client-redux": "*",
 		"@common-stack/core": "*",
-		"@common-stack/counter": "^0.0.14-38",
+		"@common-stack/counter": "^0.0.140",
 		"@common-stack/utils": "*",
 		"apollo-cache-inmemory": "^1.2.2",
 		"apollo-client": "^2.3.1",

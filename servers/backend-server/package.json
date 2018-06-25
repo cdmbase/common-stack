@@ -1,6 +1,6 @@
 {
 	"name": "common-stack-backend-server",
-	"version": "0.0.14-38",
+	"version": "0.0.140",
 	"description": "Starter kit for apollo server using webpack and typescript",
 	"main": "dist/index.js",
 	"private": true,
@@ -52,7 +52,7 @@
 	"dependencies": {
 		"@cdm-logger/server": "^3.0.2",
 		"@common-stack/core": "*",
-		"@common-stack/counter": "^0.0.14-38",
+		"@common-stack/counter": "^0.0.140",
 		"@common-stack/server-core": "*",
 		"@common-stack/utils": "*",
 		"apollo-link": "^1.2.2",

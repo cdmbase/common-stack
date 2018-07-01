@@ -132,11 +132,11 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get leftFooter() {
-        return merge(...this.leftFooterItems);
+        return this.leftFooterItems;
     }
 
     get rightFooter() {
-        return merge(...this.rightFooterItems);
+        return this.rightFooterItems;
     }
 
     get middleLowerPanel() {

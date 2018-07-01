@@ -14,6 +14,7 @@ export type FeatureParams = {
   createContextFunc?: Function | Function[],
   createServiceFunc?: Function | Function[],
   createContainerFunc?: Function | Function[],
+  createPreference?: Function | Function[],
   beforeware?: any | any[],
   middleware?: any | any[],
   catalogInfo?: any | any[],

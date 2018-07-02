@@ -1,6 +1,7 @@
 import { IResolverOptions, IDirectiveOptions } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { Container, interfaces } from 'inversify';
+import { getCurrentPreferences, transformPrefsToArray } from '../utils';
 export const featureCatalog: any = {};
 
 const combine = (features, extractor): any =>
@@ -15,6 +16,7 @@ export type FeatureParams = {
   createServiceFunc?: Function | Function[],
   createContainerFunc?: Function | Function[],
   createPreference?: Function | Function[],
+  overwritePreference?: Function | Function[],
   beforeware?: any | any[],
   middleware?: any | any[],
   catalogInfo?: any | any[],
@@ -31,6 +33,7 @@ class Feature {
   public beforeware: Function[];
   public middleware: Function[];
   public createPreference: Function[];
+  public overwritePreference: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
@@ -45,6 +48,7 @@ class Feature {
     this.beforeware = combine(arguments, arg => arg.beforeware);
     this.middleware = combine(arguments, arg => arg.middleware);
     this.createPreference = combine(arguments, arg => arg.createPreference);
+    this.overwritePreference = combine(arguments, arg => arg.overwritePreference);
   }
 
   get schemas(): string[] {
@@ -104,7 +108,7 @@ class Feature {
   }
 
   public createDefaultPreferences() {
-    return this.createPreference;
+    return transformPrefsToArray(merge(...this.createPreference));
   }
 
   get beforewares(): any[] {
@@ -113,6 +117,13 @@ class Feature {
 
   get middlewares(): any[] {
     return this.middleware;
+  }
+
+  public getPreferences() {
+    const defaultPrefs = merge(...this.createPreference);
+    const overwritePrefs = merge(...this.overwritePreference);
+    const fullPrefs = getCurrentPreferences(defaultPrefs, overwritePrefs);
+    return transformPrefsToArray(fullPrefs);
   }
 }
 

@@ -24,11 +24,11 @@ export interface FeatureParams {
     readonly scriptsInsert?: any;
     readonly catalogInfo?: any;
     readonly languagesFuncs?: any;
-    readonly leftMainPanelItems: any;
-    readonly middleMainPanelItems: any;
-    readonly leftFooterItems: any;
-    readonly rightFooterItems: any;
-    readonly middleLowerPanelItems: any;
+    readonly leftMainPanelItems?: any;
+    readonly middleMainPanelItems?: any;
+    readonly leftFooterItems?: any;
+    readonly rightFooterItems?: any;
+    readonly middleLowerPanelItems?: any;
 }
 
 

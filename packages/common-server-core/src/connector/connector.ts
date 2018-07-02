@@ -14,7 +14,7 @@ export type FeatureParams = {
   createContextFunc?: Function | Function[],
   createServiceFunc?: Function | Function[],
   createContainerFunc?: Function | Function[],
-  createPreference?: Function | Function[],
+  createPreference?: any | any[],
   beforeware?: any | any[],
   middleware?: any | any[],
   catalogInfo?: any | any[],
@@ -30,7 +30,7 @@ class Feature {
   public createContainerFunc: Function[];
   public beforeware: Function[];
   public middleware: Function[];
-  public createPreference: Function[];
+  public createPreference: any[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>

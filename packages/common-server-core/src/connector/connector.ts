@@ -35,7 +35,6 @@ class Feature {
   public middleware: Function[];
   public createPreference: any[];
   public overwritePreference: Function[];
-  public dataIdFromObject: Function[];
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
@@ -51,7 +50,6 @@ class Feature {
     this.middleware = combine(arguments, arg => arg.middleware);
     this.createPreference = combine(arguments, arg => arg.createPreference);
     this.overwritePreference = combine(arguments, arg => arg.overwritePreference);
-    this.dataIdFromObject = combine(arguments, arg => arg.dataIdFromObject);
   }
 
   get schemas(): string[] {
@@ -129,10 +127,6 @@ class Feature {
     return transformPrefsToArray(fullPrefs);
   }
 
-  public getDataIdFromObject(result: any) {
-    const dataIdFromObject = merge(...this.dataIdFromObject);
-    return dataIdFromObject[result.type](result);
-  }
 }
 
 export { Feature };

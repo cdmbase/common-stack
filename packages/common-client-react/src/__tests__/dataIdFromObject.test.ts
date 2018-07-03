@@ -1,4 +1,3 @@
-import { getCurrentPreferences, transformPrefsToArray } from '../../utils';
 import { Feature } from '../connector';
 import 'jest';
 

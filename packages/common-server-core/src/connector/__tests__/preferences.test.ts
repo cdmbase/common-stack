@@ -10,6 +10,7 @@ const defaultSettings = {
         settings: 'both',
         enum: [],
         enumDescriptions: [],
+        overridable: true,
     },
     'files.autosave': {
         type: 'boolean',
@@ -38,6 +39,7 @@ const prefRes = {
         settings: 'both',
         enum: [],
         enumDescriptions: [],
+        overridable: true,
     },
     'files.autosave': {
         type: 'boolean',
@@ -47,7 +49,7 @@ const prefRes = {
         enum: [],
         enumDescriptions: [],
     },
-    'tree.trimTrailingWhitespace': { one: true, something: 'else' },
+    'tree.trimTrailingWhitespace': { one: false},
 };
 
 
@@ -63,6 +65,7 @@ const prefsArrRes = [
                 settings: 'both',
                 enum: [],
                 enumDescriptions: [],
+                overridable: true,
 
             }, {
                 name: 'files.autosave',
@@ -76,7 +79,7 @@ const prefsArrRes = [
         ],
     }, {
         type: 'tree',
-        data: [{ name: 'tree.trimTrailingWhitespace', one: true, something: 'else' }],
+        data: [{ name: 'tree.trimTrailingWhitespace', one: false }],
     },
 ];
 
@@ -92,7 +95,7 @@ const finalSettings = [
                 settings: 'both',
                 enum: [],
                 enumDescriptions: [],
-
+                overridable: true,
             }, {
                 name: 'files.autosave',
                 type: 'boolean',
@@ -101,6 +104,7 @@ const finalSettings = [
                 settings: 'both',
                 enum: [],
                 enumDescriptions: [],
+                overridable: true,
             },
         ],
     },
@@ -125,6 +129,7 @@ describe('Preferences', function () {
                     settings: 'both',
                     enum: [],
                     enumDescriptions: [],
+                    overridable: true,
                 },
             } as any,
         });
@@ -137,6 +142,7 @@ describe('Preferences', function () {
                     settings: 'both',
                     enum: [],
                     enumDescriptions: [],
+                    overridable: true,
                 },
             } as any,
         });

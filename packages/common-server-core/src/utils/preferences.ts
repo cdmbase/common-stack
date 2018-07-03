@@ -2,13 +2,15 @@ export const getCurrentPreferences = (preferencesDefaultArr, overwritePreference
   const preferencesArr = { ...preferencesDefaultArr };
 
   Object.keys(preferencesDefaultArr).forEach(key => {
-    const overwritesSettings = Object.keys(overwritePreferences).filter(el => el.indexOf(key) !== -1);
-    let newValues = {};
-    overwritesSettings.forEach(item => {
-      const overwriteKey = item.split('.').pop();
-      newValues[overwriteKey] = overwritePreferences[item];
-    });
-    preferencesArr[key] = { ...preferencesDefaultArr[key], ...newValues };
+    if (preferencesDefaultArr[key].overridable) {
+      const overwritesSettings = Object.keys(overwritePreferences).filter(el => el.indexOf(key) !== -1);
+      let newValues = {};
+      overwritesSettings.forEach(item => {
+        const overwriteKey = item.split('.').pop();
+        newValues[overwriteKey] = overwritePreferences[item];
+      });
+      preferencesArr[key] = { ...preferencesDefaultArr[key], ...newValues };
+    }
   });
   return preferencesArr;
 };

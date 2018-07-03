@@ -108,7 +108,10 @@ export class Feature extends AbstractFeature implements IReactFeature {
 
   public getDataIdFromObject(result: any) {
     const dataIdFromObject = merge(...this.dataIdFromObject);
-    return dataIdFromObject[result.type](result);
+    const type = dataIdFromObject[result.type];
+    if (type) {return type(result); }
+
+    return result.id || result._id;
   }
 
 }

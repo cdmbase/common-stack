@@ -25,6 +25,7 @@ export abstract class AbstractFeature implements IFeature {
     public catalogInfo: any[];
     public languagesFuncs: any[];
     public data: any[];
+    public dataIdFromObject: any[];
 
     public leftMainPanelItems: any;
     public middleMainPanelItems: any;
@@ -53,6 +54,7 @@ export abstract class AbstractFeature implements IFeature {
         this.leftFooterItems = combine(arguments, arg => arg.leftFooterItems);
         this.rightFooterItems = combine(arguments, arg => arg.rightFooterItems);
         this.middleLowerPanelItems = combine(arguments, arg => arg.middleLowerPanelItems);
+        this.dataIdFromObject = combine(arguments, arg => arg.dataIdFromObject);
 
         // Navigation
         this.routerFactory = combine(arguments, arg => arg.routerFactory)
@@ -142,6 +144,8 @@ export abstract class AbstractFeature implements IFeature {
     get middleLowerPanel() {
         return merge(...this.middleLowerPanelItems);
     }
+
+    public abstract getDataIdFromObject(result: any);
 
     public abstract getWrappedRoot(root, req);
 

@@ -4,6 +4,7 @@ import { AbstractFeature } from '@common-stack/client-core';
 import { IReactFeature, IMenuItem } from '../interfaces';
 import { getRoutes, getMenus } from '../utils';
 // import { renderRoutes } from 'react-router-config';
+import { merge } from 'lodash';
 
 export class Feature extends AbstractFeature implements IReactFeature {
 
@@ -103,6 +104,11 @@ export class Feature extends AbstractFeature implements IReactFeature {
     for (const func of this.languagesFuncs) {
       func(monaco);
     }
+  }
+
+  public getDataIdFromObject(result: any) {
+    const dataIdFromObject = merge(...this.dataIdFromObject);
+    return dataIdFromObject[result.type](result);
   }
 
 }

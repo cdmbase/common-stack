@@ -29,6 +29,7 @@ export interface FeatureParams {
     readonly leftFooterItems?: any;
     readonly rightFooterItems?: any;
     readonly middleLowerPanelItems?: any;
+    readonly dataIdFromObject?: any;
 }
 
 
@@ -84,6 +85,7 @@ export interface IFeature {
     readonly leftFooter;
     readonly rightFooter;
     readonly middleLowerPanel;
+    readonly dataIdFromObject;
 
     getWrappedRoot(root: any, req?: any): any;
     getDataRoot(root: any): any;

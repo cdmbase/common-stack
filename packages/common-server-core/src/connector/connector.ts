@@ -33,13 +33,9 @@ class Feature {
   public createContainerFunc: Function[];
   public beforeware: Function[];
   public middleware: Function[];
-<<<<<<< HEAD
   public createPreference: any[];
-=======
-  public createPreference: Function[];
   public overwritePreference: Function[];
   public dataIdFromObject: Function[];
->>>>>>> feature/preferences
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>

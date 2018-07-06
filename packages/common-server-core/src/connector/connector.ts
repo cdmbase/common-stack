@@ -15,6 +15,7 @@ export type FeatureParams = {
   createContextFunc?: Function | Function[],
   createServiceFunc?: Function | Function[],
   createContainerFunc?: Function | Function[],
+  updateContainerFunc?: Function | Function[],
   createPreference?: Function | Function[],
   overwritePreference?: Function | Function[],
   dataIdFromObject?: Function | Function[];
@@ -31,10 +32,14 @@ class Feature {
   public createContextFunc: Function[];
   public createServiceFunc: Function[];
   public createContainerFunc: Function[];
+  public updateContainerFunc: Function[];
   public beforeware: Function[];
   public middleware: Function[];
   public createPreference: Function[];
   public overwritePreference: Function[];
+
+  private services;
+  private container;
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
@@ -46,6 +51,7 @@ class Feature {
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
     this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
+    this.updateContainerFunc = combine(arguments, arg => arg.updateContainerFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
     this.middleware = combine(arguments, arg => arg.middleware);
     this.createPreference = combine(arguments, arg => arg.createPreference);
@@ -75,12 +81,12 @@ class Feature {
    * It should be called twice to get the context.
    */
   public createServiceContext(options) {
-    const services = this.createService(options);
+    this.createService(options);
     return async (req: any, connectionParams: any, webSocket?: any) => {
       const results = await Promise.all(
         this.createContextFunc.map(createContext => createContext(req, connectionParams, webSocket)),
       );
-      return merge({}, ...results, { ...services });
+      return merge({}, ...results, { ...this.services });
     };
 
   }
@@ -90,8 +96,13 @@ class Feature {
    * @param container
    */
   public createService(options) {
-    const container = this.createContainers(options);
-    return merge({}, ...this.createServiceFunc.map(createService => createService(container)));
+    if (this.container) {
+      this.updateContainers(options);
+    } else {
+      this.createContainers(options);
+    }
+
+    return this.services = merge({}, ...this.createServiceFunc.map(createService => createService(this.container)));
   }
 
   public createResolvers(options?: IResolverOptions) {
@@ -103,9 +114,13 @@ class Feature {
   }
 
   public createContainers(options) {
-    const container = new Container();
-    this.createContainerFunc.map(createModule => container.load(createModule(options)));
-    return container;
+    this.container = new Container();
+    this.createContainerFunc.map(createModule => this.container.load(createModule(options)));
+    return this.container;
+  }
+
+  public updateContainers(options) {
+    this.updateContainerFunc.map(createModule => this.container.load(createModule(options)));
   }
 
   public createDefaultPreferences() {

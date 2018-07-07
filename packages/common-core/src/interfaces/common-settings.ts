@@ -2,7 +2,7 @@
 export interface ICommonSettings {
     namespace?: string;
     connectionId?: string;
-    topic?: string;
+    subTopic?: string;
     [key: string]: string | number | any;
 }
 

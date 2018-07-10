@@ -116,6 +116,7 @@ class Feature {
   public createContainers(options) {
     this.container = new Container();
     this.createContainerFunc.map(createModule => this.container.load(createModule(options)));
+    this.container.bind('IDefaultSettings').toConstantValue(this.getPreferences());
     return this.container;
   }
 

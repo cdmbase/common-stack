@@ -35,7 +35,7 @@ class Feature {
   public updateContainerFunc: Function[];
   public beforeware: Function[];
   public middleware: Function[];
-  public createPreference: Function[];
+  public createPreference: any[];
   public overwritePreference: Function[];
 
   private services;

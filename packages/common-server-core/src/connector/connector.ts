@@ -15,7 +15,8 @@ export type FeatureParams = {
   createContextFunc?: Function | Function[],
   createServiceFunc?: Function | Function[],
   createContainerFunc?: Function | Function[],
-  updateContainerFunc?: Function | Function[],
+  preCreateServiceFunc?: Function | Function[],
+  updateContainerFunc?: any | any[],
   createPreference?: Function | Function[],
   overwritePreference?: Function | Function[],
   dataIdFromObject?: Function | Function[];
@@ -32,7 +33,8 @@ class Feature {
   public createContextFunc: Function[];
   public createServiceFunc: Function[];
   public createContainerFunc: Function[];
-  public updateContainerFunc: Function[];
+  public preCreateServiceFunc: Function[];
+  public updateContainerFunc: any[];
   public beforeware: Function[];
   public middleware: Function[];
   public createPreference: any[];
@@ -50,6 +52,8 @@ class Feature {
     this.createResolversFunc = combine(arguments, arg => arg.createResolversFunc);
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
     this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
+    this.preCreateServiceFunc = combine(arguments, arg => arg.preCreateServiceFunc);
+
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.updateContainerFunc = combine(arguments, arg => arg.updateContainerFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
@@ -80,8 +84,8 @@ class Feature {
    * If you need to attach service to Graphql Context, you can use this function.
    * It should be called twice to get the context.
    */
-  public createServiceContext(options) {
-    this.createService(options);
+  public createServiceContext(options, updateOptions?: any) {
+    this.createService(options, updateOptions);
     return async (req: any, connectionParams: any, webSocket?: any) => {
       const results = await Promise.all(
         this.createContextFunc.map(createContext => createContext(req, connectionParams, webSocket)),
@@ -95,11 +99,12 @@ class Feature {
    * Its wrapper to container to get services
    * @param container
    */
-  public createService(options) {
+  public async createService(options, updateOptions?: any) {
     if (this.container) {
-      this.updateContainers(options);
+      this.updateContainers(options, updateOptions);
     } else {
       this.createContainers(options);
+      await Promise.all(this.preCreateServiceFunc.map(async (createService) => await createService(this.container)));
     }
 
     return this.services = merge({}, ...this.createServiceFunc.map(createService => createService(this.container)));
@@ -120,8 +125,17 @@ class Feature {
     return this.container;
   }
 
-  public updateContainers(options) {
-    this.updateContainerFunc.map(createModule => this.container.load(createModule(options)));
+  public updateContainers(options, updateOptions) {
+    let mergedModules = merge({}, ...this.updateContainerFunc);
+    const matchingModules = [];
+    updateOptions.forEach(option => {
+      const searchModule = mergedModules[option];
+      if (searchModule) {
+        matchingModules.push(searchModule);
+      }
+    });
+
+    matchingModules.map(createModule => this.container.load(createModule(options)));
   }
 
   public createDefaultPreferences() {

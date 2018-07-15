@@ -29,7 +29,7 @@ describe('service merge test', function () {
             bind<string>(TYPES.settings2).toConstantValue(settings.settings2);
         });
 
-    it('Should be able load context module', () => {
+    it('Should be able load context module', async () => {
 
         const serviceFunc = (cont) => ({
             service1: cont.get(TYPES.someType1),
@@ -40,7 +40,7 @@ describe('service merge test', function () {
         });
 
 
-        const service = feature.createService({ settings1: 'settings1', settings2: 'settings2' });
+        const service = await feature.createService({ settings1: 'settings1', settings2: 'settings2' });
 
         expect(service.service1).toEqual(1);
     });

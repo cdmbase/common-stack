@@ -19,7 +19,8 @@ export type FeatureParams = {
   updateContainerFunc?: any | any[],
   createPreference?: Function | Function[],
   overwritePreference?: Function | Function[],
-  dataIdFromObject?: Function | Function[];
+  dataIdFromObject?: Function | Function[],
+  disposeFunc?: any | any[],
   beforeware?: any | any[],
   middleware?: any | any[],
   catalogInfo?: any | any[],
@@ -34,6 +35,7 @@ class Feature {
   public createServiceFunc: Function[];
   public createContainerFunc: Function[];
   public preCreateServiceFunc: Function[];
+  public disposeFunc: any[];
   public updateContainerFunc: any[];
   public beforeware: Function[];
   public middleware: Function[];
@@ -53,6 +55,7 @@ class Feature {
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
     this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
     this.preCreateServiceFunc = combine(arguments, arg => arg.preCreateServiceFunc);
+    this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.updateContainerFunc = combine(arguments, arg => arg.updateContainerFunc);
@@ -129,6 +132,10 @@ class Feature {
     let mergedModules = merge({}, ...this.updateContainerFunc);
     const matchingModules = [];
     updateOptions.forEach(option => {
+      const dispose = this.disposeFunc.find(el => el.container === option);
+      if (dispose) {
+        this.services[dispose.ctx].dispose();
+      }
       const searchModule = mergedModules[option];
       if (searchModule) {
         matchingModules.push(searchModule);

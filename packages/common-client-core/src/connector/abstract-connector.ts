@@ -11,6 +11,7 @@ export abstract class AbstractFeature implements IFeature {
     public connectionParam: any;
     public reducer: any;
     public resolver: any;
+    public schema: any[];
     public routerFactory: any;
     public route: any;
     public routeConfig: any;
@@ -47,6 +48,9 @@ export abstract class AbstractFeature implements IFeature {
 
         // State management
         this.reducer = combine(arguments, arg => arg.reducer);
+
+        // Client side schema for apollo-link-state
+        this.schema = combine(arguments, arg => arg.schema);
         this.resolver = combine(arguments, arg => arg.resolver);
 
         this.leftMainPanelItems = combine(arguments, arg => arg.leftMainPanelItems);

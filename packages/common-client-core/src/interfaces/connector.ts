@@ -11,6 +11,7 @@ export interface FeatureParams {
     readonly connectionParam?: any;
     readonly reducer?: any;
     readonly resolver?: any;
+    readonly schema?: any;
     readonly routerFactory?: any;
     readonly route?: any;
     readonly routeConfig?: any;
@@ -40,6 +41,7 @@ export interface IFeature {
     readonly connectionParam: any;
     readonly reducer: any;
     readonly resolver: any;
+    readonly schema: any;
     readonly routerFactory: any;
     readonly route: any;
     readonly routeConfig: any;

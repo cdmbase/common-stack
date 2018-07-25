@@ -224,8 +224,8 @@
     "ws": "^3.3.3"
   },
   "dependencies": {
-    "@cdm-logger/client": "^3.1.1",
-    "@cdm-logger/server": "^3.0.2",
+    "@cdm-logger/client": "^5.0.4",
+    "@cdm-logger/server": "^5.0.4",
     "@common-stack/client-core": "0.0.14-28",
     "@common-stack/client-react": "0.0.14-28",
     "@common-stack/client-redux": "0.0.14-28",

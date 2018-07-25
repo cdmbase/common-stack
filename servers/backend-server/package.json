@@ -50,7 +50,7 @@
 	},
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
-		"@cdm-logger/server": "^3.0.2",
+		"@cdm-logger/server": "^5.0.4",
 		"@common-stack/core": "*",
 		"@common-stack/server-core": "*",
 		"@common-stack/utils": "*",

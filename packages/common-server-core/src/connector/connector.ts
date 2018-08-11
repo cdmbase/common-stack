@@ -14,6 +14,7 @@ export type FeatureParams = {
   createResolversFunc?: Function | Function[],
   createContextFunc?: Function | Function[],
   createServiceFunc?: Function | Function[],
+  createDataSourceFunc?: Function | Function[],
   createContainerFunc?: Function | Function[],
   preCreateServiceFunc?: Function | Function[],
   updateContainerFunc?: any | any[],
@@ -34,6 +35,7 @@ class Feature {
   public createContextFunc: Function[];
   public createServiceFunc: Function[];
   public createContainerFunc: Function[];
+  public createDataSourceFunc: Function[];
   public preCreateServiceFunc: Function[];
   public disposeFunc: any[];
   public updateContainerFunc: any[];
@@ -44,6 +46,7 @@ class Feature {
 
   private services;
   private container;
+  private dataSources;
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
@@ -53,6 +56,7 @@ class Feature {
     this.createDirectivesFunc = combine(arguments, arg => arg.createDirectivesFunc);
     this.createResolversFunc = combine(arguments, arg => arg.createResolversFunc);
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
+    this.createDataSourceFunc = combine(arguments, arg => arg.createDataSourceFunc);
     this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
     this.preCreateServiceFunc = combine(arguments, arg => arg.preCreateServiceFunc);
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
@@ -111,6 +115,10 @@ class Feature {
     }
 
     return this.services = merge({}, ...this.createServiceFunc.map(createService => createService(this.container)));
+  }
+
+  public async createDataSource(options?: any) {
+    return this.dataSources = merge({}, ...this.createDataSourceFunc.map(createDataSource => createDataSource(this.container)));
   }
 
   public createResolvers(options?: IResolverOptions) {

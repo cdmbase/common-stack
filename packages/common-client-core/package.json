@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-core",
-  "version": "0.0.155",
+  "version": "0.0.156",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -53,7 +53,7 @@
     "webpack": "^4.7.0"
   },
   "dependencies": {
-    "@common-stack/core": "^0.0.155"
+    "@common-stack/core": "^0.0.156"
   },
   "peerDependencies": {
     "lodash": "*"

@@ -27,6 +27,7 @@ export interface FeatureParams {
     readonly languagesFuncs?: any;
     readonly leftMainPanelItems?: any;
     readonly middleMainPanelItems?: any;
+    readonly middleMainPanelItemsProps?: any;
     readonly leftFooterItems?: any;
     readonly rightFooterItems?: any;
     readonly middleLowerPanelItems?: any;
@@ -62,6 +63,7 @@ export interface IFeature {
     readonly leftFooterItems: any;
     readonly rightFooterItems: any;
     readonly middleLowerPanelItems: any;
+    readonly middleMainPanelItemsProps?: any;
 
     // methods
     readonly getRouter;

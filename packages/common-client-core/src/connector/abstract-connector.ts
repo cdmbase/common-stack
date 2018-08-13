@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { IFeature, FeatureParams, ClientStateParams } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 
@@ -30,6 +31,7 @@ export abstract class AbstractFeature implements IFeature {
 
     public leftMainPanelItems: any;
     public middleMainPanelItems: any;
+    public middleMainPanelItemsProps: any;
     public leftFooterItems: any;
     public rightFooterItems: any;
     public middleLowerPanelItems: any;
@@ -55,6 +57,7 @@ export abstract class AbstractFeature implements IFeature {
 
         this.leftMainPanelItems = combine(arguments, arg => arg.leftMainPanelItems);
         this.middleMainPanelItems = combine(arguments, arg => arg.middleMainPanelItems);
+        this.middleMainPanelItemsProps = combine(arguments, arg => arg.middleMainPanelItemsProps);
         this.leftFooterItems = combine(arguments, arg => arg.leftFooterItems);
         this.rightFooterItems = combine(arguments, arg => arg.rightFooterItems);
         this.middleLowerPanelItems = combine(arguments, arg => arg.middleLowerPanelItems);
@@ -134,7 +137,18 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get middleMainPanel() {
-        return merge(...this.middleMainPanelItems);
+        const panelObj = merge(...this.middleMainPanelItems);
+        const withProps = {} as any;
+        Object.keys(panelObj).forEach(key => {
+            const props = this.middleMainPanelItemsProps.filter(el => !!el[key]);
+            let mergedProps = [];
+            props.forEach(el => {mergedProps = [...mergedProps, ...el[key]]; });
+            return withProps[key] = React.cloneElement(
+                panelObj[key],
+                {...merge(...mergedProps)},
+              );
+        });
+        return withProps;
     }
 
     get leftFooter() {

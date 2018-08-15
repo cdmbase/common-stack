@@ -117,7 +117,7 @@ class Feature {
     return this.services = merge({}, ...this.createServiceFunc.map(createService => createService(this.container)));
   }
 
-  public async createDataSource(options?: any) {
+  public createDataSource(options?: any) {
     return this.dataSources = merge({}, ...this.createDataSourceFunc.map(createDataSource => createDataSource(this.container)));
   }
 

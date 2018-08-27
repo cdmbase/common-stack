@@ -142,10 +142,19 @@ export abstract class AbstractFeature implements IFeature {
         Object.keys(panelObj).forEach(key => {
             const props = this.middleMainPanelItemsProps.filter(el => !!el[key]);
             let mergedProps = [];
-            props.forEach(el => {mergedProps = [...mergedProps, ...el[key]]; });
+            props.forEach(el => {
+                const insideEl = el[key];
+                Object.keys(insideEl).forEach(item => {
+                    if (mergedProps[item]) {
+                        mergedProps[item] = [...mergedProps[item], ...insideEl[item]];
+                    } else {
+                        mergedProps = {...mergedProps, [item]: insideEl[item]};
+                    }
+                });
+            });
             return withProps[key] = React.cloneElement(
                 panelObj[key],
-                {...merge(...mergedProps)},
+                mergedProps,
               );
         });
         return withProps;

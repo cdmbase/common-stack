@@ -31,7 +31,7 @@ export abstract class AbstractFeature implements IFeature {
 
     public leftMainPanelItems: any;
     public middleMainPanelItems: any;
-    public middleMainPanelItemsProps: any;
+    public middleMainPanelItemsProps: {editors: any, git: any, search: any, terminal: any};
     public leftFooterItems: any;
     public rightFooterItems: any;
     public middleLowerPanelItems: any;

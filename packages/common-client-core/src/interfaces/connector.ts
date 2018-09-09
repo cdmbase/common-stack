@@ -12,6 +12,7 @@ export interface FeatureParams {
     readonly reducer?: any;
     readonly resolver?: any;
     readonly schema?: any;
+    readonly sidebarSegments?: any;
     readonly routerFactory?: any;
     readonly route?: any;
     readonly routeConfig?: any;

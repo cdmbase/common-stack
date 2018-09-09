@@ -7,6 +7,9 @@ import { getRoutes, getMenus } from '../utils';
 import { merge } from 'lodash';
 
 export class Feature extends AbstractFeature implements IReactFeature {
+  public routes: any;
+  public menuConfig: any;
+  public dataIdFromObject: any;
 
   /* tslint:disable:jsx-no-lambda */
   private renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps = {}) =>
@@ -38,7 +41,6 @@ export class Feature extends AbstractFeature implements IReactFeature {
     const renderedRoutes = this.renderRoutes(configuredRoutes, solidRoutes);
     return renderedRoutes;
   }
-
 
   /**
    * Get menus

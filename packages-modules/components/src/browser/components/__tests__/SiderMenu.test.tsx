@@ -15,7 +15,7 @@ const genMenu = {
 };
 
 
-const connector = new Feature({ menuConfig: genMenu });
+const connector = new Feature({ menuConfig: genMenu } as any);
 const menu = connector.getMenus();
 
 const flatMenuKeys = getFlatMenuKeys(menu);

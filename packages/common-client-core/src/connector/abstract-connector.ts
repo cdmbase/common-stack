@@ -12,6 +12,7 @@ export abstract class AbstractFeature implements IFeature {
     public reducer: any;
     public resolver: any;
     public schema: any[];
+    public sidebarSegments: any[];
     public routerFactory: any;
     public route: any;
     public routeConfig: any;
@@ -52,6 +53,8 @@ export abstract class AbstractFeature implements IFeature {
         // Client side schema for apollo-link-state
         this.schema = combine(arguments, arg => arg.schema);
         this.resolver = combine(arguments, arg => arg.resolver);
+
+        this.sidebarSegments = combine(arguments, arg => arg.sidebarSegments);
 
         this.leftMainPanelItems = combine(arguments, arg => arg.leftMainPanelItems);
         this.middleMainPanelItems = combine(arguments, arg => arg.middleMainPanelItems);

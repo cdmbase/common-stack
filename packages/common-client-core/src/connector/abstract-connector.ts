@@ -95,7 +95,7 @@ export abstract class AbstractFeature implements IFeature {
             .reduce(
                 (acc, el) => [{ ...acc[0], ...el }],
                 [{}],
-        );
+            );
     }
 
     public getRouter(withRoot?: boolean, rootComponent?: any) {
@@ -151,14 +151,14 @@ export abstract class AbstractFeature implements IFeature {
                     if (mergedProps[item]) {
                         mergedProps[item] = [...mergedProps[item], ...insideEl[item]];
                     } else {
-                        mergedProps = {...mergedProps, [item]: insideEl[item]};
+                        mergedProps = { ...mergedProps, [item]: insideEl[item] };
                     }
                 });
             });
             return withProps[key] = React.cloneElement(
                 panelObj[key],
                 mergedProps,
-              );
+            );
         });
         return withProps;
     }

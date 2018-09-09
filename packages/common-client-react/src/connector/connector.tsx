@@ -39,7 +39,6 @@ export class Feature extends AbstractFeature implements IReactFeature {
     return renderedRoutes;
   }
 
-
   /**
    * Get menus
    */

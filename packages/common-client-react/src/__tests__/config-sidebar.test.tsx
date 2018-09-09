@@ -106,8 +106,8 @@ describe('getMenu utility with basic paths', () => {
 
 describe('getMenu utility with connector', () => {
     it('with connector', () => {
-        const connector = new Feature({ menuConfig: [genMenuData()]  });
-        const connector2 = new Feature({ menuConfig: [genMenuData('/test')]  });
+        const connector = new Feature({ menuConfig: [genMenuData()]  } as any);
+        const connector2 = new Feature({ menuConfig: [genMenuData('/test')] } as any);
 
         const feature = new Feature(connector, connector2);
         const finalMenu = feature.getMenus();

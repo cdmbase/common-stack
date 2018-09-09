@@ -37,13 +37,13 @@ describe('data id from object', function () {
                 'IContent': (result) => result.__typename + ':' + result.resource,
                 'IStreamContent': (result) => result.__typename + ':' + result.resource,
                 'IChangedContent': (result) => result.__typename + ':' + result.resource,
-            } as any,
-        });
+            },
+        } as any);
         const connector2 = new Feature({
             dataIdFromObject: {
                 'UserSettings': (result) => result.__typename,
-            } as any,
-        });
+            },
+        } as any);
 
         const feature = new Feature(connector, connector2);
 

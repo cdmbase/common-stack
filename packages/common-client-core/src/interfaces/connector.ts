@@ -7,7 +7,7 @@ export interface ClientStateParams {
 
 export interface FeatureParams {
     readonly link?: any;
-    readonly errorLink: any;
+    readonly errorLink?: any;
     readonly createFetch?: any;
     readonly connectionParam?: any;
     readonly reducer?: any;

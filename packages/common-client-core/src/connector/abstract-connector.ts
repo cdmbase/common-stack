@@ -8,6 +8,7 @@ export const featureCatalog = {};
 
 export abstract class AbstractFeature implements IFeature {
     public link: any;
+    public errorLink: any;
     public createFetch: any;
     public connectionParam: any;
     public reducer: any;
@@ -44,6 +45,8 @@ export abstract class AbstractFeature implements IFeature {
 
         // Connectivity
         this.link = combine(arguments, arg => arg.link);
+        this.errorLink = combine(arguments, arg => arg.errorLink);
+
         this.createFetch = combine(arguments, arg => arg.createFetch)
             .slice(-1)
             .pop();

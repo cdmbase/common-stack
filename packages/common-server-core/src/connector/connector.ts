@@ -56,13 +56,13 @@ class Feature {
     this.createDirectivesFunc = combine(arguments, arg => arg.createDirectivesFunc);
     this.createResolversFunc = combine(arguments, arg => arg.createResolversFunc);
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
-    this.createDataSourceFunc = combine(arguments, arg => arg.createDataSourceFunc);
     this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
     this.preCreateServiceFunc = combine(arguments, arg => arg.preCreateServiceFunc);
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.updateContainerFunc = combine(arguments, arg => arg.updateContainerFunc);
+    this.createDataSourceFunc = combine(arguments, arg => arg.createDataSourceFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
     this.middleware = combine(arguments, arg => arg.middleware);
     this.createPreference = combine(arguments, arg => arg.createPreference);

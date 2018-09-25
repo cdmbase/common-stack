@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-react",
-  "version": "0.0.162",
+  "version": "0.0.163",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -56,9 +56,9 @@
     "redux": ">=3.6.0"
   },
   "dependencies": {
-    "@common-stack/client-core": "^0.0.162",
-    "@common-stack/client-redux": "^0.0.162",
-    "@common-stack/core": "^0.0.162"
+    "@common-stack/client-core": "^0.0.163",
+    "@common-stack/client-redux": "^0.0.163",
+    "@common-stack/core": "^0.0.163"
   },
   "devDependencies": {
     "jest": "^22.4.2",

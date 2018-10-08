@@ -28,19 +28,19 @@ export class Cache implements ICacheService {
     }
 
     public static get Instance() {
-        return this.instance || (this.instance = new this(new Redis()));
+        return this.instance || (this.instance = new this(new Redis({url: config.REDIS_URL})));
     }
 
-    public key(key: string, scope?: string) {
+    private key(key: string, scope?: string) {
         return `${scope || Cache.DEFAULT_SCOPE}.${key}`;
     }
 
-    public isExpired(createdAt: number, maxAge: number) {
+    private isExpired(createdAt: number, maxAge: number) {
         const now = parseInt(`${Date.now() / 1000}`, null);
         return now - createdAt > maxAge;
     }
 
-    public getOptions(opts: ICacheOptions) {
+    private getOptions(opts: ICacheOptions) {
         return Object.assign(this.defaults, opts || {});
     }
 
@@ -77,7 +77,7 @@ export class Cache implements ICacheService {
         } else {
             return opts.parse
                 ? cache.payload
-                : JSON.parse(cache.payload);
+                : cache.payload; // not really doing anything here
         }
     }
 

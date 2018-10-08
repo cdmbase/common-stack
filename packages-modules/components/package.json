@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/components",
-  "version": "0.0.163",
+  "version": "0.0.164",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -49,9 +49,9 @@
     "webpack": "^4.7.0"
   },
   "dependencies": {
-    "@common-stack/client-core": "^0.0.163",
-    "@common-stack/client-react": "^0.0.163",
-    "@common-stack/core": "^0.0.163",
+    "@common-stack/client-core": "^0.0.164",
+    "@common-stack/client-react": "^0.0.164",
+    "@common-stack/core": "^0.0.164",
     "antd": "^3.5.0"
   },
   "typings": "lib/index.d.ts",

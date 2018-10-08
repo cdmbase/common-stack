@@ -17,6 +17,9 @@
         "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
         "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.gql --schema schema.json --target typescript --output src/browser/gql/schema.ts"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "jest": {
         "testEnvironment": "node",
         "roots": [

@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/store-mongo",
-  "version": "0.0.172",
+  "version": "0.0.173",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {

@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as Logger from 'bunyan';
 
 import { Types } from '../constants';
-import { ICacheService, ICacheEngine, ICacheOptions } from '../interfaces';
+import { ICacheService, ICacheEngine, ICacheOptions, ICacheSetOptions } from '../interfaces';
 import { create } from 'domain';
 import { Redis } from '../engines/redis-engine';
 import { logger as cdmLogger } from '@cdm-logger/server';
@@ -52,7 +52,7 @@ export class Cache implements ICacheService {
         };
     }
 
-    public async set(key: string, payload: any, options?: ICacheOptions) {
+    public async set(key: string, payload: any, options?: ICacheSetOptions) {
         const opts = this.getOptions(options);
         const cache = Object.assign({}, { payload }, opts);
 
@@ -85,7 +85,7 @@ export class Cache implements ICacheService {
         return true;
     }
 
-    public async invalidate(keys, options?: ICacheOptions) {
+    public async invalidate(keys?: string[], options?: ICacheOptions) {
         if (keys.length <= 0) {
             return this.engine.invalidate();
         } else {

@@ -225,7 +225,7 @@
   },
   "dependencies": {
     "@cdm-logger/client": "^5.0.4",
-    "@cdm-logger/server": "^5.0.4",
+    "@cdm-logger/server": "^5.0.5",
     "@common-stack/client-core": "0.0.14-28",
     "@common-stack/client-react": "0.0.14-28",
     "@common-stack/client-redux": "0.0.14-28",
@@ -313,6 +313,7 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "react-transition-group": "^2.3.1",
     "recompose": "^0.27.1",
+    "redis": "^2.8.0",
     "redux": "^3.7.2",
     "redux-thunk": "2.2.0",
     "reflect-metadata": "^0.1.12",

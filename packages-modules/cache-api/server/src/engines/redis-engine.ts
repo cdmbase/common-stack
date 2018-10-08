@@ -1,13 +1,16 @@
 import * as NodeRedis from 'redis';
 import { config } from '../config';
 import { ICacheEngine } from '../interfaces';
+const {promisify} = require('util');
 
 export class Redis implements ICacheEngine {
-    private client;
+    private client: NodeRedis.RedisClient;
+    private getAsync;
 
     constructor(
     ) {
         this.client = NodeRedis.createClient(config.REDIS_URL);
+        this.getAsync =  promisify(this.client.get).bind(this.client);
     }
 
     public async set(key: string, data: any) {
@@ -16,7 +19,7 @@ export class Redis implements ICacheEngine {
     }
 
     public async get(key: string) {
-        return this.client.getAsync(key);
+        return await this.getAsync(key);
     }
 
     public async drop(key: string) {

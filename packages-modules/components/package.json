@@ -46,7 +46,7 @@
     "jest": "^22.4.2",
     "persistgraphql-webpack-plugin": "^0.5.4",
     "rimraf": "^2.6.1",
-    "webpack": "^4.7.0"
+    "webpack": "^4.19.0"
   },
   "dependencies": {
     "@common-stack/client-core": "*",

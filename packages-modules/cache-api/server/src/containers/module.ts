@@ -24,7 +24,7 @@ export const moduleFunc: (settings: any, pubsub) => interfaces.ContainerModule =
         }).whenTargetIsDefault();
 
         bind<ICacheEngine>(Types.CacheEngine)
-            .toConstantValue(new Redis())
+            .toConstantValue(new Redis(settings.redisConnection))
             // .inSingletonScope()
             .whenTargetIsDefault();
     });

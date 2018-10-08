@@ -1,8 +1,5 @@
-import { injectable } from 'inversify';
-
 import { ICacheEngine } from '../interfaces';
 
-@injectable()
 export class InMemory implements ICacheEngine {
     private cache = new Map();
 

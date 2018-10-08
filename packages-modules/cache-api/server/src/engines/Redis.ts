@@ -1,18 +1,13 @@
 import * as Redis from 'redis';
-import { inject, injectable, tagged } from 'inversify';
-
+import { config } from '../config';
 import { ICacheEngine } from '../interfaces';
 
-@injectable()
 export class Redis implements ICacheEngine {
     private client;
 
     constructor(
-        @inject('Settings')
-        private settings,
     ) {
-        this.settings = settings;
-        this.client = Redis.createClient(this.settings.redisURL);
+        this.client = Redis.createClient(config.REDIS_URL);
     }
 
     public async set(key: string, data: any) {

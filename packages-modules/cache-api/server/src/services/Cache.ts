@@ -1,32 +1,34 @@
 import * as _ from 'lodash';
 import * as Logger from 'bunyan';
-import { inject, injectable, optional } from 'inversify';
 
 import { Types } from '../constants';
 import { ICacheService, ICacheEngine, ICacheOptions } from '../interfaces';
 import { create } from 'domain';
+import { Redis } from '../engines/redis';
+import { logger as cdmLogger } from '@cdm-logger/server';
+import { config } from '../config';
 
-@injectable()
 export class Cache implements ICacheService {
-    public static DEFAULT_SCOPE = 'cde_cache';
+    private static DEFAULT_SCOPE = 'cde_cache';
+    private static instance: Cache;
 
-    private settings: any;
     private logger: Logger;
     private engine: ICacheEngine;
 
     constructor(
-        @inject('Logger')
-        logger: Logger,
-
-        @inject(Types.CacheEngine)
         engine: ICacheEngine,
-
-        @inject('Settings')
-        settings: any,
+        logger?: Logger,
     ) {
         this.engine = engine;
-        this.settings = settings;
-        this.logger = logger.child(this.constructor.name);
+        if (logger) {
+            this.logger = logger.child(this.constructor.name);
+        } else {
+            this.logger = cdmLogger.child(this.constructor.name);
+        }
+    }
+
+    public static get Instance() {
+        return this.instance || (this.instance = new this(new Redis()));
     }
 
     public key(key: string, scope?: string) {
@@ -45,7 +47,7 @@ export class Cache implements ICacheService {
     get defaults() {
         return {
             scope: Cache.DEFAULT_SCOPE,
-            maxAge: _.get(this.settings, 'cache.maxAge'),
+            maxAge: config.REDIS_CACHE_MAX_AGE_in_sec,
             createdAt: parseInt(`${Date.now() / 1000}`, null),
         };
     }
@@ -55,7 +57,7 @@ export class Cache implements ICacheService {
         const cache = Object.assign({}, { payload }, opts);
 
         const path = this.key(key, opts.scope);
-        const result = this.engine.set(key, cache);
+        const result = this.engine.set(path, cache);
 
         return payload;
     }

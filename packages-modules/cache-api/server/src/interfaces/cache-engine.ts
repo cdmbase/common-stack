@@ -1,4 +1,4 @@
-import { ICache } from '../../../common';
+import { ICache } from './common';
 
 export interface ICacheEngine {
     get(key: string): Promise<ICache>;

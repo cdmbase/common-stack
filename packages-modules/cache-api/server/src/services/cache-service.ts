@@ -2,9 +2,9 @@ import * as _ from 'lodash';
 import * as Logger from 'bunyan';
 
 import { Types } from '../constants';
-import { ICacheService, ICacheEngine, ICacheOptions } from '../interfaces';
+import { ICacheService, ICacheEngine, ICacheOptions, ICacheSetOptions } from '../interfaces';
 import { create } from 'domain';
-import { Redis } from '../engines/redis';
+import { Redis } from '../engines/redis-engine';
 import { logger as cdmLogger } from '@cdm-logger/server';
 import { config } from '../config';
 
@@ -52,7 +52,7 @@ export class Cache implements ICacheService {
         };
     }
 
-    public async set(key: string, payload: any, options?: ICacheOptions) {
+    public async set(key: string, payload: any, options?: ICacheSetOptions) {
         const opts = this.getOptions(options);
         const cache = Object.assign({}, { payload }, opts);
 

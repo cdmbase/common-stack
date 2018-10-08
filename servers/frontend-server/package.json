@@ -47,7 +47,7 @@
 	},
 	"dependencies": {
 		"@cdm-logger/client": "^5.0.4",
-		"@cdm-logger/server": "^5.0.4",
+		"@cdm-logger/server": "^5.0.5",
 		"@common-stack/core": "*",
 		"@common-stack/client-core": "*",
 		"@common-stack/client-react": "*",

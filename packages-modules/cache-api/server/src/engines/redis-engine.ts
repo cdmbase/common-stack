@@ -1,4 +1,4 @@
-import * as Redis from 'redis';
+import * as NodeRedis from 'redis';
 import { config } from '../config';
 import { ICacheEngine } from '../interfaces';
 
@@ -7,7 +7,7 @@ export class Redis implements ICacheEngine {
 
     constructor(
     ) {
-        this.client = Redis.createClient(config.REDIS_URL);
+        this.client = NodeRedis.createClient(config.REDIS_URL);
     }
 
     public async set(key: string, data: any) {

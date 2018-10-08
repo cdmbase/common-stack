@@ -4,7 +4,7 @@ import * as Logger from 'bunyan';
 import { Types } from '../constants';
 import { ICacheService, ICacheEngine, ICacheOptions } from '../interfaces';
 import { create } from 'domain';
-import { Redis } from '../engines/redis';
+import { Redis } from '../engines/redis-engine';
 import { logger as cdmLogger } from '@cdm-logger/server';
 import { config } from '../config';
 

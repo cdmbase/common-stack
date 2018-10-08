@@ -85,7 +85,7 @@ export class Cache implements ICacheService {
         return true;
     }
 
-    public async invalidate(keys?: string[], options?: ICacheOptions) {
+    public async invalidate(keys, options?: ICacheOptions) {
         if (keys.length <= 0) {
             return this.engine.invalidate();
         } else {

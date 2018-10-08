@@ -67,6 +67,10 @@ export class Cache implements ICacheService {
         const path = this.key(key, opts.scope);
         const cache = await this.engine.get(path);
 
+        if (cache == null) {
+            return null;
+        }
+
         if (this.isExpired(cache.createdAt, cache.maxAge)) {
             this.engine.drop(path);
             return null;

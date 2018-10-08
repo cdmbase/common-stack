@@ -15,7 +15,7 @@
   "packages": [
     "packages/*",
     "servers/*",
-    "packages-modules/*"
+    "packages-modules/**"
   ],
   "version": "0.0.4"
 }

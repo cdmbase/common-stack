@@ -98,7 +98,9 @@
 		"spinjs": "0.4.126",
 		"ts-node": "^6.0.0",
 		"typescript": "2.8.3",
-		"webpack": "^4.7.0"
+		"jest": "^22.4.2",
+		"rimraf": "^2.6.1",
+		"webpack": "^4.19.0"
 	},
 	"typings": "dist/main.d.ts",
 	"typescript": {

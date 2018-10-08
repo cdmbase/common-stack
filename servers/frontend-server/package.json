@@ -43,7 +43,7 @@
 		"rimraf": "^2.6.1",
 		"spinjs": "0.4.126",
 		"tslib": "^1.9.0",
-		"webpack": "^4.7.0"
+		"webpack": "^4.19.0"
 	},
 	"dependencies": {
 		"@cdm-logger/client": "^5.0.4",

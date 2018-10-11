@@ -2,7 +2,7 @@ import { ContainerModule, interfaces } from 'inversify';
 
 import { Cache } from '../services';
 import { Types } from '../constants';
-import { Redis } from '../engines/redis-engine';
+import { Redis } from '../engines/ioredis-engine';
 import { ICacheEngine, ICacheService } from '../interfaces';
 import * as Logger from 'bunyan';
 

@@ -6,8 +6,12 @@ export class Redis implements ICacheEngine {
     private client: IORedis.Redis;
     private getAsync;
 
-    constructor(options: IORedis.RedisOptions) {
-        this.client = new IORedis(options);
+    constructor(options: IORedis.RedisOptions | IORedis.ClusterOptions, isCluster?: boolean, clusterNodes?: IORedis.ClusterNode[]) {
+        if (isCluster) {
+            this.client = new IORedis.Cluster(clusterNodes, options);
+        } else {
+            this.client = new IORedis(options);
+        }
         this.getAsync = promisify(this.client.get).bind(this.client);
     }
 

@@ -4,9 +4,10 @@ import * as Logger from 'bunyan';
 import { Types } from '../constants';
 import { ICacheService, ICacheEngine, ICacheOptions, ICacheSetOptions } from '../interfaces';
 import { create } from 'domain';
-import { Redis } from '../engines/redis-engine';
+import { Redis } from '../engines/ioredis-engine';
 import { logger as cdmLogger } from '@cdm-logger/server';
 import { config } from '../config';
+import * as url from 'url';
 
 export class Cache implements ICacheService {
     private static DEFAULT_SCOPE = 'cde_cache';
@@ -28,7 +29,12 @@ export class Cache implements ICacheService {
     }
 
     public static get Instance() {
-        return this.instance || (this.instance = new this(new Redis({url: config.REDIS_URL})));
+        if (this.instance) {
+            return this.instance;
+        }
+        const {  port , hostname } = url.parse(config.REDIS_URL) as { port: any, hostname: string};
+        this.instance = new this(new Redis({ sentinels: [{ host: hostname, port }] }));
+        return this.instance;
     }
 
     private key(key: string, scope?: string) {

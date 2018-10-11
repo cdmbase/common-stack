@@ -32,8 +32,17 @@ export class Cache implements ICacheService {
         if (this.instance) {
             return this.instance;
         }
-        const {  port , hostname } = url.parse(config.REDIS_URL) as { port: any, hostname: string};
-        this.instance = new this(new Redis({ sentinels: [{ host: hostname, port }] }));
+        const { port, hostname } = url.parse(config.REDIS_URL) as { port: any, hostname: string };
+        let options;
+        if (config.REDIS_SENTINEL_ENABLED) {
+            options = {
+                sentinels: [{ host: hostname, port }],
+                name: config.REDIS_SENTINEL_NAME,
+            };
+        } else {
+            options = { host: hostname, port };
+        }
+        this.instance = new this(new Redis(options));
         return this.instance;
     }
 

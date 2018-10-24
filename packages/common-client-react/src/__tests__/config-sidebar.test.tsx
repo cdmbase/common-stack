@@ -9,10 +9,6 @@ import { IMenuData } from '../interfaces';
 import { isUrl, getMenus } from '../utils';
 import 'jest';
 
-
-
-
-
 const genMenuData: (namespace?: string) => IMenuData = (namespace = '') => ({
     [namespace + '/a']: { name: 'a', icon: 'a', authority: 'guest' },
     [namespace + '/a/1']: { name: '1', icon: '1' },
@@ -116,4 +112,3 @@ describe('getMenu utility with connector', () => {
     });
 
 });
-

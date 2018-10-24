@@ -35,7 +35,7 @@
     "db:migrate": "knex migrate:latest --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:seed": "npm run db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:watch": "npm test -- --watch",
     "posttest": "npm run lint",
     "coverage": "jest --coverage",
@@ -47,15 +47,26 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "setupFiles": [
+      "./setupTests.ts"
+    ],
     "roots": [
       "packages",
       "packages-modules",
       "servers"
     ],
+    "collectCoverageFrom": [
+      "packages/common-client-react/src/**/*.{ts,tsx}",
+      "!packages/**/*.test.{ts,tsx}"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.ts",
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
     ],
     "transform": {
       "\\.(gql|graphql)$": "jest-transform-graphql",
@@ -131,8 +142,9 @@
     "css-loader": "^0.28.11",
     "dotenv-webpack": "^1.5.5",
     "envalid": "^4.1.4",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^4.19.1",
     "eslint-plugin-graphql": "^2.1.1",
     "express": "^4.16.3",
@@ -156,6 +168,7 @@
     "jest-cli": "^22.4.2",
     "jest-transform-graphql": "^2.1.0",
     "jsdom": "^11.6.0",
+    "jsdom-global": "^3.0.2",
     "json-loader": "^0.5.7",
     "lerna": "2.11.0",
     "lint-staged": "^6.1.0",

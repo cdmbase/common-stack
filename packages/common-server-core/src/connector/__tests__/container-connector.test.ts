@@ -9,7 +9,7 @@ describe('container merge test', function () {
 
 
 
-    it('Should be able load container module', () => {
+    it('Should be able load container module', async () => {
 
         const TYPES = {
             someType1: 'someType1',
@@ -37,7 +37,7 @@ describe('container merge test', function () {
         });
 
 
-        const container = feature.createContainers({ settings1: 'settings1', settings2: 'settings2' });
+        const container = await feature.createContainers({ settings1: 'settings1', settings2: 'settings2' });
 
 
         const values1 = container.get(TYPES.someType1);

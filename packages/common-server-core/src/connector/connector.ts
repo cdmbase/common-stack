@@ -95,8 +95,9 @@ class Feature {
    * It should be called twice to get the context.
    */
   public createServiceContext(options, updateOptions?: any) {
-    this.createService(options, updateOptions);
     return async (req: any, connectionParams: any, webSocket?: any) => {
+      await this.createService(options, updateOptions);
+
       const results = await Promise.all(
         this.createContextFunc.map(createContext => createContext(req, connectionParams, webSocket)),
       );
@@ -110,14 +111,19 @@ class Feature {
    * @param container
    */
   public async createService(options, updateOptions?: any) {
-    if (this.container) {
-      this.updateContainers(options, updateOptions);
-    } else {
-      await this.createContainers(options);
-      await Promise.all(this.preCreateServiceFunc.map(async (createService) => await createService(this.container)));
+    try {
+      if (this.container) {
+        this.updateContainers(options, updateOptions);
+      } else {
+        await this.createContainers(options);
+        await Promise.all(this.preCreateServiceFunc.map(async (createService) => await createService(this.container)));
+      }
+      this.services = merge({}, ...this.createServiceFunc.map(createService => createService(this.container)));
+      return this.services;
+    } catch (err) {
+      throw err;
     }
 
-    return this.services = merge({}, ...this.createServiceFunc.map(createService => createService(this.container)));
   }
 
   public createDataSource(options?: any) {
@@ -135,7 +141,8 @@ class Feature {
   public async createContainers(options) {
     this.container = new Container();
     this.createContainerFunc.map(createModule => this.container.load(createModule(options)));
-    this.createAsyncContainerFunc.map(async asyncCreateModule => await this.container.loadAsync(asyncCreateModule));
+    await Promise.all(this.createAsyncContainerFunc
+      .map(async asyncCreateModule => await this.container.loadAsync(asyncCreateModule(options))));
     this.container.bind('IDefaultSettings').toConstantValue(this.getPreferences());
     return this.container;
   }

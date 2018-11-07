@@ -1,21 +1,26 @@
-import { ContainerModule, interfaces, Container } from 'inversify';
+import { ContainerModule, interfaces, Container, AsyncContainerModule } from 'inversify';
 import { Feature } from '../connector';
 
 import 'jest';
 
 
 describe('context merge test', function () {
+    const TYPES = {
+        someType1: 'someType1',
+        someType2: 'someType2',
+        someType3: 'someType3',
+        settings1: 'settings1',
+        settings2: 'settings2',
+    };
+    const createContainers = async (options) => {
+        this.container = new Container();
+        // this.createContainerFunc.map(createModule => this.container.load(createModule(options)));
+        this.createAsyncContainerFunc.map(async asyncCreateModule => await this.container.loadAsync(asyncCreateModule));
+        this.container.bind('IDefaultSettings').toConstantValue(this.getPreferences());
+        return this.container;
+    };
+    it('Should be able load context module', async (done) => {
 
-    it('Should be able load context module', async () => {
-
-
-        const TYPES = {
-            someType1: 'someType1',
-            someType2: 'someType2',
-            someType3: 'someType3',
-            settings1: 'settings1',
-            settings2: 'settings2',
-        };
 
         const module1 =
             (settings) => new ContainerModule((bind: interfaces.Bind) => {
@@ -36,16 +41,60 @@ describe('context merge test', function () {
         });
 
 
-        const feature = new Feature({
-            createContainerFunc: [module1, module2],
-            createServiceFunc: [serviceFunc],
+
+
+        try {
+            const feature = new Feature({
+                createContainerFunc: [module1, module2],
+                createServiceFunc: [serviceFunc],
+            });
+            const service = await feature.createServiceContext({ settings1: 'settings1', settings2: 'settings2' });
+            const contextService = await service(null, null);
+            expect(contextService.service1).toEqual(1);
+            done();
+        } catch (err) {
+            console.error(err);
+            expect(done.fail);
+        }
+
+
+    });
+
+    it('Should be able use await async functions in container modules', async (done) => {
+
+        const container = new Container();
+        const someAsyncFactory = () => new Promise<number>((res) => setTimeout(() => res(5), 100));
+        let resutlVal;
+        const module1 = () => new AsyncContainerModule(async (bind) => {
+            resutlVal = await someAsyncFactory();
+            bind<number>(TYPES.someType1).toConstantValue(resutlVal);
+        });
+
+        const module2 = () => new AsyncContainerModule(async (bind) => {
+            bind<number>(TYPES.someType2).toConstantValue(2);
         });
 
 
-        const service = feature.createServiceContext({ settings1: 'settings1', settings2: 'settings2' });
-        const contextService = await service(null, null);
+        const serviceFunc = (cont) => ({
+            service1: cont.get(TYPES.someType1),
+        });
 
-        expect(contextService.service1).toEqual(1);
+
+
+        try {
+            const feature = new Feature({
+                createAsyncContainerFunc: [module1, module2],
+                createServiceFunc: [serviceFunc],
+            });
+            const service = feature.createServiceContext({ settings1: 'settings1', settings2: 'settings2' });
+
+            const contextService = await service(null, null);
+            expect(contextService.service1).toEqual(resutlVal);
+            done();
+        } catch (err) {
+            done.fail(err);
+        }
+
 
 
     });

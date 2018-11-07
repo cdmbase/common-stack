@@ -16,6 +16,7 @@ export type FeatureParams = {
   createServiceFunc?: Function | Function[],
   createDataSourceFunc?: Function | Function[],
   createContainerFunc?: Function | Function[],
+  createAsyncContainerFunc?: Function | Function[],
   preCreateServiceFunc?: Function | Function[],
   updateContainerFunc?: any | any[],
   createPreference?: Function | Function[],
@@ -35,6 +36,7 @@ class Feature {
   public createContextFunc: Function[];
   public createServiceFunc: Function[];
   public createContainerFunc: Function[];
+  public createAsyncContainerFunc: Function[];
   public createDataSourceFunc: Function[];
   public preCreateServiceFunc: Function[];
   public disposeFunc: any[];
@@ -61,6 +63,7 @@ class Feature {
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
+    this.createAsyncContainerFunc = combine(arguments, arg => arg.createAsyncContainerFunc);
     this.updateContainerFunc = combine(arguments, arg => arg.updateContainerFunc);
     this.createDataSourceFunc = combine(arguments, arg => arg.createDataSourceFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
@@ -110,7 +113,7 @@ class Feature {
     if (this.container) {
       this.updateContainers(options, updateOptions);
     } else {
-      this.createContainers(options);
+      await this.createContainers(options);
       await Promise.all(this.preCreateServiceFunc.map(async (createService) => await createService(this.container)));
     }
 
@@ -129,9 +132,10 @@ class Feature {
     return merge({}, ...this.createDirectivesFunc.map(createDirectives => createDirectives(options)));
   }
 
-  public createContainers(options) {
+  public async createContainers(options) {
     this.container = new Container();
     this.createContainerFunc.map(createModule => this.container.load(createModule(options)));
+    this.createAsyncContainerFunc.map(async asyncCreateModule => await this.container.loadAsync(asyncCreateModule));
     this.container.bind('IDefaultSettings').toConstantValue(this.getPreferences());
     return this.container;
   }

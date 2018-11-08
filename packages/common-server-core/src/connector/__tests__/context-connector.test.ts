@@ -1,5 +1,6 @@
 import { ContainerModule, interfaces, Container, AsyncContainerModule } from 'inversify';
 import { Feature } from '../connector';
+import { defaultSettings, userSettings, prefRes, prefsArrRes, finalSettings } from './fixtures/preferenfces/sample-settings';
 
 import 'jest';
 
@@ -21,7 +22,6 @@ describe('context merge test', function () {
     };
     it('Should be able load context module', async (done) => {
 
-
         const module1 =
             (settings) => new ContainerModule((bind: interfaces.Bind) => {
                 bind<number>(TYPES.someType1).toConstantValue(1);
@@ -35,13 +35,9 @@ describe('context merge test', function () {
                 bind<string>(TYPES.settings2).toConstantValue(settings.settings2);
             });
 
-
         const serviceFunc = (cont) => ({
             service1: cont.get(TYPES.someType1),
         });
-
-
-
 
         try {
             const feature = new Feature({
@@ -56,13 +52,10 @@ describe('context merge test', function () {
             console.error(err);
             expect(done.fail);
         }
-
-
     });
 
     it('Should be able use await async functions in container modules', async (done) => {
 
-        const container = new Container();
         const someAsyncFactory = () => new Promise<number>((res) => setTimeout(() => res(5), 100));
         let resutlVal;
         const module1 = () => new AsyncContainerModule(async (bind) => {
@@ -74,12 +67,9 @@ describe('context merge test', function () {
             bind<number>(TYPES.someType2).toConstantValue(2);
         });
 
-
         const serviceFunc = (cont) => ({
             service1: cont.get(TYPES.someType1),
         });
-
-
 
         try {
             const feature = new Feature({
@@ -89,13 +79,12 @@ describe('context merge test', function () {
             const service = feature.createServiceContext({ settings1: 'settings1', settings2: 'settings2' });
 
             const contextService = await service(null, null);
+            console.log('contextService', contextService);
             expect(contextService.service1).toEqual(resutlVal);
             done();
         } catch (err) {
             done.fail(err);
         }
-
-
-
     });
+
 });

@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/counter",
-  "version": "0.0.186",
+  "version": "0.0.187",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "private": true,
@@ -47,7 +47,7 @@
     "webpack": "^4.19.0"
   },
   "dependencies": {
-    "@common-stack/components": "^0.0.186",
+    "@common-stack/components": "^0.0.187",
     "graphql-iso-date": "^3.5.0",
     "graphql-tag": "^2.9.2"
   },

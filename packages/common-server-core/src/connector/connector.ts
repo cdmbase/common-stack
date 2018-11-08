@@ -147,19 +147,21 @@ class Feature {
     return this.container;
   }
 
-  public updateContainers(options, updateOptions) {
+  public updateContainers(options, updateOptions?: any) {
     let mergedModules = merge({}, ...this.updateContainerFunc);
     const matchingModules = [];
-    updateOptions.forEach(option => {
-      const dispose = this.disposeFunc.find(el => el.container === option);
-      if (dispose) {
-        this.services[dispose.ctx].dispose();
-      }
-      const searchModule = mergedModules[option];
-      if (searchModule) {
-        matchingModules.push(searchModule);
-      }
-    });
+    if (updateOptions) {
+      updateOptions.forEach(option => {
+        const dispose = this.disposeFunc.find(el => el.container === option);
+        if (dispose) {
+          this.services[dispose.ctx].dispose();
+        }
+        const searchModule = mergedModules[option];
+        if (searchModule) {
+          matchingModules.push(searchModule);
+        }
+      });
+    }
 
     matchingModules.map(createModule => this.container.load(createModule(options)));
   }

@@ -19,17 +19,27 @@ export enum ConfigurationScope {
 
 
 export interface IPreferences {
-    [key: string]: {
-        type?: string | string[];
-        default?: string | boolean | number | any;
-        description?: string;
-        overridable?: boolean;
-        scope?: ConfigurationScope;
-        settings?: string;
-        enum?: any;
-        enumDescriptions?: string[];
-        [key: string]: any;
-    };
+    [key: string]: IPreferencesData;
+}
+
+export interface IPreferencesData {
+    type?: string | string[];
+    default?: string | boolean | number | any;
+    description?: string;
+    overridable?: boolean;
+    scope?: ConfigurationScope;
+    settings?: string;
+    enum?: any;
+    enumDescriptions?: string[];
+    [key: string]: any;
+}
+
+/**
+ * Formatted preferences data
+ */
+export interface IPreferncesTransformed {
+    type: string;
+    data: IPreferencesData;
 }
 
 export interface IOverwritePrefernce {

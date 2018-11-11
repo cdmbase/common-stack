@@ -1,3 +1,5 @@
+import { IPreferncesTransformed, IPreferences } from '../interfaces';
+
 export const getCurrentPreferences = (preferencesDefaultArr, overwritePreferences) => {
   const preferencesArr = { ...preferencesDefaultArr };
 
@@ -15,8 +17,8 @@ export const getCurrentPreferences = (preferencesDefaultArr, overwritePreference
   return preferencesArr;
 };
 
-export const transformPrefsToArray = (preferences) => {
-  const resultArr = [];
+export const transformPrefsToArray = (preferences: IPreferences) => {
+  const resultArr: IPreferncesTransformed[] = [];
   Object.keys(preferences).forEach(key => {
     const type = key.split('.')[0];
     const findType = resultArr.find(el => el.type === type);

@@ -1,4 +1,4 @@
-import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePrefernce } from '../interfaces';
+import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePrefernce, IPreferncesTransformed } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { Container, interfaces } from 'inversify';
 import { getCurrentPreferences, transformPrefsToArray } from '../utils';
@@ -178,7 +178,7 @@ class Feature {
     return this.middleware;
   }
 
-  public getPreferences() {
+  public getPreferences(): IPreferncesTransformed[] {
     const defaultPrefs = merge(...this.createPreference);
     const overwritePrefs = merge(...this.overwritePreference);
     const fullPrefs = getCurrentPreferences(defaultPrefs, overwritePrefs);

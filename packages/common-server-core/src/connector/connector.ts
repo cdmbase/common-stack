@@ -1,4 +1,4 @@
-import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePrefernce, IPreferncesTransformed } from '../interfaces';
+import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePreference, IPreferncesTransformed } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { Container, interfaces } from 'inversify';
 import { getCurrentPreferences, transformPrefsToArray } from '../utils';
@@ -20,7 +20,7 @@ export type FeatureParams = {
   preCreateServiceFunc?: Function | Function[],
   updateContainerFunc?: any | any[],
   createPreference?: IPreferences | IPreferences[],
-  overwritePreference?: IOverwritePrefernce | IOverwritePrefernce[],
+  overwritePreference?: IOverwritePreference | IOverwritePreference[],
   dataIdFromObject?: Function | Function[],
   disposeFunc?: any | any[],
   beforeware?: any | any[],
@@ -44,7 +44,7 @@ class Feature {
   public beforeware: Function[];
   public middleware: Function[];
   public createPreference: IPreferences[];
-  public overwritePreference: IOverwritePrefernce[];
+  public overwritePreference: IOverwritePreference[];
 
   private services;
   private container;

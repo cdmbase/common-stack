@@ -42,6 +42,6 @@ export interface IPreferncesTransformed {
     data: IPreferencesData;
 }
 
-export interface IOverwritePrefernce {
+export interface IOverwritePreference {
     [key: string]: string | boolean | number | any;
 }

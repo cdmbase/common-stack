@@ -21,6 +21,43 @@ export const defaultSettings = {
     },
 };
 
+export const convertedDefaultSettings = [
+    {
+        type: 'files',
+        data: [
+            {
+                default: false,
+                description: 'When enabled, will trim trailing whitespace when saving a file.',
+                enum: [],
+                enumDescriptions: [],
+                name: 'files.trimTrailingWhitespace',
+                overridable: true,
+                settings: 'both',
+                type: 'boolean',
+            },
+            {
+                default: false,
+                description: 'Some Description',
+                enum: [],
+                enumDescriptions: [],
+                name: 'files.autosave',
+                settings: 'both',
+                type: 'boolean',
+            },
+        ],
+    },
+    {
+        type: 'tree',
+        data: [
+            {
+                'name': 'tree.trimTrailingWhitespace',
+                'one': false,
+            },
+        ],
+
+    },
+];
+
 export const userSettings = {
     'files.trimTrailingWhitespace.default': true,
     'tree.trimTrailingWhitespace.something': 'else',
@@ -45,7 +82,7 @@ export const prefRes = {
         enum: [],
         enumDescriptions: [],
     },
-    'tree.trimTrailingWhitespace': { one: false},
+    'tree.trimTrailingWhitespace': { one: false },
 };
 
 export const prefsArrRes = [

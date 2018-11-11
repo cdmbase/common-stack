@@ -11,3 +11,27 @@ export interface IDirectiveOptions {
     [key: string]: any;
     logger?: Logger;
 }
+
+export enum ConfigurationScope {
+    WINDOW = 1,
+    RESOURCE,
+}
+
+
+export interface IPreferences {
+    [key: string]: {
+        type?: string | string[];
+        default?: string | boolean | number | any;
+        description?: string;
+        overridable?: boolean;
+        scope?: ConfigurationScope;
+        settings?: string;
+        enum?: any;
+        enumDescriptions?: string[];
+        [key: string]: any;
+    };
+}
+
+export interface IOverwritePrefernce {
+    [key: string]: string | boolean | number | any;
+}

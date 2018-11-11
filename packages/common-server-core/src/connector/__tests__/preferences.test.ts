@@ -25,7 +25,7 @@ describe('Preferences', function () {
                     enumDescriptions: [],
                     overridable: true,
                 },
-            } as any,
+            },
         });
         const connector2 = new Feature({
             createPreference: {
@@ -38,18 +38,18 @@ describe('Preferences', function () {
                     enumDescriptions: [],
                     overridable: true,
                 },
-            } as any,
+            },
         });
 
         const connector3 = new Feature({
             overwritePreference: {
                 'files.trimTrailingWhitespace.default': true,
-            } as any,
+            },
         });
         const connector4 = new Feature({
             overwritePreference: {
                 'files.autosave.description': 'new one',
-            } as any,
+            },
         });
 
         const feature = new Feature(connector, connector2, connector3, connector4);

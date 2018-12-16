@@ -11,6 +11,7 @@ export abstract class AbstractFeature implements IFeature {
     public errorLink: any;
     public createFetch: any;
     public connectionParam: any;
+    public epic: any;
     public reducer: any;
     public resolver: any;
     public schema: any[];
@@ -54,6 +55,9 @@ export abstract class AbstractFeature implements IFeature {
 
         // State management
         this.reducer = combine(arguments, arg => arg.reducer);
+
+        // Epic actions
+        this.epic = combine(arguments, arg => arg.epic);
 
         // Client side schema for apollo-link-state
         this.schema = combine(arguments, arg => arg.schema);
@@ -99,6 +103,10 @@ export abstract class AbstractFeature implements IFeature {
                 (acc, el) => [{ ...acc[0], ...el }],
                 [{}],
             );
+    }
+
+    public get epics() {
+        return merge(...this.epic);
     }
 
     public getRouter(withRoot?: boolean, rootComponent?: any) {

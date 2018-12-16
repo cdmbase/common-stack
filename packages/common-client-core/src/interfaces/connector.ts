@@ -10,6 +10,8 @@ export interface FeatureParams {
     readonly errorLink?: any;
     readonly createFetch?: any;
     readonly connectionParam?: any;
+    // to support observable actions from 'redux-observable'
+    readonly epic?: any;
     readonly reducer?: any;
     readonly resolver?: any;
     readonly schema?: any;
@@ -43,6 +45,7 @@ export interface IFeature {
     readonly errorLink: any;
     readonly createFetch: any;
     readonly connectionParam: any;
+    readonly epic: any;
     readonly reducer: any;
     readonly resolver: any;
     readonly schema: any;
@@ -69,6 +72,8 @@ export interface IFeature {
     readonly middleMainPanelItemsProps?: any;
 
     // methods
+    readonly epics;
+
     readonly getRouter;
 
     readonly getRoutes;

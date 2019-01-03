@@ -140,10 +140,15 @@ class Feature {
 
   public async createContainers(options) {
     this.container = new Container();
-    this.createContainerFunc.map(createModule => this.container.load(createModule(options)));
+    this.createContainerFunc.map(createModule => {
+      this.container.load(createModule(options));
+    });
     await Promise.all(this.createAsyncContainerFunc
-      .map(async asyncCreateModule => await this.container.loadAsync(asyncCreateModule(options))));
+      .map(async asyncCreateModule => {
+        await this.container.loadAsync(asyncCreateModule(options));
+      }));
     this.container.bind('IDefaultSettings').toConstantValue(this.getPreferences());
+    this.container.bind('IDefaultSettingsObj').toConstantValue(this.getPreferencesObj());
     return this.container;
   }
 
@@ -179,10 +184,13 @@ class Feature {
   }
 
   public getPreferences(): IPreferncesTransformed[] {
+    return transformPrefsToArray(this.getPreferencesObj());
+  }
+
+  public getPreferencesObj() {
     const defaultPrefs = merge(...this.createPreference);
     const overwritePrefs = merge(...this.overwritePreference);
-    const fullPrefs = getCurrentPreferences(defaultPrefs, overwritePrefs);
-    return transformPrefsToArray(fullPrefs);
+    return getCurrentPreferences(defaultPrefs, overwritePrefs);
   }
 
 }

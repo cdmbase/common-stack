@@ -41,7 +41,8 @@ export abstract class AbstractFeature implements IFeature {
 
     constructor(
         feature?: FeatureParams,
-        ...features,
+        // tslint:disable:trailing-comma
+        ...features: FeatureParams[]
     ) {
 
         // Connectivity
@@ -58,6 +59,7 @@ export abstract class AbstractFeature implements IFeature {
 
         // Epic actions
         this.epic = combine(arguments, arg => arg.epic);
+        console.log('This.epic', this.epic);
 
         // Client side schema for apollo-link-state
         this.schema = combine(arguments, arg => arg.schema);
@@ -106,7 +108,7 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     public get epics() {
-        return merge(...this.epic);
+        return this.epic;
     }
 
     public getRouter(withRoot?: boolean, rootComponent?: any) {

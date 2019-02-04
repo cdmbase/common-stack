@@ -48,7 +48,7 @@ describe('epics', () => {
         );
 
         const reduxStore = { I: 'am', a: 'store' };
-        const subject = new Subject();
+        const subject: any = new Subject();
         const initActions = new ActionsObservable(subject);
         const result = epic(initActions, reduxStore);
         const emittedActions = [];
@@ -84,7 +84,7 @@ describe('epics', () => {
         );
 
         const reduxStore = { I: 'am', a: 'store' };
-        const subject = new Subject();
+        const subject: any = new Subject();
         const initActions = new ActionsObservable(subject);
         const result = epic(initActions, reduxStore);
         const emittedActions = [];

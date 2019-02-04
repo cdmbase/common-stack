@@ -59,7 +59,6 @@ export abstract class AbstractFeature implements IFeature {
 
         // Epic actions
         this.epic = combine(arguments, arg => arg.epic);
-        console.log('This.epic', this.epic);
 
         // Client side schema for apollo-link-state
         this.schema = combine(arguments, arg => arg.schema);

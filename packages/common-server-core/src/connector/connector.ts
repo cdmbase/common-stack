@@ -16,7 +16,9 @@ export type FeatureParams = {
   createServiceFunc?: Function | Function[],
   createDataSourceFunc?: Function | Function[],
   createContainerFunc?: Function | Function[],
+  createHemeraContainerFunc?: Function | Function[],
   createAsyncContainerFunc?: Function | Function[],
+  createAsyncHemeraContainerFunc?: Function | Function[],
   preCreateServiceFunc?: Function | Function[],
   updateContainerFunc?: any | any[],
   createPreference?: IPreferences | IPreferences[],
@@ -36,7 +38,9 @@ class Feature {
   public createContextFunc: Function[];
   public createServiceFunc: Function[];
   public createContainerFunc: Function[];
+  public createHemeraContainerFunc: Function[];
   public createAsyncContainerFunc: Function[];
+  public createAsyncHemeraContainerFunc: Function[];
   public createDataSourceFunc: Function[];
   public preCreateServiceFunc: Function[];
   public disposeFunc: any[];
@@ -48,6 +52,7 @@ class Feature {
 
   private services;
   private container;
+  private hemeraContainer;
   private dataSources;
 
   constructor(feature?: FeatureParams, ...features: Feature[]) {
@@ -63,7 +68,9 @@ class Feature {
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
+    this.createHemeraContainerFunc = combine(arguments, arg => arg.createHemeraContainerFunc);
     this.createAsyncContainerFunc = combine(arguments, arg => arg.createAsyncContainerFunc);
+    this.createAsyncHemeraContainerFunc = combine(arguments, arg => arg.createAsyncHemeraContainerFunc);
     this.updateContainerFunc = combine(arguments, arg => arg.updateContainerFunc);
     this.createDataSourceFunc = combine(arguments, arg => arg.createDataSourceFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
@@ -150,6 +157,18 @@ class Feature {
     this.container.bind('IDefaultSettings').toConstantValue(this.getPreferences());
     this.container.bind('IDefaultSettingsObj').toConstantValue(this.getPreferencesObj());
     return this.container;
+  }
+
+  public async createHemeraContainers(options) {
+    this.hemeraContainer = new Container();
+    this.createHemeraContainerFunc.map(createModule => {
+      this.hemeraContainer.load(createModule(options));
+    });
+    await Promise.all(this.createAsyncHemeraContainerFunc
+      .map(async asyncCreateModule => {
+        await this.hemeraContainer.loadAsync(asyncCreateModule(options));
+      }));
+    return this.hemeraContainer;
   }
 
   public updateContainers(options, updateOptions?: any) {

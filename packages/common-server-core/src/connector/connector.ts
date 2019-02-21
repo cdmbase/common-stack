@@ -28,6 +28,7 @@ export type FeatureParams = {
   beforeware?: any | any[],
   middleware?: any | any[],
   catalogInfo?: any | any[],
+  configureServer: any | any[],
 };
 
 class Feature {
@@ -47,6 +48,7 @@ class Feature {
   public updateContainerFunc: any[];
   public beforeware: Function[];
   public middleware: Function[];
+  public configureServer: Function[];
   public createPreference: IPreferences[];
   public overwritePreference: IOverwritePreference[];
 
@@ -60,6 +62,7 @@ class Feature {
       Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
     );
     this.schema = combine(arguments, arg => arg.schema);
+    this.configureServer = combine(arguments, arg => arg.configureServer);
     this.createDirectivesFunc = combine(arguments, arg => arg.createDirectivesFunc);
     this.createResolversFunc = combine(arguments, arg => arg.createResolversFunc);
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);

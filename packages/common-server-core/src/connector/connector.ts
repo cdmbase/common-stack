@@ -43,6 +43,7 @@ class Feature {
   public createAsyncHemeraContainerFunc: Function[];
   public createDataSourceFunc: Function[];
   public preCreateServiceFunc: Function[];
+  public afterCreateServiceFunc: Function[];
   public disposeFunc: any[];
   public updateContainerFunc: any[];
   public beforeware: Function[];
@@ -65,6 +66,7 @@ class Feature {
     this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
     this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
     this.preCreateServiceFunc = combine(arguments, arg => arg.preCreateServiceFunc);
+    this.afterCreateServiceFunc = combine(arguments, arg => arg.afterCreateServiceFunc);
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
@@ -126,6 +128,8 @@ class Feature {
         await Promise.all(this.preCreateServiceFunc.map(async (createService) => await createService(this.container)));
       }
       this.services = merge({}, ...this.createServiceFunc.map(createService => createService(this.container)));
+
+      await Promise.all(this.afterCreateServiceFunc.map(async (createService) => await createService(this.container)));
       return this.services;
     } catch (err) {
       throw err;

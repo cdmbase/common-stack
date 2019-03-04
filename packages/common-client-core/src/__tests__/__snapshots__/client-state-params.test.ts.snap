@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`client-state-params concatenates schema strings if typeDefs are passed in as an array 1`] = `
+Array [
+  Object {
+    "definition": "type Todo1 {
+        id: String
+        message: String!
+      }
+      extend type Query {
+        todo1(id: String!): Todo1
+      }type Todo2 {
+        id: String
+        message: String!
+      }
+      extend type Query {
+        todo2(id: String!): Todo2
+      }type Query {}
+  type Mutation {}",
+    "directives": "directive @client on FIELD",
+  },
+]
+`;
+
 exports[`client-state-params merge client-state 1`] = `
 Object {
   "defaults": Object {
@@ -18,9 +40,63 @@ Object {
       "foo2": [Function],
     },
   },
-  "typeDefs": "
-    type Query {}
-    type Mutation {}
-    ",
+  "typeDefs": "type Todo1 {
+        id: String
+        message: String!
+      }
+      extend type Query {
+        todo1(id: String!): Todo1
+      }type Todo2 {
+        id: String
+        message: String!
+      }
+      extend type Query {
+        todo2(id: String!): Todo2
+      }type Query {}
+  type Mutation {}",
+}
+`;
+
+exports[`client-state-params writes defaults to the cache upon initialization -- original 1`] = `
+Object {
+  "$ROOT_QUERY.foo": Object {
+    "__typename": "Bar",
+    "bar": false,
+  },
+  "ROOT_QUERY": Object {
+    "foo": Object {
+      "generated": true,
+      "id": "$ROOT_QUERY.foo",
+      "type": "id",
+      "typename": "Bar",
+    },
+  },
+}
+`;
+
+exports[`client-state-params writes defaults to the cache upon initialization 1`] = `
+Object {
+  "$ROOT_QUERY.foo1": Object {
+    "__typename": "Bar1",
+    "bar1": false,
+  },
+  "$ROOT_QUERY.foo2": Object {
+    "__typename": "Bar2",
+    "bar2": false,
+  },
+  "ROOT_QUERY": Object {
+    "foo1": Object {
+      "generated": true,
+      "id": "$ROOT_QUERY.foo1",
+      "type": "id",
+      "typename": "Bar1",
+    },
+    "foo2": Object {
+      "generated": true,
+      "id": "$ROOT_QUERY.foo2",
+      "type": "id",
+      "typename": "Bar2",
+    },
+  },
 }
 `;

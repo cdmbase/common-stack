@@ -140,10 +140,6 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get getStateParams(): ClientStateParams {
-        // let schema;
-        // for(let param of this.clientStateParams) {
-
-        // }
         return this.clientStateParams.reduce(function (acc, curr) {
             const defs = Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs];
             const schema = defs.map(typeDef => {

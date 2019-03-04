@@ -1,6 +1,6 @@
 
 export interface ClientStateParams {
-    resolvers: any;
+    resolvers?: any;
     defaults?: any;
     typeDefs?: string | string[];
 }

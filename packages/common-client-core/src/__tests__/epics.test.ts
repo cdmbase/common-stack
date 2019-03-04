@@ -3,31 +3,8 @@ import { combineEpics, ofType, ActionsObservable } from 'redux-observable';
 import 'jest';
 import { Subject } from 'rxjs';
 import { map, toArray } from 'rxjs/operators';
-import { AbstractFeature } from '../connector';
+import { TestFeature } from './test-feature';
 
-class TestFeature extends AbstractFeature {
-    public getConfiguredMenus: () => {};
-
-    public getDataIdFromObject: () => {};
-
-    public getDataRoot: () => {};
-
-    public getConfiguredRoutes: () => {};
-
-    public getMenus: () => {};
-
-    public getRoutes: () => {};
-
-    public getWrappedRoot: () => {};
-
-    public navItems: () => {};
-
-    public navItemRight: () => {};
-
-    public navItemsRight: () => {};
-
-    public registerLanguages: () => {};
-}
 
 describe('epics', () => {
     xit('should combine epics', () => {

@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`client-state-params merge client-state 1`] = `
+Object {
+  "defaults": Object {
+    "foo1": Object {
+      "__typename": "Bar1",
+      "bar1": false,
+    },
+    "foo2": Object {
+      "__typename": "Bar2",
+      "bar2": false,
+    },
+  },
+  "resolvers": Object {
+    "Query": Object {
+      "foo1": [Function],
+      "foo2": [Function],
+    },
+  },
+  "typeDefs": "
+    type Query {}
+    type Mutation {}
+    ",
+}
+`;

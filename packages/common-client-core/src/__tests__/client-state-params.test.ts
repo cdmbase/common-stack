@@ -32,7 +32,7 @@ describe('client-state-params', () => {
         id: String
         message: String!
       }
-      extend Query {
+      extend type Query {
         todo1(id: String!): Todo1
       }
     `;
@@ -61,7 +61,7 @@ describe('client-state-params', () => {
         id: String
         message: String!
       }
-      extend Query {
+      extend type Query {
         todo2(id: String!): Todo2
       }
     `;

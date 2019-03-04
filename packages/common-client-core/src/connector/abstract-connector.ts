@@ -139,7 +139,7 @@ export abstract class AbstractFeature implements IFeature {
         return merge(...this.resolver);
     }
 
-    get getStateParams() {
+    get getStateParams(): ClientStateParams {
         return merge({}, ...this.clientStateParams);
     }
 

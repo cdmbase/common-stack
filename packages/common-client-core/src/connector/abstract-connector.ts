@@ -139,8 +139,27 @@ export abstract class AbstractFeature implements IFeature {
         return merge(...this.resolver);
     }
 
-    get getStateParams() {
-        return merge({}, ...this.clientStateParams);
+    get getStateParams(): ClientStateParams {
+        // let schema;
+        // for(let param of this.clientStateParams) {
+
+        // }
+        return this.clientStateParams.reduce(function (acc, curr) {
+            const defs = Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs];
+            const schema = defs.map(typeDef => {
+                if (typeof typeDef === 'string') {
+
+                    return typeDef;
+                }
+                console.warn(`Not supported AST format `, typeDef);
+            })
+                .map(str => str.trim())
+                .join('\n');
+            const typeDefs = acc.typeDefs ? acc.typeDefs.concat(schema) : schema;
+            const defaults = merge(acc.defaults, curr.defaults);
+            const resolvers = merge(acc.resolvers, curr.resolvers);
+            return { defaults, resolvers, typeDefs };
+        }, {});
     }
 
     get connectionParams() {

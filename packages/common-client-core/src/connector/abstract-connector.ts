@@ -13,7 +13,11 @@ export abstract class AbstractFeature implements IFeature {
     public connectionParam: any;
     public epic: any;
     public reducer: any;
+    /**
+     * @deprecated use `clientStateParams`
+     */
     public resolver: any;
+    public clientStateParams?: ClientStateParams[];
     public schema: any[];
     public sidebarSegments: any[];
     public routerFactory: any;
@@ -46,56 +50,57 @@ export abstract class AbstractFeature implements IFeature {
     ) {
 
         // Connectivity
-        this.link = combine(arguments, arg => arg.link);
-        this.errorLink = combine(arguments, arg => arg.errorLink);
+        this.link = combine(arguments, (arg: FeatureParams) => arg.link);
+        this.errorLink = combine(arguments, (arg: FeatureParams) => arg.errorLink);
 
-        this.createFetch = combine(arguments, arg => arg.createFetch)
+        this.createFetch = combine(arguments, (arg: FeatureParams) => arg.createFetch)
             .slice(-1)
             .pop();
-        this.connectionParam = combine(arguments, arg => arg.connectionParam);
+        this.connectionParam = combine(arguments, (arg: FeatureParams) => arg.connectionParam);
 
         // State management
-        this.reducer = combine(arguments, arg => arg.reducer);
+        this.reducer = combine(arguments, (arg: FeatureParams) => arg.reducer);
+        this.clientStateParams = combine(arguments, (arg: FeatureParams) => arg.clientStateParams);
 
         // Epic actions
-        this.epic = combine(arguments, arg => arg.epic);
+        this.epic = combine(arguments, (arg: FeatureParams) => arg.epic);
 
         // Client side schema for apollo-link-state
-        this.schema = combine(arguments, arg => arg.schema);
-        this.resolver = combine(arguments, arg => arg.resolver);
+        this.schema = combine(arguments, (arg: FeatureParams) => arg.schema);
+        this.resolver = combine(arguments, (arg: FeatureParams) => arg.resolver);
 
-        this.sidebarSegments = combine(arguments, arg => arg.sidebarSegments);
+        this.sidebarSegments = combine(arguments, (arg: FeatureParams) => arg.sidebarSegments);
 
-        this.leftMainPanelItems = combine(arguments, arg => arg.leftMainPanelItems);
-        this.middleMainPanelItems = combine(arguments, arg => arg.middleMainPanelItems);
-        this.middleMainPanelItemsProps = combine(arguments, arg => arg.middleMainPanelItemsProps);
-        this.leftFooterItems = combine(arguments, arg => arg.leftFooterItems);
-        this.rightFooterItems = combine(arguments, arg => arg.rightFooterItems);
-        this.middleLowerPanelItems = combine(arguments, arg => arg.middleLowerPanelItems);
-        this.dataIdFromObject = combine(arguments, arg => arg.dataIdFromObject);
+        this.leftMainPanelItems = combine(arguments, (arg: FeatureParams) => arg.leftMainPanelItems);
+        this.middleMainPanelItems = combine(arguments, (arg: FeatureParams) => arg.middleMainPanelItems);
+        this.middleMainPanelItemsProps = combine(arguments, (arg: FeatureParams) => arg.middleMainPanelItemsProps);
+        this.leftFooterItems = combine(arguments, (arg: FeatureParams) => arg.leftFooterItems);
+        this.rightFooterItems = combine(arguments, (arg: FeatureParams) => arg.rightFooterItems);
+        this.middleLowerPanelItems = combine(arguments, (arg: FeatureParams) => arg.middleLowerPanelItems);
+        this.dataIdFromObject = combine(arguments, (arg: FeatureParams) => arg.dataIdFromObject);
 
         // Navigation
-        this.routerFactory = combine(arguments, arg => arg.routerFactory)
+        this.routerFactory = combine(arguments, (arg: FeatureParams) => arg.routerFactory)
             .slice(-1)
             .pop();
-        this.route = combine(arguments, arg => arg.route);
-        this.routeConfig = combine(arguments, arg => arg.routeConfig);
+        this.route = combine(arguments, (arg: FeatureParams) => arg.route);
+        this.routeConfig = combine(arguments, (arg: FeatureParams) => arg.routeConfig);
 
-        this.menuConfig = combine(arguments, arg => arg.menuConfig);
-        this.navItem = combine(arguments, arg => arg.navItem);
-        this.navItemRight = combine(arguments, arg => arg.navItemRight);
-
-        // UI provider-components
-        this.rootComponentFactory = combine(arguments, arg => arg.rootComponentFactory);
-        this.dataRootComponent = combine(arguments, arg => arg.dataRootComponent);
+        this.menuConfig = combine(arguments, (arg: FeatureParams) => arg.menuConfig);
+        this.navItem = combine(arguments, (arg: FeatureParams) => arg.navItem);
+        this.navItemRight = combine(arguments, (arg: FeatureParams) => arg.navItemRight);
 
         // UI provider-components
-        this.languagesFuncs = combine(arguments, arg => arg.languagesFuncs);
+        this.rootComponentFactory = combine(arguments, (arg: FeatureParams) => arg.rootComponentFactory);
+        this.dataRootComponent = combine(arguments, (arg: FeatureParams) => arg.dataRootComponent);
+
+        // UI provider-components
+        this.languagesFuncs = combine(arguments, (arg: FeatureParams) => arg.languagesFuncs);
 
 
         // TODO: Use React Helmet for those. Low level DOM manipulation
-        this.stylesInsert = combine(arguments, arg => arg.stylesInsert);
-        this.scriptsInsert = combine(arguments, arg => arg.scriptsInsert);
+        this.stylesInsert = combine(arguments, (arg: FeatureParams) => arg.stylesInsert);
+        this.scriptsInsert = combine(arguments, (arg: FeatureParams) => arg.scriptsInsert);
 
 
         // Shared modules data
@@ -134,6 +139,9 @@ export abstract class AbstractFeature implements IFeature {
         return merge(...this.resolver);
     }
 
+    get getStateParams() {
+        return merge({}, ...this.clientStateParams);
+    }
 
     get connectionParams() {
         return this.connectionParam;

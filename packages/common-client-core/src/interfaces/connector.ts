@@ -1,6 +1,6 @@
 
 export interface ClientStateParams {
-    resolvers: any;
+    resolvers?: any;
     defaults?: any;
     typeDefs?: string | string[];
 }
@@ -13,7 +13,11 @@ export interface FeatureParams {
     // to support observable actions from 'redux-observable'
     readonly epic?: any;
     readonly reducer?: any;
+    /**
+     * @deprecated use `clientStateParams`
+     */
     readonly resolver?: any;
+    readonly clientStateParams?: ClientStateParams | ClientStateParams[];
     readonly schema?: any;
     readonly sidebarSegments?: any;
     readonly routerFactory?: any;
@@ -47,6 +51,7 @@ export interface IFeature {
     readonly connectionParam: any;
     readonly epic: any;
     readonly reducer: any;
+    readonly clientStateParams?: ClientStateParams | ClientStateParams[];
     readonly resolver: any;
     readonly schema: any;
     readonly routerFactory: any;

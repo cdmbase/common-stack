@@ -1,32 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`client-state-params concatenates schema strings if typeDefs are passed in as an array 1`] = `
-Array [
-  Object {
-    "definition": "
-  type Query {}
-  type Mutation {}
-  type Todo1 {
-        id: String
-        message: String!
-      }
-      extend type Query {
-        todo1(id: String!): Todo1
-      }
-type Todo2 {
-        id: String
-        message: String!
-      }
-      extend type Query {
-        todo2(id: String!): Todo2
-      }
-type Query {}
-  type Mutation {}",
-    "directives": "directive @client on FIELD",
-  },
-]
-`;
-
 exports[`client-state-params merge client-state 1`] = `
 Object {
   "defaults": Object {
@@ -45,12 +18,11 @@ Object {
       "foo2": [Function],
     },
   },
-  "typeDefs": "type Todo1 {
-        id: String
-        message: String!
+  "typeDefs": "type Bar1 {
+        bar1: Boolean
       }
       extend type Query {
-        todo1(id: String!): Todo1
+        foo1(): Bar1
       }
 type Todo2 {
         id: String
@@ -68,7 +40,7 @@ exports[`client-state-params writes defaults to the cache upon initialization --
 Object {
   "$ROOT_QUERY.foo": Object {
     "__typename": "Bar",
-    "bar": false,
+    "bar": true,
   },
   "ROOT_QUERY": Object {
     "foo": Object {

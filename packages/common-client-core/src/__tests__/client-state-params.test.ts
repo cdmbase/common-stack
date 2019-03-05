@@ -149,7 +149,7 @@ describe('client-state-params', () => {
     const client = withClientState({
       resolvers: finalModule.getStateParams.resolvers,
       defaults: finalModule.getStateParams.defaults,
-      typeDefs: finalModule.getStateParams.typeDefs,
+      typeDefs: schema.concat(finalModule.getStateParams.typeDefs as string),
     });
 
     execute(client.concat(nextLink), {

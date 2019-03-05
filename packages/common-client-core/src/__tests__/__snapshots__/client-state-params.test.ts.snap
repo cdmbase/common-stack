@@ -3,19 +3,24 @@
 exports[`client-state-params concatenates schema strings if typeDefs are passed in as an array 1`] = `
 Array [
   Object {
-    "definition": "type Todo1 {
+    "definition": "
+  type Query {}
+  type Mutation {}
+  type Todo1 {
         id: String
         message: String!
       }
       extend type Query {
         todo1(id: String!): Todo1
-      }type Todo2 {
+      }
+type Todo2 {
         id: String
         message: String!
       }
       extend type Query {
         todo2(id: String!): Todo2
-      }type Query {}
+      }
+type Query {}
   type Mutation {}",
     "directives": "directive @client on FIELD",
   },
@@ -46,13 +51,15 @@ Object {
       }
       extend type Query {
         todo1(id: String!): Todo1
-      }type Todo2 {
+      }
+type Todo2 {
         id: String
         message: String!
       }
       extend type Query {
         todo2(id: String!): Todo2
-      }type Query {}
+      }
+type Query {}
   type Mutation {}",
 }
 `;

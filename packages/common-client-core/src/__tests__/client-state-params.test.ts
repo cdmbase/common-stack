@@ -13,7 +13,7 @@ describe('client-state-params', () => {
   type Mutation {}
   `;
   const resolvers = { Query: { foo: () => ({ bar: true }) } };
-  const defaults = { foo: { bar: false, __typename: 'Bar' } };
+  const defaults = { foo: { bar: true, __typename: 'Bar' } };
   const query = gql`
     {
       foo @client {
@@ -42,7 +42,7 @@ describe('client-state-params', () => {
 
 
   // feature1
-  const resolvers1 = { Query: { foo1: () => ({ bar1: true }) } };
+  const resolvers1 = { Query: { foo1: () => ({ bar1: true, __typename: 'Bar1' }) } };
   const defaults1 = { foo1: { bar1: false, __typename: 'Bar1' } };
   const query1 = gql`
       {
@@ -61,12 +61,11 @@ describe('client-state-params', () => {
     `;
 
   const typeDefs1 = `
-      type Todo1 {
-        id: String
-        message: String!
+      type Bar1 {
+        bar1: Boolean
       }
       extend type Query {
-        todo1(id: String!): Todo1
+        foo1(): Bar1
       }
     `;
 
@@ -130,7 +129,15 @@ describe('client-state-params', () => {
     expect(cache.extract()).toMatchSnapshot();
   });
 
-  it('concatenates schema strings if typeDefs are passed in as an array', done => {
+  it('should return empty string when typedefs not defined', () => {
+    const moduleNoTypedef = new TestFeature({
+      clientStateParams: [{ resolvers: resolvers1, defaults: defaults1 }],
+    });
+
+    expect(moduleNoTypedef.getStateParams.typeDefs).toBe('');
+  });
+
+  it('concatenates schema strings if typeDefs are passed in as an array', () => {
     const anotherSchema = `
       type Foo {
         foo: String!
@@ -146,15 +153,23 @@ describe('client-state-params', () => {
       });
     });
 
-    const client = withClientState({
+    const local = withClientState({
       resolvers: finalModule.getStateParams.resolvers,
       defaults: finalModule.getStateParams.defaults,
       typeDefs: schema.concat(finalModule.getStateParams.typeDefs as string),
     });
 
-    execute(client.concat(nextLink), {
-      query: remoteQuery1,
-    }).subscribe(() => done(), done.fail);
+    const client = new ApolloClient({
+      cache: new InMemoryCache(),
+      link: local,
+    });
+
+
+    client
+      .query({ query: query1 })
+      .then(({ data }) => {
+        expect(data).toMatchObject({ foo1: { bar1: true, __typename: 'Bar1' } });
+      });
   });
 
 });

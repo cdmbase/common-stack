@@ -141,7 +141,7 @@ export abstract class AbstractFeature implements IFeature {
 
     get getStateParams(): ClientStateParams {
         return this.clientStateParams.reduce(function (acc, curr) {
-            const defs = Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs];
+            const defs = curr.typeDefs ? Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs] : [];
             const schema = defs.map(typeDef => {
                 if (typeof typeDef === 'string') {
                     return typeDef;
@@ -150,7 +150,7 @@ export abstract class AbstractFeature implements IFeature {
             })
                 .map(str => str.trim())
                 .join('\n');
-            const typeDefs = acc.typeDefs ? acc.typeDefs.concat( '\n', schema) : schema;
+            const typeDefs = acc.typeDefs ? acc.typeDefs.concat('\n', schema) : schema;
             const defaults = merge(acc.defaults, curr.defaults);
             const resolvers = merge(acc.resolvers, curr.resolvers);
             return { defaults, resolvers, typeDefs };

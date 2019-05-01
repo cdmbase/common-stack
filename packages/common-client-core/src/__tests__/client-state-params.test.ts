@@ -42,7 +42,7 @@ describe('client-state-params', () => {
 
 
   // feature1
-  const resolvers1 = { Query: { foo1: () => ({ bar1: true , __typename: 'Bar1'}) } };
+  const resolvers1 = { Query: { foo1: () => ({ bar1: true, __typename: 'Bar1' }) } };
   const defaults1 = { foo1: { bar1: false, __typename: 'Bar1' } };
   const query1 = gql`
       {
@@ -129,6 +129,14 @@ describe('client-state-params', () => {
     expect(cache.extract()).toMatchSnapshot();
   });
 
+  it('should return empty string when typedefs not defined', () => {
+    const moduleNoTypedef = new TestFeature({
+      clientStateParams: [{ resolvers: resolvers1, defaults: defaults1 }],
+    });
+
+    expect(moduleNoTypedef.getStateParams.typeDefs).toBe('');
+  });
+
   it('concatenates schema strings if typeDefs are passed in as an array', () => {
     const anotherSchema = `
       type Foo {
@@ -158,10 +166,10 @@ describe('client-state-params', () => {
 
 
     client
-    .query({ query: query1 })
-    .then(({ data }) => {
-      expect(data).toMatchObject({ foo1: { bar1: true, __typename: 'Bar1' } });
-    });
+      .query({ query: query1 })
+      .then(({ data }) => {
+        expect(data).toMatchObject({ foo1: { bar1: true, __typename: 'Bar1' } });
+      });
   });
 
 });

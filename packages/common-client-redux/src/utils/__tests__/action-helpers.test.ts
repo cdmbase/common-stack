@@ -1,9 +1,9 @@
 import { compose } from 'redux';
-import { 
-    sideAction, 
+import {
+    sideAction,
     withContext,
 } from '../action-helpers';
-
+import 'jest';
 import { Actions } from './utils';
 
 const ID = 1;
@@ -78,10 +78,10 @@ describe('Action helpers', () => {
             type: Actions.DummySync,
         });
     });
-const wrap = action => (...args) => compose(
-    sideAction(),
-    withContext('async'),
-)(action(...args));
+    const wrap = action => (...args) => compose(
+        sideAction(),
+        withContext('async'),
+    )(action(...args));
 
     it('[withContext & sideAction]: should apply to thunk action', () => {
         const action = id => compose(
@@ -94,7 +94,7 @@ const wrap = action => (...args) => compose(
         expect(result.$action).toBeInstanceOf(Function);
         expect(result).toMatchObject({
             $side: true,
-            $dependencies: ['async']
+            $dependencies: ['async'],
         });
     });
 });

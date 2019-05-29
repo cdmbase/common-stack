@@ -12,6 +12,7 @@ export interface FeatureParams {
     readonly connectionParam?: any;
     // to support observable actions from 'redux-observable'
     readonly epic?: any;
+    readonly reduxContext?: any;
     readonly reducer?: any;
     /**
      * @deprecated use `clientStateParams`
@@ -50,6 +51,7 @@ export interface IFeature {
     readonly createFetch: any;
     readonly connectionParam: any;
     readonly epic: any;
+    readonly reduxContext: any;
     readonly reducer: any;
     readonly clientStateParams?: ClientStateParams | ClientStateParams[];
     readonly resolver: any;

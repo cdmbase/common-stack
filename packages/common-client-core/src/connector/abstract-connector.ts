@@ -13,6 +13,7 @@ export abstract class AbstractFeature implements IFeature {
     public connectionParam: any;
     public epic: any;
     public reducer: any;
+    public reduxContext: any;
     /**
      * @deprecated use `clientStateParams`
      */
@@ -48,6 +49,7 @@ export abstract class AbstractFeature implements IFeature {
         // tslint:disable:trailing-comma
         ...features: FeatureParams[]
     ) {
+        this.reduxContext = combine(arguments, (arg: FeatureParams) => arg.reduxContext);
 
         // Connectivity
         this.link = combine(arguments, (arg: FeatureParams) => arg.link);
@@ -113,6 +115,10 @@ export abstract class AbstractFeature implements IFeature {
 
     public get epics() {
         return this.epic;
+    }
+
+    public get getReduxContext() {
+        return merge(...this.reduxContext);
     }
 
     public getRouter(withRoot?: boolean, rootComponent?: any) {

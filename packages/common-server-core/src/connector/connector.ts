@@ -7,6 +7,13 @@ export const featureCatalog: any = {};
 const combine = (features, extractor): any =>
   without(union(...map(features, res => castArray(extractor(res)))), undefined);
 
+export interface IFederationServiceOptions {
+  port: number;
+  config?: any; // for apollo-server
+}
+
+export type FederationServiceDeclaration = (options: IFederationServiceOptions) => Promise<void>; 
+
 export type FeatureParams = {
   schema?: string | string[],
   createRemoteSchemas?: Function | Function[],
@@ -24,6 +31,7 @@ export type FeatureParams = {
   updateContainerFunc?: any | any[],
   createPreference?: IPreferences | IPreferences[],
   overwritePreference?: IOverwritePreference | IOverwritePreference[],
+  federation?: FederationServiceDeclaration | FederationServiceDeclaration[];
   dataIdFromObject?: Function | Function[],
   disposeFunc?: any | any[],
   beforeware?: any | any[],
@@ -39,6 +47,7 @@ class Feature {
   public createContextFunc: Function[];
   public createServiceFunc: Function[];
   public createContainerFunc: Function[];
+  public federation: FederationServiceDeclaration[];
   public createHemeraContainerFunc: Function[];
   public createAsyncContainerFunc: Function[];
   public createAsyncHemeraContainerFunc: Function[];
@@ -70,6 +79,7 @@ class Feature {
     this.postCreateServiceFunc = combine(arguments, arg => arg.postCreateServiceFunc);
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
+    this.federation =  combine(arguments, arg => arg.federation);
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.createHemeraContainerFunc = combine(arguments, arg => arg.createHemeraContainerFunc);
     this.createAsyncContainerFunc = combine(arguments, arg => arg.createAsyncContainerFunc);

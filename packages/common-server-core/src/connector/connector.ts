@@ -12,7 +12,7 @@ export interface IFederationServiceOptions {
   config?: any; // for apollo-server
 }
 
-export type FederationServiceDeclaration = (options: IFederationServiceOptions) => Promise<void>; 
+export type FederationServiceDeclaration = (options: IFederationServiceOptions) => Promise<void>;
 
 export type FeatureParams = {
   schema?: string | string[],

@@ -12,6 +12,7 @@ Object {
       "bar2": false,
     },
   },
+  "fragmentMatcher": Object {},
   "resolvers": Object {
     "Query": Object {
       "foo1": [Function],
@@ -36,7 +37,7 @@ type Query {}
 }
 `;
 
-exports[`client-state-params writes defaults to the cache upon initialization -- original 1`] = `
+exports[`client-state-params writes defaults to the cache upon initialization 1`] = `
 Object {
   "$ROOT_QUERY.foo": Object {
     "__typename": "Bar",
@@ -48,33 +49,6 @@ Object {
       "id": "$ROOT_QUERY.foo",
       "type": "id",
       "typename": "Bar",
-    },
-  },
-}
-`;
-
-exports[`client-state-params writes defaults to the cache upon initialization 1`] = `
-Object {
-  "$ROOT_QUERY.foo1": Object {
-    "__typename": "Bar1",
-    "bar1": false,
-  },
-  "$ROOT_QUERY.foo2": Object {
-    "__typename": "Bar2",
-    "bar2": false,
-  },
-  "ROOT_QUERY": Object {
-    "foo1": Object {
-      "generated": true,
-      "id": "$ROOT_QUERY.foo1",
-      "type": "id",
-      "typename": "Bar1",
-    },
-    "foo2": Object {
-      "generated": true,
-      "id": "$ROOT_QUERY.foo2",
-      "type": "id",
-      "typename": "Bar2",
     },
   },
 }

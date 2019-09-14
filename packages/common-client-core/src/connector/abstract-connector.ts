@@ -3,6 +3,7 @@ import { IFeature, IModuleShape, IClientStateConfig } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { IdGetter } from 'apollo-cache-inmemory';
 import { ErrorLink } from 'apollo-link-error';
+import { ReducersMapObject } from 'redux';
 
 const combine = (features, extractor) => without(union(...map(features, res => castArray(extractor(res)))), undefined);
 export const featureCatalog = {};
@@ -14,7 +15,7 @@ export abstract class AbstractFeature implements IFeature {
     public createFetch: any;
     public connectionParam: any;
     public epic: any;
-    public reducer: any;
+    public reducer: ReducersMapObject[];
     public reduxContext: any;
     public clientStateParams?: IClientStateConfig[];
     public sidebarSegments: any[];
@@ -143,7 +144,7 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get getStateParams(): IClientStateConfig {
-        return this.clientStateParams.reduce(function (acc, curr) {
+        return this.clientStateParams.reduce<IClientStateConfig>(function (acc, curr) {
             const defs = curr.typeDefs ? Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs] : [];
             const schema = defs.map(typeDef => {
                 if (typeof typeDef === 'string') {
@@ -156,8 +157,9 @@ export abstract class AbstractFeature implements IFeature {
             const typeDefs = acc.typeDefs ? acc.typeDefs.concat('\n', schema) : schema;
             const defaults = merge(acc.defaults, curr.defaults);
             const resolvers = merge(acc.resolvers, curr.resolvers);
-            return { defaults, resolvers, typeDefs };
-        }, {});
+            const fragmentMatcher = merge(acc.fragmentMatcher, curr.fragmentMatcher);
+            return { defaults, resolvers, typeDefs, fragmentMatcher };
+        }, {} as IClientStateConfig);
     }
 
     get connectionParams() {

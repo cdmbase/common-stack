@@ -1,11 +1,11 @@
 // tslint:disable:max-line-length
 
-import { LocalStateFragmentMatcher, Resolvers } from 'apollo-client';
+import { LocalStateFragmentMatcher } from 'apollo-client';
 import { IdGetter } from 'apollo-cache-inmemory';
 import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 export interface IClientStateConfig {
-    resolvers?: Resolvers | Resolvers[];
+    resolvers?: any; // don't need `Resolvers` type as it may conflict with the usage
     defaults?: any;
     typeDefs?: string | string[];
     fragmentMatcher?: LocalStateFragmentMatcher;
@@ -43,7 +43,7 @@ export interface IModuleShape {
     /**
      * @param reducer Redux reducers list
      */
-    readonly reducer?: ReducersMapObject[];
+    readonly reducer?: ReducersMapObject | ReducersMapObject[];
     /**
      * @param clientStateParams Client side configuration of `apollo-client`
      * @inheritdoc https://github.com/apollographql/apollo-client/tree/2d65da133c156f6d808e64aee7e7fd5f7cc71d7f

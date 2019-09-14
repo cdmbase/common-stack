@@ -1,23 +1,34 @@
-
-export interface ClientStateParams {
-    resolvers?: any;
+import { LocalStateFragmentMatcher, } from 'apollo-client';
+export interface ClientStateConfig {
+    resolvers?: any | (() => any);
     defaults?: any;
     typeDefs?: string | string[];
+    fragmentMatcher?: ApolloClient
 }
-
-export interface FeatureParams {
+/**
+ * Interface that optionally be implemented by all the feature modules
+ * in the application.
+ */
+export interface ModuleShape {
+    /**
+     * all `apollo-link` that need to be composed.
+     * @inheritdoc https://github.com/apollographql/apollo-link
+     * @public
+     */
     readonly link?: any;
     readonly errorLink?: any;
     readonly createFetch?: any;
     readonly connectionParam?: any;
-    // to support observable actions from 'redux-observable'
+    /**
+     * all `epics` that need to be composed.
+     * @inheritdoc https://redux-observable.js.org/docs/basics/Epics.html
+     */
     readonly epic?: any;
     readonly reduxContext?: any;
     readonly reducer?: any;
     /**
-     * @deprecated use `clientStateParams`
+     * Client side schema for apollo-link-state
      */
-    readonly resolver?: any;
     readonly clientStateParams?: ClientStateParams | ClientStateParams[];
     readonly schema?: any;
     readonly sidebarSegments?: any;
@@ -43,7 +54,6 @@ export interface FeatureParams {
     readonly dataIdFromObject?: any;
 }
 
-
 export interface IFeature {
     // Public variables
     readonly link: any;
@@ -54,8 +64,6 @@ export interface IFeature {
     readonly reduxContext: any;
     readonly reducer: any;
     readonly clientStateParams?: ClientStateParams | ClientStateParams[];
-    readonly resolver: any;
-    readonly schema: any;
     readonly routerFactory: any;
     readonly route: any;
     readonly routeConfig: any;

@@ -62,14 +62,12 @@ export abstract class AbstractFeature implements IFeature {
 
         // State management
         this.reducer = combine(arguments, (arg: FeatureParams) => arg.reducer);
+        // Client side schema for apollo-link-state
         this.clientStateParams = combine(arguments, (arg: FeatureParams) => arg.clientStateParams);
 
         // Epic actions
         this.epic = combine(arguments, (arg: FeatureParams) => arg.epic);
 
-        // Client side schema for apollo-link-state
-        this.schema = combine(arguments, (arg: FeatureParams) => arg.schema);
-        this.resolver = combine(arguments, (arg: FeatureParams) => arg.resolver);
 
         this.sidebarSegments = combine(arguments, (arg: FeatureParams) => arg.sidebarSegments);
 

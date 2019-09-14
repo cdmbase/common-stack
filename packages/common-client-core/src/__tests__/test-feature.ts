@@ -4,8 +4,6 @@ import { AbstractFeature } from '../connector';
 export class TestFeature extends AbstractFeature {
     public getConfiguredMenus: () => {};
 
-    public getDataIdFromObject: () => {};
-
     public getDataRoot: () => {};
 
     public getConfiguredRoutes: () => {};

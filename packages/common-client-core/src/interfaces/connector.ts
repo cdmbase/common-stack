@@ -54,7 +54,7 @@ export interface IModuleShape {
      * object.
      * @inheritdoc https://github.com/apollographql/apollo-client/tree/ed66999bac40226abfeada8d6c83b454636bb4b0/packages/apollo-cache-inmemory#configuration
      */
-    readonly dataIdFromObject?: IdGetter | IdGetter[];
+    readonly dataIdFromObject?: { [key: string]: IdGetter } |  { [key: string]: IdGetter }[];
     readonly sidebarSegments?: any;
     readonly routerFactory?: any;
     /**

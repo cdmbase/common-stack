@@ -1,6 +1,5 @@
 const { defaults } = require("jest-config");
 
-console.log('______DEFAULTS', defaults);
 module.exports = {
   "verbose": true,
   testEnvironment: "jsdom",

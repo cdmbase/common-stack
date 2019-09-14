@@ -32,7 +32,7 @@ export abstract class AbstractFeature implements IFeature {
     public catalogInfo: any[];
     public languagesFuncs: any[];
     public data: any[];
-    public dataIdFromObject: IdGetter[];
+    public dataIdFromObject: { [key: string]: IdGetter }[];
 
     public leftMainPanelItems: any;
     public middleMainPanelItems: any;
@@ -44,8 +44,8 @@ export abstract class AbstractFeature implements IFeature {
     /**
      * Constructs Client feature module representation, that folds all the feature modules
      * into a single module represented by this instance.
-     * @param feature 
-     * @param features 
+     * @param feature
+     * @param features
      */
     constructor(
         feature?: IModuleShape,
@@ -177,7 +177,7 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get middleMainPanel() {
-        const panelObj = merge({}, ...(this.middleMainPanelItems  || []));
+        const panelObj = merge({}, ...(this.middleMainPanelItems || []));
         const withProps = {} as any;
         Object.keys(panelObj).forEach(key => {
             const props = this.middleMainPanelItemsProps.filter(el => !!el[key]);
@@ -212,7 +212,13 @@ export abstract class AbstractFeature implements IFeature {
         return merge({}, ...(this.middleLowerPanelItems || []));
     }
 
-    public abstract getDataIdFromObject(result: any);
+    public getDataIdFromObject(result: { [key: string]: string | number, __typename?: string }) {
+        const dataIdFromObject = merge({}, ...this.dataIdFromObject);
+        if (dataIdFromObject[result.__typename]) {
+            return dataIdFromObject[result.__typename](result);
+        }
+        return result.id || result._id;
+    }
 
     public abstract getWrappedRoot(root, req);
 

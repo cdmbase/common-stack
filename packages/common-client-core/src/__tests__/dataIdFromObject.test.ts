@@ -1,4 +1,4 @@
-import { Feature } from '../connector';
+import { TestFeature as Feature } from './test-feature';
 import 'jest';
 
 const finalSettings = [
@@ -33,24 +33,23 @@ describe('data id from object', function () {
     it('with connector', () => {
         const connector = new Feature({
             dataIdFromObject: {
-                'IFileStat': (result) => result.__typename + ':' + result.resource,
-                'IContent': (result) => result.__typename + ':' + result.resource,
-                'IStreamContent': (result) => result.__typename + ':' + result.resource,
-                'IChangedContent': (result) => result.__typename + ':' + result.resource,
+                'IFileStat': (result: { resource: string, __typename: string }) => result.__typename + ':' + result.resource,
+                'IContent': (result: { resource: string, __typename: string }) => result.__typename + ':' + result.resource,
+                'IStreamContent': (result: { resource: string, __typename: string }) => result.__typename + ':' + result.resource,
+                'IChangedContent': (result: { resource: string, __typename: string }) => result.__typename + ':' + result.resource,
             },
-        } as any);
+        });
         const connector2 = new Feature({
             dataIdFromObject: {
                 'UserSettings': (result) => result.__typename,
             },
-        } as any);
+        });
 
         const feature = new Feature(connector, connector2);
 
-        const __typenameRes = '__typenameRes';
+        const __typenameRes = 'IFileStat';
         const resourceRes = 'resourceRes';
         const finalDataIdFromObject = feature.getDataIdFromObject({
-            type: 'IFileStat',
             __typename: __typenameRes,
             resource: resourceRes,
         });

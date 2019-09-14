@@ -61,7 +61,7 @@ export function getRoutes(path: string, routerData: IRouteData) {
       }
       lastNode = lastNode.routes[lastIndex];
       // do not overwrite the route's exact value
-      lastNode.exact = routerData[lastNode.path].hasOwnProperty('exact') ? routerData[lastNode.path].exact : false;
+      lastNode.exact = routerData[lastNode.path as string].hasOwnProperty('exact') ? routerData[lastNode.path as string].exact : false;
     }
     if (!lastNode.routes) {
       lastNode.routes = [];

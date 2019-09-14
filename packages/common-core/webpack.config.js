@@ -17,10 +17,6 @@ var webpack_opts = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
@@ -42,10 +38,7 @@ var webpack_opts = {
     rules: [{
       test: /\.ts$/,
       loaders: 'ts-loader'
-    }, {
-      test: /\.json?$/,
-      loader: 'json-loader'
-    },]
+    }]
   },
   externals: [
     nodeExternals({ modulesDir: "../../node_modules" }),

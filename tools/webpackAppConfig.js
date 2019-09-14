@@ -1,7 +1,11 @@
 
 const dependencyPlatforms = {
     "@cdm-logger/server": 'server',
+<<<<<<< HEAD
     "@common-stack/utils": 'server',
+=======
+    "@cdm-logger/server": 'server',
+>>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
     "bunyan": 'server',
     "export-dir": 'server',
     "express": 'server',
@@ -24,6 +28,9 @@ const dependencyPlatforms = {
     "helmet": 'server',
     "hemera-joi": 'server',
     "hemera-plugin": 'server',
+    "hemera-safe-promises": 'server',
+    "hemera-sql-store": 'server',
+    "hemera-zipkin": 'server',
     "inversify": 'server',
     "morgan": 'server',
     "nats": 'server',

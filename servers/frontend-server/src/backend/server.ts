@@ -6,17 +6,31 @@ import * as http from 'http';
 import * as path from 'path';
 import * as url from 'url';
 import 'isomorphic-fetch';
+<<<<<<< HEAD
 import { logger } from '@common-stack/utils';
+=======
+import { logger } from '@cdm-logger/server';
+>>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
 import { websiteMiddleware } from './website';
 import { corsMiddleware } from './middlewares/cors';
-import { SETTINGS } from '../config';
+import { errorMiddleware } from './middlewares/error';
+import { config } from '../config';
+const cookiesMiddleware = require('universal-cookie-express');
+import modules from './modules';
 
 let server;
 
 const app = express();
 
+for (const applyBeforeware of modules.beforewares) {
+    applyBeforeware(app);
+}
+
+app.use(cookiesMiddleware());
+
+
 // By default it uses backend_url port, which may conflict with graphql server.
-const { port: serverPort } = url.parse(SETTINGS.BACKEND_URL);
+const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);
 
 // Don't rate limit heroku
 app.enable('trust proxy');
@@ -38,6 +52,9 @@ if (__DEV__) {
 
 app.use(websiteMiddleware);
 
+if (__DEV__) {
+    app.use(errorMiddleware);
+}
 
 server = http.createServer(app);
 

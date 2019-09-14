@@ -1,5 +1,5 @@
 {
-  "lerna": "2.11.0",
+  "lerna": "3.8.0",
   "changelog": {
     "repo": "cdmbase/lerna-bootstrap",
     "labels": {
@@ -11,7 +11,14 @@
       "tag: internal": ":house: Internal"
     }
   },
-  "commands": {},
+  "command": {
+    "publish": {
+      "allowBranch": ["publish", "devpublish"]
+    },
+    "bootstrap": {
+      "npmClientArgs": ["--no-package-lock"]      
+    }
+  },
   "packages": [
     "packages/*",
     "servers/*",

@@ -14,11 +14,7 @@ var webpack_opts = {
     library: "@common-stack/client-react"
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.css'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
+    extensions: ['.ts', '.tsx', '.js', '.css']
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
@@ -40,17 +36,21 @@ var webpack_opts = {
     rules: [{
       test: /\.tsx?$/,
       loaders: 'ts-loader'
-    }, {
-      test: /\.json?$/,
-      loaders: 'json-loader'
     },
     {
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
       loader: 'graphql-tag/loader'
     },
-    { test: /\.svg$/, loader: 'url-loader?limit=10000' },
     {
+      test: /\.svg$/,
+      use: {
+        loader: 'svg-url-loader',
+        options: {
+          noquotes: true,
+        }
+      }
+    },    {
       test: /\.css$/,
       use: [
         { loader: 'css-loader', options: { importLoaders: 1 } },

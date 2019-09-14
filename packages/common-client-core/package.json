@@ -1,7 +1,7 @@
 {
   "name": "@common-stack/client-core",
-  "version": "0.0.201",
-  "description": "Sample core for higher packages to depend on",
+  "version": "0.0.1",
+  "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
@@ -13,7 +13,9 @@
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
-    "build:lib:watch": "npm run build:lib -- --watch"
+    "build:lib:watch": "npm run build:lib -- --watch",
+    "apollo": "apollo client:codegen --target typescript --endpoint=http://localhost:8080/graphql --outputFlat src/schema.ts",
+    "apollo:download": "apollo service:download --endpoint=http://localhost:8080/graphql"
   },
   "publishConfig": {
     "access": "public"
@@ -47,16 +49,12 @@
     "url": "https://github.com/cdmbase/fullstack-pro/issues"
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
-  "devDependencies": {
-    "jest": "^22.4.2",
-    "rimraf": "^2.6.1",
-    "webpack": "^4.19.0"
-  },
   "dependencies": {
-    "@common-stack/core": "^0.0.201"
+    "@common-stack/core": "file:../sample-core"
   },
   "peerDependencies": {
-    "lodash": "*"
+    "apollo-client": ">=2.4.0",
+    "redux": ">=4.0.1"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

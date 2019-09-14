@@ -16,7 +16,7 @@ var webpack_opts = {
     __dirname: false
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.graphql', '.gql'],
+    extensions: ['.ts', '.js', '.json']
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({

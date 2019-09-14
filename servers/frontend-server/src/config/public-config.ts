@@ -5,6 +5,7 @@
  * not dependent on any other file that compromises the security.
  */
 const publicEnv = [
+    'NODE_ENV',
     'GRAPHQL_URL',
     'FACEBOOK_APP_ID',
     'GA_ID',
@@ -12,7 +13,7 @@ const publicEnv = [
 ];
 
 const isBrowser = typeof window !== 'undefined';
-const base = (isBrowser ? window.__ENV__ : process.env) || {};
+const base = (isBrowser ? ( window.__ENV__ || __ENV__) : process.env) || {};
 
 const env: any = {};
 for (const v of publicEnv) {
@@ -22,7 +23,8 @@ for (const v of publicEnv) {
 export default env;
 
 if (isBrowser) {
-    process['env'] = env;
+    process.env = env;
+    process.APP_ENV = env;
 }
 export const PUBLIC_SETTINGS: __PUBLIC_SETTINGS__ = {
     apolloLogging: false,

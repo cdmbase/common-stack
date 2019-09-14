@@ -40,10 +40,13 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "devDependencies": {
-    "cross-env": "^5.1.3",
-    "jest": "^22.4.2",
-    "rimraf": "^2.6.1",
-    "webpack": "^4.19.0"
+  },
+  "dependencies": {
+    "@common-stack/core": "file:../sample-core",
+    "sequelize": "^5.7.6"
+  },
+  "peerDependencies": {
+    
   },
   "typings": "lib/index.d.ts",
   "typescript": {

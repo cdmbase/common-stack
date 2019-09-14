@@ -13,7 +13,6 @@ var webpack_opts = {
     path: path.join(__dirname, 'lib'),
     filename: 'index.js',
     libraryTarget: "commonjs2",
-    library: '@common-stack/client-core'
   },
   resolve: {
     extensions: ['.ts', '.js'],

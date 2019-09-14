@@ -12,14 +12,8 @@ var webpack_opts = {
   },
   target: 'node',
   output: {
-<<<<<<< HEAD:experimental/common-graphql-schema/webpack.config.js
-    filename: libPath('[name].js'),
-    library: '@common-stack/graphql-schema',
-=======
     path: path.join(__dirname, 'lib'),
     filename: '[name].js',
-    library: '@common-stack/graphql-schema',
->>>>>>> f4ab7cd01d19552faea5da1c006ed4e0322af3bd:packages/sample-graphql-schema/webpack.config.js
     libraryTarget: 'commonjs2',
   },
   resolve: {

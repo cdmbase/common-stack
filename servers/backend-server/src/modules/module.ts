@@ -3,7 +3,7 @@ import { Feature } from '@common-stack/server-core';
 import { logger } from '@cdm-logger/server';
 import CounterModule from '@common-stack/counter-module-server';
 import { pubsubGen } from './pubsub';
-// import { generateMongo } from '@common-stack/store-mongo';
+// import { generateMongo } from '@common-stack/store-mongo-mongo';
 import { config } from '../config';
 import { hemeraGen } from './nats-connection';
 

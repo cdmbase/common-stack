@@ -1,4 +1,4 @@
-import { ICounterRepository, ICount } from '@common-stack/store';
+import { ICounterRepository, ICount } from '@common-stack/store-mongo';
 import { PubSub } from 'graphql-subscriptions';
 import * as Logger from 'bunyan';
 

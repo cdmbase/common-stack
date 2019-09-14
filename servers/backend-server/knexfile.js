@@ -13,8 +13,8 @@ var connection = {
 };
 var DB_CLIENT = process.env.DB_TYPE || 'sqlite3';
 
-var migrations_path = path.dirname(require.resolve('@common-stack/store/lib/store/migrations/index'));
-var seeds_path = path.dirname(require.resolve('@common-stack/store/lib/store/seeds/index'));
+var migrations_path = path.dirname(require.resolve('@common-stack/store-mongo/lib/store/migrations/index'));
+var seeds_path = path.dirname(require.resolve('@common-stack/store-mongo/lib/store/seeds/index'));
 module.exports = {
 
   development: {

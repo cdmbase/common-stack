@@ -1,13 +1,13 @@
 {
     "client": "sqlite3",
     "connection": {
-        "filename": "packages/sample-store/__tests__/db/test-db.sqlite3"
+        "filename": "packages/common-store-mongo/__tests__/db/test-db.sqlite3"
     },
     "seeds": {
-        "directory": "packages/sample-store/__tests__/db/seeds"
+        "directory": "packages/common-store-mongo/__tests__/db/seeds"
     },
     "migrations": {
-        "directory": "packages/sample-store/__tests__/db/migrations"
+        "directory": "packages/common-store-mongo/__tests__/db/migrations"
     },
     "useNullAsDefault": true
 }

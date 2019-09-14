@@ -46,7 +46,7 @@
   "license": "MIT",
   "dependencies": {
     "@common-stack/server-core": "*",
-    "@common-stack/store": "*"
+    "@common-stack/store-mongo": "*"
   },
   "devDependencies": {
     "@common-stack/utils": "*",

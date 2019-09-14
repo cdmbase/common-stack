@@ -4,13 +4,9 @@ import {
     compose, combineReducers, StoreEnhancer,
 } from 'redux';
 import thunk from 'redux-thunk';
-<<<<<<< HEAD
-import { routerReducer, routerMiddleware } from 'react-router-redux';
-=======
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import storage from 'redux-persist/lib/storage';
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
 import modules from '../modules';
 import { persistReducer, WebStorage } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -20,27 +16,6 @@ import { rootEpic } from '../config/epic-config';
 
 export const history = require('./router-history');
 
-<<<<<<< HEAD
-/**
- * Add middleware that required for this app.
- */
-const middlewares: Middleware[] = [
-    routerMiddleware(history),
-    thunk,
-];
-
-const enhancers = () => [
-    applyMiddleware(...middlewares),
-];
-
-const composeEnhancers: any = (
-    (process.env.NODE_ENV === 'development' || __DEBUGGING__) &&
-    typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
-
-export const storeReducer = combineReducers<any>({
-    router: routerReducer,
-=======
 const reduxLogger = createLogger({
     collapsed: true,
 });
@@ -52,7 +27,6 @@ export const epicMiddleware = createEpicMiddleware({
 
 export const storeReducer = (hist) => combineReducers({
     router: connectRouter(hist),
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
     ...modules.reducers,
 });
 
@@ -69,13 +43,6 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-<<<<<<< HEAD
-export const createReduxStore = () => {
-    const store: Store<any> =
-        createStore(
-            storeReducer,
-            {},
-=======
 export const createReduxStore = (url = '/') => {
 
     // only in server side, url will be passed.
@@ -117,7 +84,6 @@ export const createReduxStore = (url = '/') => {
         createStore(
             persistedReducer,
             initialState,
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
             composeEnhancers(...enhancers()),
         );
     if (__CLIENT__) {

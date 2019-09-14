@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { DbConfig, repositoryModule, TYPES as RepoTypes, ICounterRepository } from '@common-stack/store';
+import { DbConfig, repositoryModule, TYPES as RepoTypes, ICounterRepository } from '@common-stack/store-mongo';
 import * as Hemera from 'nats-hemera';
 import { pubsub, client as natsClient } from './pubsub';
 import { TaggedType } from '@common-stack/core';

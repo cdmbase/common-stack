@@ -7,7 +7,7 @@ let reqlib: any = require('app-root-path');
 let persistCache = true;
 let queryMap;
 try {
-    queryMap = reqlib.require('@common-stack/client-state/extracted_queries.json');
+    queryMap = reqlib.require('@common-stack/client-core/extracted_queries.json');
 
 } catch (err) {
     logger.warn('extracted_queries.json file is unavailable, disabling persist queries');

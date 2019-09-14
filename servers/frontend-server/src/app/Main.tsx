@@ -8,13 +8,6 @@ import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
 import { rehydrate, render } from 'fela-dom';
 import { createApolloClient } from '../config/apollo-client';
-<<<<<<< HEAD
-import { createReduxStore, storeReducer, history } from '../config/redux-config';
-import { createRenderer as createFelaRenderer } from 'fela';
-import modules from '../modules';
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
-import { Switch } from 'react-router-dom';
-=======
 import { epic$, rootEpic } from '../config/epic-config';
 import {
   createReduxStore,
@@ -25,20 +18,10 @@ import {
 } from '../config/redux-config';
 import modules, { MainRoute } from '../modules';
 import { ConnectedRouter } from 'connected-react-router';
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
 import RedBox from './RedBox';
 import { ServerError } from './Error';
-<<<<<<< HEAD
-import { renderRoutes } from 'react-router-config';
-
-
-import '../index.css';
-
-const rootEl = document.getElementById('content');
-=======
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
 
 
 const client = createApolloClient();
@@ -77,15 +60,7 @@ export interface MainState {
   info?: any;
 }
 
-<<<<<<< HEAD
-const All = ({ routes }) => (
-  <div>
-    {renderRoutes(routes)}
-  </div>
-);
-=======
 const mountNode = document.getElementById('stylesheet');
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
 
 export class Main extends React.Component<any, MainState> {
   constructor(props: any) {
@@ -113,13 +88,6 @@ export class Main extends React.Component<any, MainState> {
           // tslint:disable-next-line:jsx-wrap-multiline
           <Provider store={store}>
             <ApolloProvider client={client}>
-<<<<<<< HEAD
-              <ReactFela.Provider renderer={renderer}>
-                <ConnectedRouter history={history}>
-                  {modules.getRoutes()}
-                </ConnectedRouter>
-              </ReactFela.Provider>
-=======
               <ReactFela.RendererProvider mountNode={mountNode} renderer={renderer}>
                 <PersistGate persistor={persistor}>
                   {modules.getWrappedRoot(
@@ -129,7 +97,6 @@ export class Main extends React.Component<any, MainState> {
                   )}
                 </PersistGate>
               </ReactFela.RendererProvider>
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
             </ApolloProvider>
           </Provider>,
         )

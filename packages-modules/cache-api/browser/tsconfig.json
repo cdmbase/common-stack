@@ -5,7 +5,7 @@
     "experimentalDecorators": true,
     "rootDirs": ["./src", "../common"],
     "outDir": "../lib",
-    "declarationDir": "../lib",
+    "declarationDir": "lib",
     "typeRoots": [
       "../../../node_modules/@types"
     ],

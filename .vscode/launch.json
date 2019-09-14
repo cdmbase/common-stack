@@ -21,7 +21,7 @@
                 "index.test"
             ],
             // Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.
-            "cwd": "${workspaceRoot}/packages/sample-graphql-schema",
+            "cwd": "${workspaceRoot}/packages/common-graphql-schema",
             // Workspace relative or absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.
             "runtimeExecutable": null,
             // Environment variables passed to the program.

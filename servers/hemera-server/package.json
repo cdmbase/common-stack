@@ -27,9 +27,8 @@
     "license": "ISC",
     "dependencies": {
         "@cdm-logger/server": "^5.0.5",
-        "@common-stack/core": "file:../../packages/sample-core",
-        "@common-stack/hemera-plugin": "file:../../packages/sample-hemera-plugin",
-        "@common-stack/server-core": "file:../../packages/sample-server-core",
+        "@common-stack/core": "file:../../packages/common-core",
+        "@common-stack/server-core": "file:../../packages/common-server-core",
         "dotenv": "^7.0.0",
         "envalid": "^5.0.0",
         "graphql-nats-subscriptions": "^1.3.0",

@@ -7,7 +7,7 @@ import * as express from 'express';
 import { counterRepo } from '../container';
 import { schema } from '../api/schema';
 import { database } from '@common-stack/graphql-schema';
-import { ICounterRepository, TYPES as CounterTypes } from '@common-stack/store';
+import { ICounterRepository, TYPES as CounterTypes } from '@common-stack/store-mongo';
 import modules from '@common-stack/counter/lib/server'; //TODO change
 
 const { persons, findPerson, addPerson } = database;

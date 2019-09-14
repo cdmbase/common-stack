@@ -6,11 +6,7 @@ import * as http from 'http';
 import * as path from 'path';
 import * as url from 'url';
 import 'isomorphic-fetch';
-<<<<<<< HEAD
-import { logger } from '@common-stack/utils';
-=======
 import { logger } from '@cdm-logger/server';
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
 import { websiteMiddleware } from './website';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';

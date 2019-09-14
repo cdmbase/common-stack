@@ -28,7 +28,7 @@ var webpack_opts = {
     path: path.join(__dirname, 'lib'),
     filename: '[name].js',
     libraryTarget: "commonjs2",
-    library: "@common-stack/store",
+    library: "@common-stack/store-mongo",
   },
   resolve: {
     extensions: ['.ts', '.js'],

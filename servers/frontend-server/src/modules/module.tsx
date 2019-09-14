@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Layout } from 'antd';
 import { Route, Switch } from 'react-router';
-import counterModules from '@common-stack/counter-module-browser';
 import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
 
 import { SiderMenu } from './layout';
 
-const features = new Feature(FeatureWithRouterFactory, counterModules);
+const features = new Feature(FeatureWithRouterFactory);
 
 console.log(features.getMenus());
 

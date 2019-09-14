@@ -14,10 +14,6 @@ var webpack_opts = {
     path: path.join(__dirname, 'lib'),
     filename: '[name].js',
     libraryTarget: "commonjs2",
-<<<<<<< HEAD:packages-modules/counter/webpack.config.js
-    library: "@common-stack/counter",
-=======
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8:tools/templates/module/server/webpack.config.js
   },
   node: {
     __dirname: false

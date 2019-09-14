@@ -1,7 +1,6 @@
 
 import gql from 'graphql-tag';
 import { TestFeature } from './test-feature';
-import { withClientState } from 'apollo-link-state';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { Observable, ApolloLink, execute } from 'apollo-link';
@@ -112,19 +111,11 @@ describe('client-state-params', () => {
     expect({ ...finalModule.getStateParams }).toMatchSnapshot();
   });
 
-  it('writes defaults to the cache upon initialization -- original', () => {
-    const cache = new InMemoryCache();
-
-    withClientState({ cache, resolvers, defaults });
-    expect(cache.extract()).toMatchSnapshot();
-  });
-
   it('writes defaults to the cache upon initialization', () => {
     const cache = new InMemoryCache();
-    withClientState({
-      cache,
-      resolvers: finalModule.getStateParams.resolvers,
-      defaults: finalModule.getStateParams.defaults,
+
+    cache.writeData({
+      data: defaults,
     });
     expect(cache.extract()).toMatchSnapshot();
   });
@@ -153,15 +144,14 @@ describe('client-state-params', () => {
       });
     });
 
-    const local = withClientState({
-      resolvers: finalModule.getStateParams.resolvers,
-      defaults: finalModule.getStateParams.defaults,
-      typeDefs: schema.concat(finalModule.getStateParams.typeDefs as string),
+    const cache = new InMemoryCache();
+    cache.writeData({
+      data: finalModule.getStateParams.defaults,
     });
-
     const client = new ApolloClient({
-      cache: new InMemoryCache(),
-      link: local,
+      cache,
+      resolvers: finalModule.getStateParams.resolvers,
+      typeDefs:  schema.concat(finalModule.getStateParams.typeDefs as string),
     });
 
 

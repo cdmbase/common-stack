@@ -11,7 +11,7 @@ import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import { logger } from '@cdm-logger/server';
 import { counterRepo } from '../container';
 import { database } from '@common-stack/graphql-schema';
-import { ICounterRepository, TYPES as CounterTypes } from '@common-stack/store';
+import { ICounterRepository, TYPES as CounterTypes } from '@common-stack/store-mongo';
 import modules from '../modules';
 
 let subscriptionServer;

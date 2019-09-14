@@ -206,7 +206,7 @@ class Feature {
   }
 
   public createDefaultPreferences() {
-    return transformPrefsToArray(merge(...this.createPreference));
+    return transformPrefsToArray(merge([], ...this.createPreference));
   }
 
   get beforewares(): any[] {
@@ -222,8 +222,8 @@ class Feature {
   }
 
   public getPreferencesObj() {
-    const defaultPrefs = merge(...this.createPreference);
-    const overwritePrefs = merge(...this.overwritePreference);
+    const defaultPrefs = merge([], ...this.createPreference);
+    const overwritePrefs = merge([], ...this.overwritePreference);
     return getCurrentPreferences(defaultPrefs, overwritePrefs);
   }
 

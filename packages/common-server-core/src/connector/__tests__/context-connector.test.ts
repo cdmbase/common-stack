@@ -3,7 +3,7 @@ import { Feature } from '../connector';
 import {
     defaultSettings, userSettings, prefRes, prefsArrRes,
     finalSettings, convertedDefaultSettings,
-} from './fixtures/preferenfces/sample-settings';
+} from './fixtures/preferenfces/common-settings';
 
 import 'jest';
 

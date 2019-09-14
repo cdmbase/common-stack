@@ -8,11 +8,7 @@ import * as fs from 'fs';
 import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-<<<<<<< HEAD
-import { logger } from '@common-stack/utils';
-=======
 import { logger } from '@cdm-logger/server';
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
 import { createApolloClient } from '../config/apollo-client';
 import * as ReactFela from 'react-fela';
 import createRenderer from '../config/fela-renderer';

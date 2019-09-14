@@ -27,11 +27,11 @@ Files explained:
 It uses `lerna.json` for creating the packages structure. Under packages you can create different modules based on its usage. For example:
 
      packages                    - Has the packages to organize the codebase into multi-package repositories.
-         sample-core             - Core interfaces of the packages which can be shared between server and client.
-         sample-server-core      - Core interfaces and its implementation code for Server.   
-         sample-client-state     - Client State related code which consists of Redux and Graphql Gql
-         sample-client-react     - React pure components and containers are defined. 
-         sample-graphql-schema   - Graphql Schema for Server.
+         common-core             - Core interfaces of the packages which can be shared between server and client.
+         common-server-core      - Core interfaces and its implementation code for Server.   
+         common-client-core     - Client State related code which consists of Redux and Graphql Gql
+         common-client-react     - React pure components and containers are defined. 
+         common-graphql-schema   - Graphql Schema for Server.
      servers                     - Has the packages to organize the codebase into multi-package repositories.
          frontend-server         - Frontend Client Server. This is useful to show demo of this package.
          backend-server          - Backend apollo server. 

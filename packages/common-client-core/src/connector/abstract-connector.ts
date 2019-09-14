@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { IFeature, FeatureParams, ClientStateParams } from '../interfaces';
+import { IFeature, IModuleShape, IClientStateConfig } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
+import { IdGetter } from 'apollo-cache-inmemory';
+import { ErrorLink } from 'apollo-link-error';
 
 const combine = (features, extractor) => without(union(...map(features, res => castArray(extractor(res)))), undefined);
 export const featureCatalog = {};
@@ -8,18 +10,13 @@ export const featureCatalog = {};
 
 export abstract class AbstractFeature implements IFeature {
     public link: any;
-    public errorLink: any;
+    public errorLink: ErrorLink[];
     public createFetch: any;
     public connectionParam: any;
     public epic: any;
     public reducer: any;
     public reduxContext: any;
-    /**
-     * @deprecated use `clientStateParams`
-     */
-    public resolver: any;
-    public clientStateParams?: ClientStateParams[];
-    public schema: any[];
+    public clientStateParams?: IClientStateConfig[];
     public sidebarSegments: any[];
     public routerFactory: any;
     public route: any;
@@ -35,7 +32,7 @@ export abstract class AbstractFeature implements IFeature {
     public catalogInfo: any[];
     public languagesFuncs: any[];
     public data: any[];
-    public dataIdFromObject: any[];
+    public dataIdFromObject: IdGetter[];
 
     public leftMainPanelItems: any;
     public middleMainPanelItems: any;
@@ -44,63 +41,69 @@ export abstract class AbstractFeature implements IFeature {
     public rightFooterItems: any;
     public middleLowerPanelItems: any;
 
+    /**
+     * Constructs Client feature module representation, that folds all the feature modules
+     * into a single module represented by this instance.
+     * @param feature 
+     * @param features 
+     */
     constructor(
-        feature?: FeatureParams,
+        feature?: IModuleShape,
         // tslint:disable:trailing-comma
-        ...features: FeatureParams[]
+        ...features: IModuleShape[]
     ) {
-        this.reduxContext = combine(arguments, (arg: FeatureParams) => arg.reduxContext);
+        this.reduxContext = combine(arguments, (arg: IModuleShape) => arg.reduxContext);
 
         // Connectivity
-        this.link = combine(arguments, (arg: FeatureParams) => arg.link);
-        this.errorLink = combine(arguments, (arg: FeatureParams) => arg.errorLink);
+        this.link = combine(arguments, (arg: IModuleShape) => arg.link);
+        this.errorLink = combine(arguments, (arg: IModuleShape) => arg.errorLink);
 
-        this.createFetch = combine(arguments, (arg: FeatureParams) => arg.createFetch)
+        this.createFetch = combine(arguments, (arg: IModuleShape) => arg.createFetch)
             .slice(-1)
             .pop();
-        this.connectionParam = combine(arguments, (arg: FeatureParams) => arg.connectionParam);
+        this.connectionParam = combine(arguments, (arg: IModuleShape) => arg.connectionParam);
 
         // State management
-        this.reducer = combine(arguments, (arg: FeatureParams) => arg.reducer);
+        this.reducer = combine(arguments, (arg: IModuleShape) => arg.reducer);
         // Client side schema for apollo-link-state
-        this.clientStateParams = combine(arguments, (arg: FeatureParams) => arg.clientStateParams);
+        this.clientStateParams = combine(arguments, (arg: IModuleShape) => arg.clientStateParams);
 
         // Epic actions
-        this.epic = combine(arguments, (arg: FeatureParams) => arg.epic);
+        this.epic = combine(arguments, (arg: IModuleShape) => arg.epic);
 
 
-        this.sidebarSegments = combine(arguments, (arg: FeatureParams) => arg.sidebarSegments);
+        this.sidebarSegments = combine(arguments, (arg: IModuleShape) => arg.sidebarSegments);
 
-        this.leftMainPanelItems = combine(arguments, (arg: FeatureParams) => arg.leftMainPanelItems);
-        this.middleMainPanelItems = combine(arguments, (arg: FeatureParams) => arg.middleMainPanelItems);
-        this.middleMainPanelItemsProps = combine(arguments, (arg: FeatureParams) => arg.middleMainPanelItemsProps);
-        this.leftFooterItems = combine(arguments, (arg: FeatureParams) => arg.leftFooterItems);
-        this.rightFooterItems = combine(arguments, (arg: FeatureParams) => arg.rightFooterItems);
-        this.middleLowerPanelItems = combine(arguments, (arg: FeatureParams) => arg.middleLowerPanelItems);
-        this.dataIdFromObject = combine(arguments, (arg: FeatureParams) => arg.dataIdFromObject);
+        this.leftMainPanelItems = combine(arguments, (arg: IModuleShape) => arg.leftMainPanelItems);
+        this.middleMainPanelItems = combine(arguments, (arg: IModuleShape) => arg.middleMainPanelItems);
+        this.middleMainPanelItemsProps = combine(arguments, (arg: IModuleShape) => arg.middleMainPanelItemsProps);
+        this.leftFooterItems = combine(arguments, (arg: IModuleShape) => arg.leftFooterItems);
+        this.rightFooterItems = combine(arguments, (arg: IModuleShape) => arg.rightFooterItems);
+        this.middleLowerPanelItems = combine(arguments, (arg: IModuleShape) => arg.middleLowerPanelItems);
+        this.dataIdFromObject = combine(arguments, (arg: IModuleShape) => arg.dataIdFromObject);
 
         // Navigation
-        this.routerFactory = combine(arguments, (arg: FeatureParams) => arg.routerFactory)
+        this.routerFactory = combine(arguments, (arg: IModuleShape) => arg.routerFactory)
             .slice(-1)
             .pop();
-        this.route = combine(arguments, (arg: FeatureParams) => arg.route);
-        this.routeConfig = combine(arguments, (arg: FeatureParams) => arg.routeConfig);
+        this.route = combine(arguments, (arg: IModuleShape) => arg.route);
+        this.routeConfig = combine(arguments, (arg: IModuleShape) => arg.routeConfig);
 
-        this.menuConfig = combine(arguments, (arg: FeatureParams) => arg.menuConfig);
-        this.navItem = combine(arguments, (arg: FeatureParams) => arg.navItem);
-        this.navItemRight = combine(arguments, (arg: FeatureParams) => arg.navItemRight);
-
-        // UI provider-components
-        this.rootComponentFactory = combine(arguments, (arg: FeatureParams) => arg.rootComponentFactory);
-        this.dataRootComponent = combine(arguments, (arg: FeatureParams) => arg.dataRootComponent);
+        this.menuConfig = combine(arguments, (arg: IModuleShape) => arg.menuConfig);
+        this.navItem = combine(arguments, (arg: IModuleShape) => arg.navItem);
+        this.navItemRight = combine(arguments, (arg: IModuleShape) => arg.navItemRight);
 
         // UI provider-components
-        this.languagesFuncs = combine(arguments, (arg: FeatureParams) => arg.languagesFuncs);
+        this.rootComponentFactory = combine(arguments, (arg: IModuleShape) => arg.rootComponentFactory);
+        this.dataRootComponent = combine(arguments, (arg: IModuleShape) => arg.dataRootComponent);
+
+        // UI provider-components
+        this.languagesFuncs = combine(arguments, (arg: IModuleShape) => arg.languagesFuncs);
 
 
         // TODO: Use React Helmet for those. Low level DOM manipulation
-        this.stylesInsert = combine(arguments, (arg: FeatureParams) => arg.stylesInsert);
-        this.scriptsInsert = combine(arguments, (arg: FeatureParams) => arg.scriptsInsert);
+        this.stylesInsert = combine(arguments, (arg: IModuleShape) => arg.stylesInsert);
+        this.scriptsInsert = combine(arguments, (arg: IModuleShape) => arg.scriptsInsert);
 
 
         // Shared modules data
@@ -116,7 +119,7 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     public get getReduxContext() {
-        return merge(...this.reduxContext);
+        return merge({}, ...this.reduxContext);
     }
 
     public getRouter(withRoot?: boolean, rootComponent?: any) {
@@ -136,14 +139,10 @@ export abstract class AbstractFeature implements IFeature {
     public abstract get navItemsRight();
 
     get reducers() {
-        return merge(...this.reducer);
+        return merge({}, ...(this.reducer || []));
     }
 
-    get resolvers() {
-        return merge(...this.resolver);
-    }
-
-    get getStateParams(): ClientStateParams {
+    get getStateParams(): IClientStateConfig {
         return this.clientStateParams.reduce(function (acc, curr) {
             const defs = curr.typeDefs ? Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs] : [];
             const schema = defs.map(typeDef => {
@@ -174,11 +173,11 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get leftMainPanel() {
-        return merge(...this.leftMainPanelItems);
+        return merge({}, ...(this.leftMainPanelItems || []));
     }
 
     get middleMainPanel() {
-        const panelObj = merge(...this.middleMainPanelItems);
+        const panelObj = merge({}, ...(this.middleMainPanelItems  || []));
         const withProps = {} as any;
         Object.keys(panelObj).forEach(key => {
             const props = this.middleMainPanelItemsProps.filter(el => !!el[key]);
@@ -210,7 +209,7 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     get middleLowerPanel() {
-        return merge(...this.middleLowerPanelItems);
+        return merge({}, ...(this.middleLowerPanelItems || []));
     }
 
     public abstract getDataIdFromObject(result: any);

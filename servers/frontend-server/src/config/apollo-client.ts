@@ -85,18 +85,7 @@ if (__CLIENT__) {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
 
-<<<<<<< HEAD
-// TODO Setup PersistQueries
-// if (__PERSIST_GQL__) {
-//     import('@common-stack/graphql-gql/extracted_queries.json').then(queryMap => {
-//         console.log(queryMap)
-//     }).catch(() => {
-//         console.warn('extracted_queries not found');
-//     });
-// }
-=======
 const links = [errorLink, ...modules.link, /** ...modules.errorLink, */ link];
->>>>>>> 307307aabc45101c0db3dc6477f55979f2eca6a8
 
 // Add apollo logger during development only
 if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {

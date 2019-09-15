@@ -1,6 +1,6 @@
 {
   "name": "common-stack-backend-server",
-  "version": "0.0.1",
+  "version": "0.0.206",
   "private": true,
   "description": "Starter kit for apollo server using webpack and typescript",
   "keywords": [
@@ -86,8 +86,8 @@
     "isomorphic-fetch": "^2.2.1",
     "knex": "^0.16.5",
     "lodash": "^4.17.11",
-	"morgan": "^1.9.1",
-	"mongoose": "5.6.9",
+    "mongoose": "5.6.9",
+    "morgan": "^1.9.1",
     "nats": "^1.2.10",
     "nats-hemera": "^7.0.1",
     "reflect-metadata": "^0.1.13",

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { IFeature, IModuleShape, IClientStateConfig } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
-import { IdGetter } from 'apollo-cache-inmemory';
 import { ErrorLink } from 'apollo-link-error';
 import { ReducersMapObject } from 'redux';
 import { Container } from 'inversify';
@@ -34,7 +33,7 @@ export abstract class AbstractFeature implements IFeature {
     public catalogInfo: any[];
     public languagesFuncs: any[];
     public data: any[];
-    public dataIdFromObject: { [key: string]: IdGetter }[];
+    public dataIdFromObject: { [key: string]: (value: any) => string }[];
     public createContainerFunc: Function[];
 
     public leftMainPanelItems: any;

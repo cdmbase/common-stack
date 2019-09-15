@@ -1,7 +1,6 @@
 // tslint:disable:max-line-length
 
 import { LocalStateFragmentMatcher } from 'apollo-client';
-import { IdGetter } from 'apollo-cache-inmemory';
 import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 export interface IClientStateConfig {
@@ -56,7 +55,7 @@ export interface IModuleShape {
      * object.
      * @inheritdoc https://github.com/apollographql/apollo-client/tree/ed66999bac40226abfeada8d6c83b454636bb4b0/packages/apollo-cache-inmemory#configuration
      */
-    readonly dataIdFromObject?: { [key: string]: IdGetter } |  { [key: string]: IdGetter }[];
+    readonly dataIdFromObject?: {[key: string]: (value: any) => string } |  {[key: string]: (value: any) => string }[];
     /**
      * @param createContainerFunc Synchronous Container Modules of inversify.
      * @inheritdoc https://github.com/inversify/InversifyJS/blob/master/wiki/container_modules.md
@@ -136,6 +135,10 @@ export interface IModuleShape {
 
 }
 
+
+/**
+ * Feature module methods
+ */
 export interface IFeature extends IModuleShape {
     // Public variables
     readonly data: any[];

@@ -38,7 +38,7 @@
     "jest": "./node_modules/.bin/jest",
     "lerna": "lerna bootstrap --hoist",
     "lerna:predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop",
-    "lerna:prepublish": "git checkout publish && git merge -s recursive -X theirs master",
+    "lerna:prepublish": "git checkout master && git merge -s recursive -X theirs master",
     "lint": "tslint ./packages/**/src/**/*.ts --exclude \"./packages/**/node_modules/**/*.ts\"",
     "postbootstrap": "npm run build",
     "prebootstrap": "lerna run prepare",

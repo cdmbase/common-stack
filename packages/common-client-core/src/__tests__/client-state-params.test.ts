@@ -108,7 +108,7 @@ describe('client-state-params', () => {
   const finalModule = new TestFeature(module1, module2, new TestFeature({ clientStateParams: [{ typeDefs: schema }] }));
 
   it('merge client-state', () => {
-    expect({ ...finalModule.getStateParams }).toMatchSnapshot();
+    expect({ ...finalModule.getStateParams() }).toMatchSnapshot();
   });
 
   it('writes defaults to the cache upon initialization', () => {
@@ -125,7 +125,7 @@ describe('client-state-params', () => {
       clientStateParams: [{ resolvers: resolvers1, defaults: defaults1 }],
     });
 
-    expect(moduleNoTypedef.getStateParams.typeDefs).toBe('');
+    expect(moduleNoTypedef.getStateParams().typeDefs).toBe('');
   });
 
   it('concatenates schema strings if typeDefs are passed in as an array', () => {
@@ -146,12 +146,12 @@ describe('client-state-params', () => {
 
     const cache = new InMemoryCache();
     cache.writeData({
-      data: finalModule.getStateParams.defaults,
+      data: finalModule.getStateParams().defaults,
     });
     const client = new ApolloClient({
       cache,
-      resolvers: finalModule.getStateParams.resolvers,
-      typeDefs:  schema.concat(finalModule.getStateParams.typeDefs as string),
+      resolvers: finalModule.getStateParams().resolvers,
+      typeDefs:  schema.concat(finalModule.getStateParams().typeDefs as string),
     });
 
 
@@ -162,10 +162,10 @@ describe('client-state-params', () => {
       });
   });
 
+  // TODO
   // describe('fragment matcher', () => {
   //   it('does basic things', () => {
   //     const resolver = fieldName => fieldName;
-  
   //     const query = gql`
   //       {
   //         a {
@@ -187,14 +187,12 @@ describe('client-state-params', () => {
   //         d
   //       }
   //     `;
-  
   //     const fragmentMatcher: FragmentMatcher = (_, typeCondition) =>
   //       typeCondition === 'Yes';
-  
   //     const resultWithMatcher = graphql(resolver, query, '', null, null, {
   //       fragmentMatcher,
   //     });
-  
+
   //     expect(resultWithMatcher).toEqual({
   //       a: {
   //         b: 'b',
@@ -202,9 +200,9 @@ describe('client-state-params', () => {
   //         e: 'e',
   //       },
   //     });
-  
+
   //     const resultNoMatcher = graphql(resolver, query, '', null, null);
-  
+
   //     expect(resultNoMatcher).toEqual({
   //       a: {
   //         b: 'b',

@@ -4,7 +4,6 @@ import { AbstractFeature } from '@common-stack/client-core';
 import { IReactFeature, IMenuItem } from '../interfaces';
 import { getRoutes, getMenus } from '../utils';
 // import { renderRoutes } from 'react-router-config';
-import { merge } from 'lodash';
 
 export class Feature extends AbstractFeature implements IReactFeature {
 

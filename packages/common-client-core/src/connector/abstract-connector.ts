@@ -4,6 +4,7 @@ import { merge, map, union, without, castArray } from 'lodash';
 import { IdGetter } from 'apollo-cache-inmemory';
 import { ErrorLink } from 'apollo-link-error';
 import { ReducersMapObject } from 'redux';
+import { Container } from 'inversify';
 
 const combine = (features, extractor) => without(union(...map(features, res => castArray(extractor(res)))), undefined);
 export const featureCatalog = {};
@@ -34,6 +35,7 @@ export abstract class AbstractFeature implements IFeature {
     public languagesFuncs: any[];
     public data: any[];
     public dataIdFromObject: { [key: string]: IdGetter }[];
+    public createContainerFunc: Function[];
 
     public leftMainPanelItems: any;
     public middleMainPanelItems: any;
@@ -101,6 +103,8 @@ export abstract class AbstractFeature implements IFeature {
         // UI provider-components
         this.languagesFuncs = combine(arguments, (arg: IModuleShape) => arg.languagesFuncs);
 
+        // container
+        this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
 
         // TODO: Use React Helmet for those. Low level DOM manipulation
         this.stylesInsert = combine(arguments, (arg: IModuleShape) => arg.stylesInsert);
@@ -143,7 +147,15 @@ export abstract class AbstractFeature implements IFeature {
         return merge({}, ...(this.reducer || []));
     }
 
-    get getStateParams(): IClientStateConfig {
+    public createContainers(options) {
+        const container = new Container();
+        this.createContainerFunc.map(createModule => {
+            container.load(createModule(options));
+        });
+        return container;
+    }
+
+    public getStateParams(args: { resolverContex?: any } = {}): IClientStateConfig {
         return this.clientStateParams.reduce<IClientStateConfig>(function (acc, curr) {
             const defs = curr.typeDefs ? Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs] : [];
             const schema = defs.map(typeDef => {
@@ -156,7 +168,11 @@ export abstract class AbstractFeature implements IFeature {
                 .join('\n');
             const typeDefs = acc.typeDefs ? acc.typeDefs.concat('\n', schema) : schema;
             const defaults = merge(acc.defaults, curr.defaults);
-            const resolvers = merge(acc.resolvers, curr.resolvers);
+
+            const curResolverObj = typeof curr.resolvers === 'function'
+                ? curr.resolvers(args.resolverContex)
+                : curr.resolvers;
+            const resolvers = merge(acc.resolvers, curResolverObj);
             const fragmentMatcher = merge(acc.fragmentMatcher, curr.fragmentMatcher);
             return { defaults, resolvers, typeDefs, fragmentMatcher };
         }, {} as IClientStateConfig);

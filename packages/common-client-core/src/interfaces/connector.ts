@@ -10,6 +10,8 @@ export interface IClientStateConfig {
     typeDefs?: string | string[];
     fragmentMatcher?: LocalStateFragmentMatcher;
 }
+
+
 /**
  * ModuleShape have optional configuration to be implemented by all the feature modules
  * in the application.
@@ -55,6 +57,11 @@ export interface IModuleShape {
      * @inheritdoc https://github.com/apollographql/apollo-client/tree/ed66999bac40226abfeada8d6c83b454636bb4b0/packages/apollo-cache-inmemory#configuration
      */
     readonly dataIdFromObject?: { [key: string]: IdGetter } |  { [key: string]: IdGetter }[];
+    /**
+     * @param createContainerFunc Synchronous Container Modules of inversify.
+     * @inheritdoc https://github.com/inversify/InversifyJS/blob/master/wiki/container_modules.md
+     */
+    readonly createContainerFunc?: Function | Function[];
     readonly sidebarSegments?: any;
     readonly routerFactory?: any;
     /**
@@ -177,9 +184,20 @@ export interface IFeature extends IModuleShape {
     readonly rightFooter;
     readonly middleLowerPanel;
     readonly dataIdFromObject;
+
     /**
-     * @param root React tree root component
-     * @param req Http Request
+     * @param args Options to pass to each Container Module
+     * @returns Created container and binds all the container modules
+     */
+    createContainers(args);
+    /**
+     * @param args Provide resolverContext which can be passed to all resolver functions.
+     * @returns IClientStateConfig
+     */
+    getStateParams(args?: {resolverContex?: any }): IClientStateConfig;
+    /**
+     * @arguments root React tree root component
+     * @arguments req Http Request
      * @returns React tree root component wrapped up by root components exposed by this module
      */
     getWrappedRoot(root: any, req?: any): any;

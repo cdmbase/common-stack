@@ -13,7 +13,7 @@
   },
   "command": {
     "publish": {
-      "allowBranch": ["publish", "devpublish"]
+      "allowBranch": ["master", "devpublish"]
     },
     "bootstrap": {
       "npmClientArgs": ["--no-package-lock"]      

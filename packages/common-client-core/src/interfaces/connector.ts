@@ -3,6 +3,7 @@
 import { LocalStateFragmentMatcher } from 'apollo-client';
 import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
+import { IdGetterObj } from 'apollo-cache-inmemory';
 export interface IClientStateConfig {
     resolvers?: any; // don't need `Resolvers` type as it may conflict with the usage
     defaults?: any;
@@ -55,12 +56,16 @@ export interface IModuleShape {
      * object.
      * @inheritdoc https://github.com/apollographql/apollo-client/tree/ed66999bac40226abfeada8d6c83b454636bb4b0/packages/apollo-cache-inmemory#configuration
      */
-    readonly dataIdFromObject?: {[key: string]: (value: any) => string } |  {[key: string]: (value: any) => string }[];
+    readonly dataIdFromObject?: {[key: string]: (value: any) => string } |  {[key: string]: (value: any) => string }[] | IdGetterObj;
     /**
      * @param createContainerFunc Synchronous Container Modules of inversify.
      * @inheritdoc https://github.com/inversify/InversifyJS/blob/master/wiki/container_modules.md
      */
     readonly createContainerFunc?: Function | Function[];
+    /**
+     * @param createServiceFunc Services
+     */
+    readonly createServiceFunc?: Function | Function[];
     readonly sidebarSegments?: any;
     readonly routerFactory?: any;
     /**
@@ -193,6 +198,9 @@ export interface IFeature extends IModuleShape {
      * @returns Created container and binds all the container modules
      */
     createContainers(args);
+
+
+    createService(options, updateOptions);
     /**
      * @param args Provide resolverContext which can be passed to all resolver functions.
      * @returns IClientStateConfig

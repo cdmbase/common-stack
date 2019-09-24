@@ -3,7 +3,8 @@ import { IFeature, IModuleShape, IClientStateConfig } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { ErrorLink } from 'apollo-link-error';
 import { ReducersMapObject } from 'redux';
-import { Container } from 'inversify';
+import { interfaces, Container } from 'inversify';
+import { IdGetterObj } from 'apollo-cache-inmemory';
 
 const combine = (features, extractor) => without(union(...map(features, res => castArray(extractor(res)))), undefined);
 export const featureCatalog = {};
@@ -35,7 +36,7 @@ export abstract class AbstractFeature implements IFeature {
     public data: any[];
     public dataIdFromObject: { [key: string]: (value: any) => string }[];
     public createContainerFunc: Function[];
-
+    public createServiceFunc: Function[];
     public leftMainPanelItems: any;
     public middleMainPanelItems: any;
     public middleMainPanelItemsProps: any;
@@ -43,6 +44,8 @@ export abstract class AbstractFeature implements IFeature {
     public rightFooterItems: any;
     public middleLowerPanelItems: any;
 
+    private container: interfaces.Container;
+    private services;
     /**
      * Constructs Client feature module representation, that folds all the feature modules
      * into a single module represented by this instance.
@@ -105,6 +108,9 @@ export abstract class AbstractFeature implements IFeature {
         // container
         this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
 
+        // services
+        this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
+
         // TODO: Use React Helmet for those. Low level DOM manipulation
         this.stylesInsert = combine(arguments, (arg: IModuleShape) => arg.stylesInsert);
         this.scriptsInsert = combine(arguments, (arg: IModuleShape) => arg.scriptsInsert);
@@ -146,12 +152,32 @@ export abstract class AbstractFeature implements IFeature {
         return merge({}, ...(this.reducer || []));
     }
 
-    public createContainers(options) {
-        const container = new Container();
+    public createContainers(options): interfaces.Container {
+        // only create once
+        if(this.container){
+            return this.container;
+        }
+        this.container = new Container();
         this.createContainerFunc.map(createModule => {
-            container.load(createModule(options));
+            this.container.load(createModule(options));
         });
-        return container;
+        return this.container;
+    }
+
+    public createService(options, updateOptions) {
+        // only create once
+        if(this.services) {
+            return this.services;
+        }
+        try {
+            if (!this.container) {
+                this.createContainers(options);
+            }
+            this.services = merge({}, ...this.createServiceFunc.map(serviceFunc => serviceFunc(this.container)));
+            return this.services;
+        } catch (err) {
+            throw err;
+        }
     }
 
     public getStateParams(args: { resolverContex?: any } = {}): IClientStateConfig {
@@ -229,12 +255,12 @@ export abstract class AbstractFeature implements IFeature {
         return merge({}, ...(this.middleLowerPanelItems || []));
     }
 
-    public getDataIdFromObject(result: { [key: string]: string | number, __typename?: string }) {
+    public getDataIdFromObject(result: { [key: string]: string | number, __typename?: string } | IdGetterObj) {
         const dataIdFromObject = merge({}, ...this.dataIdFromObject);
         if (dataIdFromObject[result.__typename]) {
             return dataIdFromObject[result.__typename](result);
         }
-        return result.id || result._id;
+        return result.id || (result as any)._id;
     }
 
     public abstract getWrappedRoot(root, req);

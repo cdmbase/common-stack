@@ -1,4 +1,5 @@
 import { TestFeature as Feature } from './test-feature';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import 'jest';
 
 const finalSettings = [
@@ -56,4 +57,20 @@ describe('data id from object', function () {
 
         expect(finalDataIdFromObject).toEqual(`${__typenameRes}:${resourceRes}`);
     });
+    it('with apollo client', () => {
+        const connector = new Feature({
+            dataIdFromObject: {
+                'IFileStat': (result: { resource: string, __typename: string }) => result.__typename + ':' + result.resource,
+                'IContent': (result: { resource: string, __typename: string }) => result.__typename + ':' + result.resource,
+                'IStreamContent': (result: { resource: string, __typename: string }) => result.__typename + ':' + result.resource,
+                'IChangedContent': (result: { resource: string, __typename: string }) => result.__typename + ':' + result.resource,
+            },
+        });
+
+        const feature = new Feature(connector);
+        const cache = new InMemoryCache({ dataIdFromObject: (result) => feature.getDataIdFromObject(result) });
+        
+    });
+
 });
+

@@ -1,6 +1,6 @@
 {
     "name": "@common-stack/cache-api-browser",
-    "version": "0.0.207",
+    "version": "0.0.208",
     "description": "Sample core for higher packages to depend on",
     "main": "lib/index.js",
     "scripts": {

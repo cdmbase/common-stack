@@ -154,7 +154,7 @@ export abstract class AbstractFeature implements IFeature {
 
     public createContainers(options): interfaces.Container {
         // only create once
-        if(this.container){
+        if (this.container) {
             return this.container;
         }
         this.container = new Container();
@@ -166,7 +166,7 @@ export abstract class AbstractFeature implements IFeature {
 
     public createService(options, updateOptions) {
         // only create once
-        if(this.services) {
+        if (this.services) {
             return this.services;
         }
         try {
@@ -194,14 +194,12 @@ export abstract class AbstractFeature implements IFeature {
             const typeDefs = acc.typeDefs ? acc.typeDefs.concat('\n', schema) : schema;
             const defaults = merge(acc.defaults, curr.defaults);
 
-            const curResolverObj = typeof curr.resolvers === 'function'
-                ? curr.resolvers(args.resolverContex)
-                : curr.resolvers;
-            const resolvers = merge(acc.resolvers, curResolverObj);
+            const resolvers = merge(acc.resolvers, consoldidatedResolvers(curr.resolvers, args.resolverContex));
             const fragmentMatcher = merge(acc.fragmentMatcher, curr.fragmentMatcher);
             return { defaults, resolvers, typeDefs, fragmentMatcher };
         }, {} as IClientStateConfig);
     }
+
 
     get connectionParams() {
         return this.connectionParam;
@@ -268,4 +266,22 @@ export abstract class AbstractFeature implements IFeature {
     public abstract getDataRoot(root);
 
     public abstract registerLanguages(monaco);
+}
+
+function consoldidatedResolvers(resolvers: object | object[] | ((services: any) => object) | ((services: any) => object)[], context) {
+    let finalResolvers;
+    if (Array.isArray(resolvers)) {
+        const resolverObject = (resolvers as (object[])).map(resolver => {
+            return typeof resolver === 'function'
+            ? resolver(context)
+            : resolver;
+        });
+        finalResolvers = merge({}, ...resolverObject);
+    } else {
+        finalResolvers = typeof resolvers === 'function'
+            ? resolvers(context)
+            : resolvers;
+    }
+
+    return finalResolvers;
 }

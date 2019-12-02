@@ -5,8 +5,8 @@ import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 import { IdGetterObj } from 'apollo-cache-inmemory';
 export interface IClientStateConfig {
-    resolvers?: any; // don't need `Resolvers` type as it may conflict with the usage
-    defaults?: any;
+    resolvers?: object | object[] | ((services: any) => object) | [((services: any) => object)]; // don't need `Resolvers` type as it may conflict with the usage
+    defaults?: object;
     typeDefs?: string | string[];
     fragmentMatcher?: LocalStateFragmentMatcher;
 }

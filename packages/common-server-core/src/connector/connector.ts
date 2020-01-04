@@ -58,8 +58,14 @@ class Feature {
   public updateContainerFunc: any[];
   public beforeware: Function[];
   public middleware: Function[];
+<<<<<<< HEAD
   public createPreference: IPreferences[];
   public overwritePreference: IOverwritePreference[];
+=======
+  public createPreference: any[];
+  public overwritePreference: Function[];
+  public migrations?: Array<{ [id: string]: IMongoMigration }>;
+>>>>>>> feature/mongo-migrations
 
   private services;
   private container;
@@ -79,7 +85,11 @@ class Feature {
     this.postCreateServiceFunc = combine(arguments, arg => arg.postCreateServiceFunc);
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
+<<<<<<< HEAD
     this.federation =  combine(arguments, arg => arg.federation);
+=======
+    this.migrations = combine(arguments, arg => arg.migrations);
+>>>>>>> feature/mongo-migrations
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.createHemeraContainerFunc = combine(arguments, arg => arg.createHemeraContainerFunc);
     this.createAsyncContainerFunc = combine(arguments, arg => arg.createAsyncContainerFunc);

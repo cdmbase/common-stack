@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IFeature, IModuleShape, IClientStateConfig } from '../interfaces';
+import { IFeature, IModuleShape, IClientStateConfig, IClientState, ResolverType } from '../interfaces';
+import { Resolvers } from 'apollo-client';
 import { merge, map, union, without, castArray } from 'lodash';
 import { ErrorLink } from 'apollo-link-error';
 import { ReducersMapObject } from 'redux';
@@ -180,8 +181,8 @@ export abstract class AbstractFeature implements IFeature {
         }
     }
 
-    public getStateParams(args: { resolverContex?: any } = {}): IClientStateConfig {
-        return this.clientStateParams.reduce<IClientStateConfig>(function (acc, curr) {
+    public getStateParams(args: { resolverContex?: any } = {}) {
+        return this.clientStateParams.reduce<IClientState>(function (acc, curr) {
             const defs = curr.typeDefs ? Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs] : [];
             const schema = defs.map(typeDef => {
                 if (typeof typeDef === 'string') {
@@ -194,10 +195,10 @@ export abstract class AbstractFeature implements IFeature {
             const typeDefs = acc.typeDefs ? acc.typeDefs.concat('\n', schema) : schema;
             const defaults = merge(acc.defaults, curr.defaults);
 
-            const resolvers = merge(acc.resolvers, consoldidatedResolvers(curr.resolvers, args.resolverContex));
+            const resolvers = merge(acc.resolvers, consoldidatedResolvers(curr.resolvers, args.resolverContex)) as Resolvers;
             const fragmentMatcher = merge(acc.fragmentMatcher, curr.fragmentMatcher);
             return { defaults, resolvers, typeDefs, fragmentMatcher };
-        }, {} as IClientStateConfig);
+        }, {} as IClientState);
     }
 
 
@@ -268,7 +269,7 @@ export abstract class AbstractFeature implements IFeature {
     public abstract registerLanguages(monaco);
 }
 
-function consoldidatedResolvers(resolvers: object | object[] | ((services: any) => object) | ((services: any) => object)[], context) {
+function consoldidatedResolvers(resolvers: ResolverType, context): Resolvers {
     let finalResolvers;
     if (Array.isArray(resolvers)) {
         const resolverObject = (resolvers as (object[])).map(resolver => {

@@ -1,16 +1,24 @@
 // tslint:disable:max-line-length
 
-import { LocalStateFragmentMatcher } from 'apollo-client';
+import { LocalStateFragmentMatcher, Resolvers } from 'apollo-client';
 import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 import { IdGetterObj } from 'apollo-cache-inmemory';
+
+export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) |  ((service: any) => Resolvers)[]  | ((service: any) => any) | ((service: any) => any)[];
 export interface IClientStateConfig {
-    resolvers?: object | object[] | ((services: any) => object) | [((services: any) => object)]; // don't need `Resolvers` type as it may conflict with the usage
+    resolvers?: ResolverType; // don't need `Resolvers` type as it may conflict with the usage
     defaults?: object;
     typeDefs?: string | string[];
     fragmentMatcher?: LocalStateFragmentMatcher;
 }
 
+export interface IClientState {
+    resolvers?: Resolvers; // don't need `Resolvers` type as it may conflict with the usage
+    defaults?: object;
+    typeDefs?: string | string[];
+    fragmentMatcher?: LocalStateFragmentMatcher;
+}
 
 /**
  * ModuleShape have optional configuration to be implemented by all the feature modules
@@ -203,9 +211,9 @@ export interface IFeature extends IModuleShape {
     createService(options, updateOptions);
     /**
      * @param args Provide resolverContext which can be passed to all resolver functions.
-     * @returns IClientStateConfig
+     * @returns IClientState
      */
-    getStateParams(args?: {resolverContex?: any }): IClientStateConfig;
+    getStateParams(args?: {resolverContex?: any }): IClientState;
     /**
      * @arguments root React tree root component
      * @arguments req Http Request

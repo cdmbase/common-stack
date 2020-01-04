@@ -1,6 +1,6 @@
 {
   "name": "common-stack-backend-server",
-  "version": "0.0.209",
+  "version": "0.0.210",
   "private": true,
   "description": "Starter kit for apollo server using webpack and typescript",
   "keywords": [

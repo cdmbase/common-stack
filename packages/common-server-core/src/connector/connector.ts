@@ -39,7 +39,7 @@ class Feature {
   public middleware: Function[];
   public createPreference: any[];
   public overwritePreference: Function[];
-  public migrations?: { [id: string]: IMongoMigration };
+  public migrations?: Array<{ [id: string]: IMongoMigration }>;
 
   private services;
   private container;

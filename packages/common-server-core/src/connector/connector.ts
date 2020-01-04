@@ -1,4 +1,4 @@
-import { IResolverOptions, IDirectiveOptions } from '../interfaces';
+import { IResolverOptions, IDirectiveOptions, IMongoMigration } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { Container, interfaces } from 'inversify';
 import { getCurrentPreferences, transformPrefsToArray } from '../utils';
@@ -39,6 +39,7 @@ class Feature {
   public middleware: Function[];
   public createPreference: any[];
   public overwritePreference: Function[];
+  public migrations?: { [id: string]: IMongoMigration };
 
   private services;
   private container;
@@ -54,6 +55,7 @@ class Feature {
     this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
     this.preCreateServiceFunc = combine(arguments, arg => arg.preCreateServiceFunc);
 
+    this.migrations = combine(arguments, arg => arg.migrations);
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.updateContainerFunc = combine(arguments, arg => arg.updateContainerFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);

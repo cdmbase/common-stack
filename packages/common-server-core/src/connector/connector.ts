@@ -1,4 +1,4 @@
-import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePreference, IPreferncesTransformed } from '../interfaces';
+import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePreference, IPreferncesTransformed, IMongoMigration } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { Container, interfaces } from 'inversify';
 import { getCurrentPreferences, transformPrefsToArray } from '../utils';

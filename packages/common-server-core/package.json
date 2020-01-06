@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/server-core",
-  "version": "0.0.212",
+  "version": "0.0.213",
   "description": "xterm server services for Node",
   "main": "lib/index.js",
   "scripts": {

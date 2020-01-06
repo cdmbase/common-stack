@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-react",
-  "version": "0.0.212",
+  "version": "0.0.213",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {

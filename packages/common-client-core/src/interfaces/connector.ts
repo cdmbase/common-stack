@@ -4,6 +4,7 @@ import { LocalStateFragmentMatcher, Resolvers } from 'apollo-client';
 import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 import { IdGetterObj } from 'apollo-cache-inmemory';
+import { IMappedData, IRouteData  } from './router';
 
 export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) |  ((service: any) => Resolvers)[]  | ((service: any) => any) | ((service: any) => any)[];
 export interface IClientStateConfig {
@@ -200,6 +201,9 @@ export interface IFeature extends IModuleShape {
     readonly rightFooter;
     readonly middleLowerPanel;
     readonly dataIdFromObject;
+
+    readonly routeConfig: IRouteData<any>;
+    readonly menuConfig: IMappedData;
 
     /**
      * @param args Options to pass to each Container Module

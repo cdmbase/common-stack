@@ -28,6 +28,8 @@ export type FeatureParams = {
   createAsyncHemeraContainerFunc?: Function | Function[],
   preCreateServiceFunc?: Function | Function[],
   postCreateServiceFunc?: Function | Function[],
+  preStartFunc?: Function | Function[],
+  postStartFunc?: Function | Function[],
   updateContainerFunc?: any | any[],
   createPreference?: IPreferences | IPreferences[],
   overwritePreference?: IOverwritePreference | IOverwritePreference[],
@@ -54,6 +56,8 @@ class Feature {
   public createDataSourceFunc: Function[];
   public preCreateServiceFunc: Function[];
   public postCreateServiceFunc: Function[];
+  public preStartFunc?: Function[];
+  public postStartFunc?: Function[];
   public disposeFunc: any[];
   public updateContainerFunc: any[];
   public beforeware: Function[];
@@ -78,6 +82,8 @@ class Feature {
     this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
     this.preCreateServiceFunc = combine(arguments, arg => arg.preCreateServiceFunc);
     this.postCreateServiceFunc = combine(arguments, arg => arg.postCreateServiceFunc);
+    this.preStartFunc = combine(arguments, arg => arg.preStartFunc);
+    this.postStartFunc = combine(arguments, arg => arg.postStartFunc);
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
     this.federation =  combine(arguments, arg => arg.federation);
@@ -148,6 +154,21 @@ class Feature {
       throw err;
     }
 
+  }
+
+  /**
+   * Pre start action will be executed there.
+   *
+   */
+  public async preStart<T>(options: T) {
+    return await Promise.all(this.preStartFunc.map(async (preStart) => await preStart(this.container, options)));
+  }
+
+  /**
+   * Post start actions will be executed here.
+   */
+  public async postStart<T>(options: T) {
+    return await Promise.all(this.postStartFunc.map(async (postStart) => await postStart(this.container, options)));
   }
 
   public createDataSource(options?: any) {

@@ -3,7 +3,7 @@ import { Feature } from '../connector';
 import {
     defaultSettings, userSettings, prefRes, prefsArrRes,
     finalSettings, convertedDefaultSettings,
-} from './fixtures/preferenfces/common-settings';
+} from './fixtures/preferenfces/sample-settings';
 
 import 'jest';
 
@@ -17,7 +17,7 @@ describe('context merge test', function () {
         settings2: 'settings2',
     };
 
-    it('Should be able load context module', async (done) => {
+    xit('Should be able load context module', async (done) => {
 
         const module1 =
             (settings) => new ContainerModule((bind: interfaces.Bind) => {
@@ -51,7 +51,7 @@ describe('context merge test', function () {
         }
     });
 
-    it('Should be able to retrieve IDefaultSettings context module', async (done) => {
+    xit('Should be able to retrieve IDefaultSettings context module', async (done) => {
 
         const module1 =
             (settings) => new ContainerModule((bind: interfaces.Bind) => {
@@ -87,7 +87,7 @@ describe('context merge test', function () {
         }
     });
 
-    it('Should be able use async functions in container modules', async (done) => {
+    xit('Should be able use async functions in container modules', async (done) => {
 
         const someAsyncFactory = () => new Promise<number>((res) => setTimeout(() => res(5), 100));
         let resutlVal;
@@ -119,7 +119,7 @@ describe('context merge test', function () {
         }
     });
 
-    it('Should be able use async functions and retrieve IDefaultSettings', async (done) => {
+    xit('Should be able use async functions and retrieve IDefaultSettings', async (done) => {
 
         const someAsyncFactory = () => new Promise<number>((res) => setTimeout(() => res(5), 100));
         let resutlVal;
@@ -150,6 +150,51 @@ describe('context merge test', function () {
             done();
         } catch (err) {
             done.fail(err);
+        }
+    });
+
+    it('Should be able load preStart module', async (done) => {
+
+        const module1 =
+            (settings) => new ContainerModule((bind: interfaces.Bind) => {
+                bind<number>(TYPES.someType1).toConstantValue(1);
+                bind<number>(TYPES.someType2).toConstantValue(2);
+                bind<string>(TYPES.settings1).toConstantValue(settings.settings1);
+            });
+
+        const module2 =
+            (settings) => new ContainerModule((bind: interfaces.Bind) => {
+                bind<number>(TYPES.someType3).toConstantValue(3);
+                bind<string>(TYPES.settings2).toConstantValue(settings.settings2);
+            });
+
+        const serviceFunc = (cont) => ({
+            service1: cont.get(TYPES.someType1),
+        });
+
+        const preStartFunc1 = (cont) => {
+            const result1 = cont.get(TYPES.someType1);
+            console.log('--Result1', result1);
+        };
+
+        const preStartFunc2 = (cont) => {
+            const result3 = cont.get(TYPES.someType3);
+            console.log('--Result3', result3);
+        };
+
+        try {
+            const feature = new Feature({
+                createContainerFunc: [module1, module2],
+                createServiceFunc: [serviceFunc],
+                preStartFunc: [preStartFunc1, preStartFunc2],
+            });
+            const cont = await feature.createContainers({});
+            const service = await feature.preStart(cont);
+            // expect(contextService.service1).toEqual(1);
+            done();
+        } catch (err) {
+            console.error(err);
+            expect(done.fail);
         }
     });
 

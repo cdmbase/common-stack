@@ -160,14 +160,14 @@ class Feature {
    * Pre start action will be executed there.
    *
    */
-  public async preStart<T>(options: T) {
+  public async preStart<T = unknown>(options: T) {
     return await Promise.all(this.preStartFunc.map(async (preStart) => await preStart(this.container, options)));
   }
 
   /**
    * Post start actions will be executed here.
    */
-  public async postStart<T>(options: T) {
+  public async postStart<T = unknown>(options: T) {
     return await Promise.all(this.postStartFunc.map(async (postStart) => await postStart(this.container, options)));
   }
 

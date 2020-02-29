@@ -14,6 +14,9 @@ export interface IFederationServiceOptions {
 
 export type FederationServiceDeclaration = (options: IFederationServiceOptions) => Promise<void>;
 
+/**
+ * Feature Params that can be passed to Feature Module.
+ */
 export type FeatureParams = {
   schema?: string | string[],
   createRemoteSchemas?: Function | Function[],
@@ -30,6 +33,8 @@ export type FeatureParams = {
   postCreateServiceFunc?: Function | Function[],
   preStartFunc?: Function | Function[],
   postStartFunc?: Function | Function[],
+  addBrokerMainServiceClass?: Function | Function[],
+  addBrokerClientServiceClass?: Function | Function[],
   updateContainerFunc?: any | any[],
   createPreference?: IPreferences | IPreferences[],
   overwritePreference?: IOverwritePreference | IOverwritePreference[],
@@ -56,8 +61,10 @@ class Feature {
   public createDataSourceFunc: Function[];
   public preCreateServiceFunc: Function[];
   public postCreateServiceFunc: Function[];
-  public preStartFunc?: Function[];
-  public postStartFunc?: Function[];
+  public preStartFunc: Function[];
+  public postStartFunc: Function[];
+  public addBrokerMainServiceClass: Function[];
+  public addBrokerClientServiceClass: Function[];
   public disposeFunc: any[];
   public updateContainerFunc: any[];
   public beforeware: Function[];
@@ -84,9 +91,11 @@ class Feature {
     this.postCreateServiceFunc = combine(arguments, arg => arg.postCreateServiceFunc);
     this.preStartFunc = combine(arguments, arg => arg.preStartFunc);
     this.postStartFunc = combine(arguments, arg => arg.postStartFunc);
+    this.addBrokerMainServiceClass = combine(arguments, arg => arg.addBrokerMainServiceClass);
+    this.addBrokerClientServiceClass = combine(arguments, arg => arg.addBrokerClientServiceClass);
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
 
-    this.federation =  combine(arguments, arg => arg.federation);
+    this.federation = combine(arguments, arg => arg.federation);
     this.migrations = combine(arguments, arg => arg.migrations);
     this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
     this.createHemeraContainerFunc = combine(arguments, arg => arg.createHemeraContainerFunc);
@@ -197,7 +206,21 @@ class Feature {
     return this.container;
   }
 
+  /**
+   * Use createMicroserviceContainer
+   * @param options
+   * @deprecated
+   */
   public async createHemeraContainers(options) {
+    return this.createMicroserviceContainers(options);
+  }
+
+  /**
+   * Creates container for the microservice
+   *
+   * @param options
+   */
+  public async createMicroserviceContainers(options) {
     this.hemeraContainer = new Container();
     this.createHemeraContainerFunc.map(createModule => {
       this.hemeraContainer.load(createModule(options));
@@ -208,6 +231,7 @@ class Feature {
       }));
     return this.hemeraContainer;
   }
+
 
   public updateContainers(options, updateOptions?: any) {
     let mergedModules = merge({}, ...this.updateContainerFunc);
@@ -226,6 +250,14 @@ class Feature {
     }
 
     matchingModules.map(createModule => this.container.load(createModule(options)));
+  }
+
+  public loadMainMoleculerService({container, broker, settings }: { container: Container, broker: any, settings: unknown }) {
+    this.addBrokerMainServiceClass.map(serviceClass => broker.createService(serviceClass, { container, settings }));
+  }
+
+  public loadClientMoleculerService({container, broker, settings }: { container: Container, broker: any, settings: unknown }) {
+    this.addBrokerClientServiceClass.map(serviceClass => broker.createService(serviceClass, { container, settings }));
   }
 
   public createDefaultPreferences() {

@@ -155,16 +155,18 @@ describe('context merge test', function () {
 
     it('Should be able load preStart module', async (done) => {
 
+        const test1 = 1;
+        const test3 = 3;
         const module1 =
             (settings) => new ContainerModule((bind: interfaces.Bind) => {
-                bind<number>(TYPES.someType1).toConstantValue(1);
+                bind<number>(TYPES.someType1).toConstantValue(test1);
                 bind<number>(TYPES.someType2).toConstantValue(2);
                 bind<string>(TYPES.settings1).toConstantValue(settings.settings1);
             });
 
         const module2 =
             (settings) => new ContainerModule((bind: interfaces.Bind) => {
-                bind<number>(TYPES.someType3).toConstantValue(3);
+                bind<number>(TYPES.someType3).toConstantValue(test3);
                 bind<string>(TYPES.settings2).toConstantValue(settings.settings2);
             });
 
@@ -174,12 +176,12 @@ describe('context merge test', function () {
 
         const preStartFunc1 = (cont) => {
             const result1 = cont.get(TYPES.someType1);
-            console.log('--Result1', result1);
+            expect(result1).toBe(test1);
         };
 
         const preStartFunc2 = (cont) => {
             const result3 = cont.get(TYPES.someType3);
-            console.log('--Result3', result3);
+            expect(result3).toBe(test3);
         };
 
         try {
@@ -190,7 +192,6 @@ describe('context merge test', function () {
             });
             const cont = await feature.createContainers({});
             const service = await feature.preStart(cont);
-            // expect(contextService.service1).toEqual(1);
             done();
         } catch (err) {
             console.error(err);

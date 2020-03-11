@@ -33,6 +33,8 @@ export type FeatureParams = {
   postCreateServiceFunc?: Function | Function[],
   preStartFunc?: Function | Function[],
   postStartFunc?: Function | Function[],
+  microservicePreStartFunc?: Function | Function[],
+  microservicePostStartFunc?: Function | Function[],
   addBrokerMainServiceClass?: Function | Function[],
   addBrokerClientServiceClass?: Function | Function[],
   updateContainerFunc?: any | any[],
@@ -63,6 +65,8 @@ class Feature {
   public postCreateServiceFunc: Function[];
   public preStartFunc: Function[];
   public postStartFunc: Function[];
+  public microservicePreStartFunc: Function[];
+  public microservicePostStartFunc: Function[];
   public addBrokerMainServiceClass: Function[];
   public addBrokerClientServiceClass: Function[];
   public disposeFunc: any[];
@@ -91,6 +95,8 @@ class Feature {
     this.postCreateServiceFunc = combine(arguments, arg => arg.postCreateServiceFunc);
     this.preStartFunc = combine(arguments, arg => arg.preStartFunc);
     this.postStartFunc = combine(arguments, arg => arg.postStartFunc);
+    this.microservicePreStartFunc = combine(arguments, arg => arg.microservicePreStartFunc);
+    this.microservicePostStartFunc = combine(arguments, arg => arg.microservicePostStartFunc);
     this.addBrokerMainServiceClass = combine(arguments, arg => arg.addBrokerMainServiceClass);
     this.addBrokerClientServiceClass = combine(arguments, arg => arg.addBrokerClientServiceClass);
     this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
@@ -178,6 +184,21 @@ class Feature {
    */
   public async postStart<T = unknown>(options: T) {
     return await Promise.all(this.postStartFunc.map(async (postStart) => await postStart(this.container, options)));
+  }
+
+  /**
+   * Pre start action will be executed there.
+   *
+   */
+  public async microservicePreStart<T = unknown>(options: T) {
+    return await Promise.all(this.microservicePreStartFunc.map(async (preStart) => await preStart(this.container, options)));
+  }
+
+  /**
+   * Post start actions will be executed here.
+   */
+  public async microservicePostStart<T = unknown>(options: T) {
+    return await Promise.all(this.microservicePostStartFunc.map(async (postStart) => await postStart(this.container, options)));
   }
 
   public createDataSource(options?: any) {

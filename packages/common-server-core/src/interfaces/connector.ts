@@ -17,6 +17,9 @@ export enum ConfigurationScope {
     RESOURCE,
 }
 
+export interface IWebsocketConfig {
+    [key: string]: any
+}
 
 export interface IPreferences {
     [key: string]: IPreferencesData;

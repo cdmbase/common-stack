@@ -1,4 +1,4 @@
-import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePreference, IPreferncesTransformed, IMongoMigration } from '../interfaces';
+import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePreference, IPreferncesTransformed, IMongoMigration, IWebsocketConfig } from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { Container, interfaces } from 'inversify';
 import { getCurrentPreferences, transformPrefsToArray } from '../utils';
@@ -37,6 +37,7 @@ export type FeatureParams = {
   microservicePostStartFunc?: Function | Function[],
   addBrokerMainServiceClass?: Function | Function[],
   addBrokerClientServiceClass?: Function | Function[],
+  createWebsocketConfig?: IWebsocketConfig | IWebsocketConfig[],
   updateContainerFunc?: any | any[],
   createPreference?: IPreferences | IPreferences[],
   overwritePreference?: IOverwritePreference | IOverwritePreference[],
@@ -73,6 +74,7 @@ class Feature {
   public updateContainerFunc: any[];
   public beforeware: Function[];
   public middleware: Function[];
+  public createWebsocketConfig: IWebsocketConfig[];
   public createPreference: IPreferences[];
   public overwritePreference: IOverwritePreference[];
   public migrations?: Array<{ [id: string]: IMongoMigration }>;
@@ -111,6 +113,7 @@ class Feature {
     this.createDataSourceFunc = combine(arguments, arg => arg.createDataSourceFunc);
     this.beforeware = combine(arguments, arg => arg.beforeware);
     this.middleware = combine(arguments, arg => arg.middleware);
+    this.createWebsocketConfig = combine(arguments, arg => arg.createWebsocketConfig);
     this.createPreference = combine(arguments, arg => arg.createPreference);
     this.overwritePreference = combine(arguments, arg => arg.overwritePreference);
   }
@@ -301,6 +304,14 @@ class Feature {
     const defaultPrefs = merge([], ...this.createPreference);
     const overwritePrefs = merge([], ...this.overwritePreference);
     return getCurrentPreferences(defaultPrefs, overwritePrefs);
+  }
+
+  public getWebsocketConfig() {
+    console.log(this.createWebsocketConfig)
+     const flat = this.createWebsocketConfig.reduce((pre, curr) => {
+      return merge(pre, curr);
+     }, {})
+     return flat;
   }
 
 }

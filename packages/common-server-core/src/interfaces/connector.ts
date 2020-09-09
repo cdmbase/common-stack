@@ -21,16 +21,19 @@ export interface IWebsocketConfig {
     [key: string]: any
 }
 
-export interface IPreferences {
-    [key: string]: IPreferencesData;
+export interface IPreferences<T = ConfigurationScope> {
+    [key: string]: IPreferencesData<T>;
 }
 
-export interface IPreferencesData {
+export interface IRoles<T = ConfigurationScope> {
+    [key: string]: IPreferencesData<T>;
+}
+export interface IPreferencesData<T = ConfigurationScope> {
     type?: string | string[];
     default?: string | boolean | number | any;
     description?: string;
     overridable?: boolean;
-    scope?: ConfigurationScope;
+    scope?: T;
     settings?: string;
     enum?: any;
     enumDescriptions?: string[];
@@ -40,9 +43,9 @@ export interface IPreferencesData {
 /**
  * Formatted preferences data
  */
-export interface IPreferncesTransformed {
+export interface IPreferncesTransformed<T = ConfigurationScope> {
     type: string;
-    data: IPreferencesData;
+    data: IPreferencesData<T>;
 }
 
 export interface IOverwritePreference {

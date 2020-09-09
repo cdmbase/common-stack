@@ -1,4 +1,7 @@
-import { IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePreference, IPreferncesTransformed, IMongoMigration, IWebsocketConfig } from '../interfaces';
+import {
+  IResolverOptions, IDirectiveOptions, IPreferences, IOverwritePreference, IPreferncesTransformed, IMongoMigration,
+  IWebsocketConfig, ConfigurationScope, IRoles,
+} from '../interfaces';
 import { merge, map, union, without, castArray } from 'lodash';
 import { Container, interfaces } from 'inversify';
 import { getCurrentPreferences, transformPrefsToArray } from '../utils';
@@ -17,7 +20,7 @@ export type FederationServiceDeclaration = (options: IFederationServiceOptions) 
 /**
  * Feature Params that can be passed to Feature Module.
  */
-export type FeatureParams = {
+export type FeatureParams<T = ConfigurationScope> = {
   schema?: string | string[],
   createRemoteSchemas?: Function | Function[],
   createDirectivesFunc?: Function | Function[],
@@ -39,7 +42,11 @@ export type FeatureParams = {
   addBrokerClientServiceClass?: Function | Function[],
   createWebsocketConfig?: IWebsocketConfig | IWebsocketConfig[],
   updateContainerFunc?: any | any[],
-  createPreference?: IPreferences | IPreferences[],
+  createPreference?: IPreferences<T> | IPreferences<T>[],
+  /**
+   * Roles to provide permissions to access resources.
+   */
+  addRoles?: IRoles<T> | IRoles<T>[],
   overwritePreference?: IOverwritePreference | IOverwritePreference[],
   federation?: FederationServiceDeclaration | FederationServiceDeclaration[];
   dataIdFromObject?: Function | Function[],
@@ -49,7 +56,7 @@ export type FeatureParams = {
   catalogInfo?: any | any[],
 };
 
-class Feature {
+class Feature<T = ConfigurationScope> {
   public schema: string[];
   public createRemoteSchemas?: Function | Function[];
   public createDirectivesFunc: Function[];
@@ -75,8 +82,10 @@ class Feature {
   public beforeware: Function[];
   public middleware: Function[];
   public createWebsocketConfig: IWebsocketConfig[];
-  public createPreference: IPreferences[];
+  public createPreference: IPreferences<T>[];
+  public addRoles: IRoles<T>[];
   public overwritePreference: IOverwritePreference[];
+  public overwriteRole: IOverwritePreference[];
   public migrations?: Array<{ [id: string]: IMongoMigration }>;
 
   private services;
@@ -84,7 +93,7 @@ class Feature {
   private hemeraContainer;
   private dataSources;
 
-  constructor(feature?: FeatureParams, ...features: Feature[]) {
+  constructor(feature?: FeatureParams<T>, ...features: Feature<T>[]) {
     combine(arguments, arg => arg.catalogInfo).forEach(info =>
       Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
     );
@@ -115,7 +124,9 @@ class Feature {
     this.middleware = combine(arguments, arg => arg.middleware);
     this.createWebsocketConfig = combine(arguments, arg => arg.createWebsocketConfig);
     this.createPreference = combine(arguments, arg => arg.createPreference);
+    this.addRoles = combine(arguments, arg => arg.addRoles);
     this.overwritePreference = combine(arguments, arg => arg.overwritePreference);
+    this.overwriteRole = combine(arguments, arg => arg.overwriteRole);
   }
 
   get schemas(): string[] {
@@ -227,6 +238,9 @@ class Feature {
       }));
     this.container.bind('IDefaultSettings').toConstantValue(this.getPreferences());
     this.container.bind('IDefaultSettingsObj').toConstantValue(this.getPreferencesObj());
+    // roles
+    this.container.bind('IDefaultRoles').toConstantValue(this.getRoles());
+    this.container.bind('IDefaultRolesObj').toConstantValue(this.getRolesObj());
     return this.container;
   }
 
@@ -276,11 +290,11 @@ class Feature {
     matchingModules.map(createModule => this.container.load(createModule(options)));
   }
 
-  public loadMainMoleculerService({container, broker, settings }: { container: Container, broker: any, settings: unknown }) {
+  public loadMainMoleculerService({ container, broker, settings }: { container: Container, broker: any, settings: unknown }) {
     this.addBrokerMainServiceClass.map(serviceClass => broker.createService(serviceClass, { container, settings }));
   }
 
-  public loadClientMoleculerService({container, broker, settings }: { container: Container, broker: any, settings: unknown }) {
+  public loadClientMoleculerService({ container, broker, settings }: { container: Container, broker: any, settings: unknown }) {
     this.addBrokerClientServiceClass.map(serviceClass => broker.createService(serviceClass, { container, settings }));
   }
 
@@ -296,22 +310,32 @@ class Feature {
     return this.middleware;
   }
 
-  public getPreferences(): IPreferncesTransformed[] {
-    return transformPrefsToArray(this.getPreferencesObj());
+  public getPreferences<T = ConfigurationScope>(): IPreferncesTransformed<T>[] {
+    return transformPrefsToArray<T>(this.getPreferencesObj());
   }
 
-  public getPreferencesObj() {
-    const defaultPrefs = merge([], ...this.createPreference);
-    const overwritePrefs = merge([], ...this.overwritePreference);
-    return getCurrentPreferences(defaultPrefs, overwritePrefs);
+  public getRoles<T = ConfigurationScope>(): IPreferncesTransformed<T>[] {
+    return transformPrefsToArray<T>(this.getPreferencesObj());
+  }
+
+  public getRolesObj<T>() {
+    const defaultPrefs: IPreferences<T>[] = merge([], ...this.addRoles);
+    const overwritePrefs: IOverwritePreference[] = merge([], ...this.overwriteRole);
+    return getCurrentPreferences<T>(defaultPrefs, overwritePrefs);
+  }
+
+  public getPreferencesObj<T>() {
+    const defaultPrefs: IPreferences<T>[] = merge([], ...this.createPreference);
+    const overwritePrefs: IOverwritePreference[] = merge([], ...this.overwritePreference);
+    return getCurrentPreferences<T>(defaultPrefs, overwritePrefs);
   }
 
   public getWebsocketConfig() {
     console.log(this.createWebsocketConfig)
-     const flat = this.createWebsocketConfig.reduce((pre, curr) => {
+    const flat = this.createWebsocketConfig.reduce((pre, curr) => {
       return merge(pre, curr);
-     }, {})
-     return flat;
+    }, {})
+    return flat;
   }
 
 }

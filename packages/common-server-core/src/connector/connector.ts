@@ -47,6 +47,7 @@ export type FeatureParams<T = ConfigurationScope> = {
    * Roles to provide permissions to access resources.
    */
   addRoles?: IRoles<T> | IRoles<T>[],
+  modifyRolesPermissions?: any | any[],
   overwritePreference?: IOverwritePreference | IOverwritePreference[],
   federation?: FederationServiceDeclaration | FederationServiceDeclaration[];
   dataIdFromObject?: Function | Function[],
@@ -84,6 +85,7 @@ class Feature<T = ConfigurationScope> {
   public createWebsocketConfig: IWebsocketConfig[];
   public createPreference: IPreferences<T>[];
   public addRoles: IRoles<T>[];
+  public modifyRolesPermissions: Function[];
   public overwritePreference: IOverwritePreference[];
   public overwriteRole: IOverwritePreference[];
   public migrations?: Array<{ [id: string]: IMongoMigration }>;
@@ -125,6 +127,7 @@ class Feature<T = ConfigurationScope> {
     this.createWebsocketConfig = combine(arguments, arg => arg.createWebsocketConfig);
     this.createPreference = combine(arguments, arg => arg.createPreference);
     this.addRoles = combine(arguments, arg => arg.addRoles);
+    this.modifyRolesPermissions = combine(arguments, arg => arg.modifyRolesPermissions);
     this.overwritePreference = combine(arguments, arg => arg.overwritePreference);
     this.overwriteRole = combine(arguments, arg => arg.overwriteRole);
   }

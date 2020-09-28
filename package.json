@@ -203,7 +203,6 @@
     "morgan": "^1.9.1",
     "nock": "^10.0.6",
     "node-dev": "^4.0.0",
-    "node-sass": "^4.12.0",
     "nodemon": "^1.18.11",
     "openurl": "^1.1.1",
     "persistgraphql-webpack-plugin": "^0.5.4",

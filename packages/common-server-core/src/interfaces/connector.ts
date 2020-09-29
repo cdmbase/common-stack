@@ -18,7 +18,7 @@ export enum ConfigurationScope {
 }
 
 export interface IWebsocketConfig {
-    [key: string]: any
+    [key: string]: any;
 }
 
 export interface IPreferences<T = ConfigurationScope> {

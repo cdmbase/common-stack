@@ -15,9 +15,6 @@ import {getCurrentPreferences, transformPrefsToArray} from '../utils';
 
 export const featureCatalog: any = {};
 
-const combine = (features, extractor): any =>
-    without(union(...map(features, res => castArray(extractor(res)))), undefined);
-
 export interface IFederationServiceOptions {
     port: number;
     config?: any; // for apollo-server
@@ -54,8 +51,7 @@ export type FeatureParams<T = ConfigurationScope> = {
     /**
      * Roles to provide permissions to access resources.
      */
-    addRoles?: IRoles<T> | IRoles<T>[],
-    modifyRolesPermissions?: any | any[],
+    rolesUpdate?: IRoleUpdate<T>,
     overwritePreference?: IOverwritePreference | IOverwritePreference[],
     federation?: FederationServiceDeclaration | FederationServiceDeclaration[];
     dataIdFromObject?: Function | Function[],
@@ -64,6 +60,14 @@ export type FeatureParams<T = ConfigurationScope> = {
     middleware?: any | any[],
     catalogInfo?: any | any[],
 };
+
+export interface IRoleUpdate<T> {
+    createRoles?: IRoles<T>[] | IRoles<T>;
+    overwriteRolesPermissions?: any | any[];
+}
+
+const combine = <T>(features: FeatureParams<T>[], extractor): any =>
+    without(union(...map(features, (res: FeatureParams<T>) => castArray(extractor(res)))), undefined);
 
 class Feature<T = ConfigurationScope> {
     public schema: string[];
@@ -92,52 +96,54 @@ class Feature<T = ConfigurationScope> {
     public middleware: Function[];
     public createWebsocketConfig: IWebsocketConfig[];
     public createPreference: IPreferences<T>[];
-    public addRoles: IRoles<T>[];
-    public modifyRolesPermissions: Function[];
+    public rolesUpdate: IRoleUpdate<T>;
     public overwritePreference: IOverwritePreference[];
     public overwriteRole: IOverwritePreference[];
     public migrations?: Array<{ [id: string]: IMongoMigration }>;
-
     private services;
     private container;
     private hemeraContainer;
     private dataSources;
 
     constructor(feature?: FeatureParams<T>, ...features: Feature<T>[]) {
-        combine(arguments, arg => arg.catalogInfo).forEach(info =>
+        const args: FeatureParams<T>[] = [feature, ...features as unknown as FeatureParams<T>[]];
+        combine<T>(args, arg => arg.catalogInfo).forEach(info =>
             Object.keys(info).forEach(key => (featureCatalog[key] = info[key])),
         );
-        this.schema = combine(arguments, arg => arg.schema);
-        this.createDirectivesFunc = combine(arguments, arg => arg.createDirectivesFunc);
-        this.createResolversFunc = combine(arguments, arg => arg.createResolversFunc);
-        this.createContextFunc = combine(arguments, arg => arg.createContextFunc);
-        this.createServiceFunc = combine(arguments, arg => arg.createServiceFunc);
-        this.preCreateServiceFunc = combine(arguments, arg => arg.preCreateServiceFunc);
-        this.postCreateServiceFunc = combine(arguments, arg => arg.postCreateServiceFunc);
-        this.preStartFunc = combine(arguments, arg => arg.preStartFunc);
-        this.postStartFunc = combine(arguments, arg => arg.postStartFunc);
-        this.microservicePreStartFunc = combine(arguments, arg => arg.microservicePreStartFunc);
-        this.microservicePostStartFunc = combine(arguments, arg => arg.microservicePostStartFunc);
-        this.addBrokerMainServiceClass = combine(arguments, arg => arg.addBrokerMainServiceClass);
-        this.addBrokerClientServiceClass = combine(arguments, arg => arg.addBrokerClientServiceClass);
-        this.disposeFunc = combine(arguments, arg => arg.disposeFunc);
+        this.schema = combine<T>(args, (arg: FeatureParams<T>) => arg.schema);
+        this.createDirectivesFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createDirectivesFunc);
+        this.createResolversFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createResolversFunc);
+        this.createContextFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createContextFunc);
+        this.createServiceFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createServiceFunc);
+        this.preCreateServiceFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.preCreateServiceFunc);
+        this.postCreateServiceFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.postCreateServiceFunc);
+        this.preStartFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.preStartFunc);
+        this.postStartFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.postStartFunc);
+        this.microservicePreStartFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.microservicePreStartFunc);
+        this.microservicePostStartFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.microservicePostStartFunc);
+        this.addBrokerMainServiceClass = combine<T>(args, (arg: FeatureParams<T>) => arg.addBrokerMainServiceClass);
+        this.addBrokerClientServiceClass = combine<T>(args, (arg: FeatureParams<T>) => arg.addBrokerClientServiceClass);
+        this.disposeFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.disposeFunc);
 
-        this.federation = combine(arguments, arg => arg.federation);
-        this.migrations = combine(arguments, arg => arg.migrations);
-        this.createContainerFunc = combine(arguments, arg => arg.createContainerFunc);
-        this.createHemeraContainerFunc = combine(arguments, arg => arg.createHemeraContainerFunc);
-        this.createAsyncContainerFunc = combine(arguments, arg => arg.createAsyncContainerFunc);
-        this.createAsyncHemeraContainerFunc = combine(arguments, arg => arg.createAsyncHemeraContainerFunc);
-        this.updateContainerFunc = combine(arguments, arg => arg.updateContainerFunc);
-        this.createDataSourceFunc = combine(arguments, arg => arg.createDataSourceFunc);
-        this.beforeware = combine(arguments, arg => arg.beforeware);
-        this.middleware = combine(arguments, arg => arg.middleware);
-        this.createWebsocketConfig = combine(arguments, arg => arg.createWebsocketConfig);
-        this.createPreference = combine(arguments, arg => arg.createPreference);
-        this.addRoles = combine(arguments, arg => arg.addRoles);
-        this.modifyRolesPermissions = combine(arguments, arg => arg.modifyRolesPermissions);
-        this.overwritePreference = combine(arguments, arg => arg.overwritePreference);
-        this.overwriteRole = combine(arguments, arg => arg.overwriteRole);
+        this.federation = combine<T>(args, (arg: FeatureParams<T>) => arg.federation);
+        this.migrations = combine<T>(args, (arg: FeatureParams<T>) => arg);
+        this.createContainerFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createContainerFunc);
+        this.createHemeraContainerFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createHemeraContainerFunc);
+        this.createAsyncContainerFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createAsyncContainerFunc);
+        this.createAsyncHemeraContainerFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createAsyncHemeraContainerFunc);
+        this.updateContainerFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.updateContainerFunc);
+        this.createDataSourceFunc = combine<T>(args, (arg: FeatureParams<T>) => arg.createDataSourceFunc);
+        this.beforeware = combine<T>(args, (arg: FeatureParams<T>) => arg.beforeware);
+        this.middleware = combine<T>(args, (arg: FeatureParams<T>) => arg.middleware);
+        this.createWebsocketConfig = combine<T>(args, (arg: FeatureParams<T>) => arg.createWebsocketConfig);
+        this.createPreference = combine<T>(args, (arg: FeatureParams<T>) => arg.createPreference);
+        this.rolesUpdate = {};
+        this.rolesUpdate.createRoles = combine<T>(args, (arg: FeatureParams<T>) => {
+            return arg.rolesUpdate.createRoles;
+        });
+        this.rolesUpdate.overwriteRolesPermissions = combine<T>(args, (arg: FeatureParams<T>) => arg.rolesUpdate.overwriteRolesPermissions);
+        this.overwritePreference = combine<T>(args, (arg: FeatureParams<T>) => arg.overwritePreference);
+        // this.overwriteRole = combine<T>(args, (arg: FeatureParams<T>) => arg.overwriteRole);
     }
 
     get schemas(): string[] {
@@ -325,8 +331,9 @@ class Feature<T = ConfigurationScope> {
         return transformPrefsToArray<S>(this.getPreferencesObj());
     }
 
-    public getRoles() {
-        const grouped = groupBy([...this.addRoles, ...this.modifyRolesPermissions], (item) => {
+    public getRoles(): IRoles[] {
+        const { createRoles, overwriteRolesPermissions} = this.rolesUpdate;
+        const grouped = groupBy([...castArray(createRoles), ...overwriteRolesPermissions], (item) => {
             return Object.keys(item)[0];
         });
         return Object.keys(grouped).reduce((acc, key) => {
@@ -347,8 +354,9 @@ class Feature<T = ConfigurationScope> {
     }
 
     public getRolesObj<S>() {
-        const defaultPrefs: IPreferences<S>[] = merge([], ...this.addRoles);
-        const overwritePrefs: IOverwritePreference[] = merge([], ...this.overwriteRole);
+        const { createRoles } = this.rolesUpdate;
+        const defaultPrefs: IPreferences<S>[] = merge([], ...castArray(createRoles));
+        const overwritePrefs: IOverwritePreference[] = merge([], ...castArray(createRoles));
         return getCurrentPreferences<S>(defaultPrefs, overwritePrefs);
     }
 

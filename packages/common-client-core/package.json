@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-core",
-  "version": "0.0.224",
+  "version": "0.0.225",
   "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {

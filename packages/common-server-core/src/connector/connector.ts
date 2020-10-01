@@ -13,6 +13,7 @@ import {castArray, groupBy, map, merge, union, without} from 'lodash';
 import {Container} from 'inversify';
 import {getCurrentPreferences, transformPrefsToArray} from '../utils';
 
+
 export const featureCatalog: any = {};
 
 const combine = (features, extractor): any =>

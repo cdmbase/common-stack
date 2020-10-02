@@ -9,19 +9,23 @@ import {
     IRoles,
     IWebsocketConfig,
 } from '../interfaces';
-import {castArray, groupBy, map, merge, union, without} from 'lodash';
-import {Container} from 'inversify';
+import {GraphqlRootType} from '../enums';
 import {getCurrentPreferences, transformPrefsToArray} from '../utils';
-
+import {Container} from 'inversify';
+import {castArray, groupBy, map, merge, union, without} from 'lodash';
 export const featureCatalog: any = {};
 
 export interface IFederationServiceOptions {
     port: number;
     config?: any; // for apollo-server
 }
-
 export type FederationServiceDeclaration = (options: IFederationServiceOptions) => Promise<void>;
+type IResolverFunc<T> = (source: Record<string, any>, args: Record<string, any>, ctx: Record<string, any>) => Promise<T>;
+interface IRule {
+    [key: string]: IResolverFunc<Record<string, any>>;
+}
 
+type IGraphqlShieldRules  =  Record<GraphqlRootType & {[key: string]: string}, IRule>;
 /**
  * Feature Params that can be passed to Feature Module.
  */
@@ -59,6 +63,11 @@ export type FeatureParams<T = ConfigurationScope> = {
     beforeware?: any | any[],
     middleware?: any | any[],
     catalogInfo?: any | any[],
+  /**
+   *  Graphql shields rules, a graphql middleware for authorization
+   *  based on defined permissions
+   */
+  rules?: IGraphqlShieldRules;
 };
 
 export interface IRoleUpdate<T> {
@@ -100,6 +109,8 @@ class Feature<T = ConfigurationScope> {
     public overwritePreference: IOverwritePreference[];
     public overwriteRole: IOverwritePreference[];
     public migrations?: Array<{ [id: string]: IMongoMigration }>;
+    private _rules: IGraphqlShieldRules[];
+
     private services;
     private container;
     private hemeraContainer;
@@ -137,15 +148,22 @@ class Feature<T = ConfigurationScope> {
         this.middleware = combine<T>(args, (arg: FeatureParams<T>) => arg.middleware);
         this.createWebsocketConfig = combine<T>(args, (arg: FeatureParams<T>) => arg.createWebsocketConfig);
         this.createPreference = combine<T>(args, (arg: FeatureParams<T>) => arg.createPreference);
-        this.rolesUpdate = {};
-        this.rolesUpdate.createRoles = combine<T>(args, (arg: FeatureParams<T>) => {
-            return arg.rolesUpdate.createRoles;
-        });
-        this.rolesUpdate.overwriteRolesPermissions = combine<T>(args, (arg: FeatureParams<T>) => arg.rolesUpdate.overwriteRolesPermissions);
+        this.rolesUpdate = {
+            createRoles: combine<T>(args, (arg: FeatureParams<T>) => arg.rolesUpdate &&
+                arg.rolesUpdate.createRoles),
+            overwriteRolesPermissions: combine<T>(args, (arg: FeatureParams<T>) => arg.rolesUpdate &&
+                arg.rolesUpdate.overwriteRolesPermissions),
+        };
         this.overwritePreference = combine<T>(args, (arg: FeatureParams<T>) => arg.overwritePreference);
+        this._rules = combine<T>(args, (arg: FeatureParams<T>) => arg.rules);
         // this.overwriteRole = combine<T>(args, (arg: FeatureParams<T>) => arg.overwriteRole);
     }
 
+    get rules(): IGraphqlShieldRules {
+        return this._rules.reduce((acc: IGraphqlShieldRules, curr) => {
+            return merge(acc, curr) as IGraphqlShieldRules;
+        }, {}) as IGraphqlShieldRules;
+    }
     get schemas(): string[] {
         return this.schema;
     }

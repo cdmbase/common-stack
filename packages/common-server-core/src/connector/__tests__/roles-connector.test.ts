@@ -1,23 +1,27 @@
 import {Feature} from '../connector';
 import 'jest';
+import {castArray} from 'lodash';
 
 describe('Preferences', function () {
 
     const featureWithRoleA = new Feature({
-        addRoles: {
-            'RoleA': {
-                name: 'Role A',
-                description: 'Role A',
-                permissions: {
-                    'org.permission.one': 'Allow',
-                    'org.permission.two': 'Allow',
-                    'org.permission.three': 'Allow',
+        rolesUpdate:   {
+            createRoles: {
+                'RoleA': {
+                    name: 'Role A',
+                    description: 'Role A',
+                    permissions: {
+                        'org.permission.one': 'Allow',
+                        'org.permission.two': 'Allow',
+                        'org.permission.three': 'Allow',
+                    },
                 },
             },
         },
     });
     const secondFeatureWithRoleA = new Feature({
-        addRoles: {
+        rolesUpdate:   {
+            createRoles: {
             'RoleA': {
                 name: 'Role A',
                 description: 'Role A Updated',
@@ -27,10 +31,11 @@ describe('Preferences', function () {
                     'org.permission.five': 'Allow',
                 },
             },
-        },
+        }},
     });
     const featureWithRoleB = new Feature({
-        addRoles: {
+        rolesUpdate:   {
+            createRoles: {
             'RoleB': {
                 name: 'Role B',
                 description: 'Role B',
@@ -40,13 +45,14 @@ describe('Preferences', function () {
                     'org.permission.three': 'Deny',
                 },
             },
-        },
+        }},
     });
 
     it('Should add two different roles with permissions', () => {
         const feature = new Feature(featureWithRoleA, featureWithRoleB);
         const featureRoles = feature.getRoles();
-        expect(featureRoles).toEqual([...featureWithRoleA.addRoles, ...featureWithRoleB.addRoles]);
+        expect(featureRoles).toEqual([...castArray(featureWithRoleA.rolesUpdate.createRoles),
+            ...castArray(featureWithRoleB.rolesUpdate.createRoles)]);
     });
 
     it('Should add two same roles with permissions', () => {
@@ -69,7 +75,8 @@ describe('Preferences', function () {
 
     it('Should overwrite permissions', () => {
         const overwritePermission = new Feature({
-            modifyRolesPermissions: {
+            rolesUpdate: {
+            overwriteRolesPermissions: {
                 'RoleB': {
                     permissions: {
                         'org.permission.three': 'Allow',
@@ -78,7 +85,7 @@ describe('Preferences', function () {
                         'org.permission.six': 'Deny',
                     },
                 },
-            },
+            }},
         });
 
 

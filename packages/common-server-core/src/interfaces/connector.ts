@@ -1,5 +1,4 @@
 import * as Logger from 'bunyan';
-import { PubSub } from 'graphql-subscriptions';
 
 export interface IResolverOptions {
     pubsub: any;

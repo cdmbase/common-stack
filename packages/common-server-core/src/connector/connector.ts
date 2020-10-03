@@ -10,9 +10,9 @@ import {
     IWebsocketConfig,
 } from '../interfaces';
 import {GraphqlRootType} from '../enums';
-import {getCurrentPreferences, transformPrefsToArray} from '../utils';
-import {Container} from 'inversify';
 import {castArray, groupBy, map, merge, union, without} from 'lodash';
+import {Container} from 'inversify';
+import {getCurrentPreferences, transformPrefsToArray} from '../utils';
 export const featureCatalog: any = {};
 
 export interface IFederationServiceOptions {

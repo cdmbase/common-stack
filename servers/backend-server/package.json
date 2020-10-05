@@ -54,7 +54,7 @@
     "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env zen watch"
   },
   "dependencies": {
-    "@cdm-logger/server": "^5.0.5",
+    "@cdm-logger/server": "^6.0.0",
     "@common-stack/core": "file:../../packages/common-core",
     "@common-stack/server-core": "file:../../packages/common-server-core",
     "@common-stack/store-mongo": "file:../../packages/common-store-mongo",

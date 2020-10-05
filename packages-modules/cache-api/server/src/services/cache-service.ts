@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import * as Logger from 'bunyan';
+import { CdmLogger } from '@cdm-logger/core';
 
 import { Types } from '../constants';
 import { ICacheService, ICacheEngine, ICacheOptions, ICacheSetOptions } from '../interfaces';
@@ -13,12 +13,12 @@ export class Cache implements ICacheService {
     private static DEFAULT_SCOPE = 'cde_cache';
     private static instance: Cache;
 
-    private logger: Logger;
+    private logger: CdmLogger.ILogger;
     private engine: ICacheEngine;
 
     constructor(
         engine: ICacheEngine,
-        logger?: Logger,
+        logger?: CdmLogger.ILogger,
     ) {
         this.engine = engine;
         if (logger) {

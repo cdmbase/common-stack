@@ -1,11 +1,10 @@
 import { ConsoleLogger, IConsoleLoggerSettings } from '@cdm-logger/server';
-import { LoggerLevel } from '@cdm-logger/core';
-import * as Logger from 'bunyan';
+import { CdmLogger } from '@cdm-logger/core';
 
 const settings: IConsoleLoggerSettings = {
-    level: process.env.LOG_LEVEL as LoggerLevel  || 'trace',
+    level: process.env.LOG_LEVEL as CdmLogger.LoggerLevel  || 'trace',
 };
 
 const appName = process.env.APP_NAME || 'CDMBASE_APP';
 
-export const logger: Logger = ConsoleLogger.create(appName, settings);
+export const logger = ConsoleLogger.create(appName, settings);

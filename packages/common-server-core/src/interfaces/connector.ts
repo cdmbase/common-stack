@@ -1,14 +1,14 @@
-import * as Logger from 'bunyan';
+import { CdmLogger } from '@cdm-logger/core';
 
 export interface IResolverOptions {
     pubsub: any;
-    logger?: Logger;
+    logger?: CdmLogger.ILogger;
     [key: string]: any;
 }
 
 export interface IDirectiveOptions {
     [key: string]: any;
-    logger?: Logger;
+    logger?: CdmLogger.ILogger;
 }
 
 export enum ConfigurationScope {

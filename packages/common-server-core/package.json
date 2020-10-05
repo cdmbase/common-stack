@@ -48,6 +48,7 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "dependencies": {
+    "@cdm-logger/core": "6.0.0",
     "@common-stack/core": "file:../common-core"
   },
   "typings": "lib/index.d.ts",

@@ -42,13 +42,14 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@common-stack/client-core": "file:../../packages/common-client-core",
-    "@common-stack/client-react": "file:../../packages/common-client-react",
-    "@common-stack/core": "file:../../packages/common-core",
+    "@common-stack/client-core": "^0.0.227",
+    "@common-stack/client-react": "^0.0.227",
+    "@common-stack/core": "^0.0.227",
     "antd": "^3.5.0"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "54f97c47a19931115ffde924cd48716a1618fb8a"
 }

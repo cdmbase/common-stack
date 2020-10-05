@@ -47,5 +47,6 @@
     },
     "dependencies": {
         "query-string": "^6.1.0"
-    }
+    },
+    "gitHead": "54f97c47a19931115ffde924cd48716a1618fb8a"
 }

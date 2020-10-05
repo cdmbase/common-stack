@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "dependencies": {
-    "@common-stack/core": "file:../common-core"
+    "@common-stack/core": "^0.0.227"
   },
   "peerDependencies": {
     "apollo-client": ">=2.4.0",
@@ -59,5 +59,6 @@
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "54f97c47a19931115ffde924cd48716a1618fb8a"
 }

@@ -56,11 +56,12 @@
     "redux": ">=4.0.1"
   },
   "dependencies": {
-    "@common-stack/client-core": "file:../common-client-core",
-    "@common-stack/core": "file:../common-core"
+    "@common-stack/client-core": "^0.0.227",
+    "@common-stack/core": "^0.0.227"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "54f97c47a19931115ffde924cd48716a1618fb8a"
 }

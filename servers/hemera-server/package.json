@@ -1,6 +1,6 @@
 {
     "name": "common-stack-hemera-server",
-    "version": "0.0.227",
+    "version": "0.0.228",
     "description": "",
     "main": "index.js",
     "private": true,

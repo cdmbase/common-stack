@@ -2,7 +2,4 @@ import * as  React from 'react';
 
 import {Feature} from '@common-stack/client-react';
 
-export default new Feature({
-  // @ts-ignore
-  routeConfig: [{}],
-});
+export default new Feature({});

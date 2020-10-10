@@ -56,8 +56,9 @@
     "redux": ">=4.0.1"
   },
   "dependencies": {
-    "@common-stack/client-core": "^0.0.229",
-    "@common-stack/core": "^0.0.229"
+    "@common-stack/client-core": "file:../common-client-core",
+    "@common-stack/core": "file:../common-core",
+    "@wordpress/hooks": "^2.10.0"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

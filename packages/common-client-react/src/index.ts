@@ -3,3 +3,4 @@ export * from './connector';
 export * from './router';
 export * from './utils';
 export * from './interfaces';
+export * from './plugin-area/';

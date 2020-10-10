@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {AbstractFeature} from '@common-stack/client-core';
+import {AbstractFeature, IModuleShape} from '@common-stack/client-core';
 import * as Logger from 'bunyan';
 import {IPlugin, IReactFeature} from '../interfaces';
 import {getMenus, getRoutes} from '../utils';
@@ -10,13 +10,14 @@ import {registerPlugin, getPlugins, getPlugin} from '../plugin-area/plugin-api';
 const combine = (features, extractor) => without(union(...map(features,
         res => castArray(extractor(res)))), undefined);
 
+type FeautureParam = IModuleShape & Partial<IReactFeature>;
 export class Feature extends AbstractFeature implements IReactFeature {
     private logger;
     public componentFillPlugins;
     constructor(
-        feature?: IReactFeature,
+        feature?: FeautureParam,
         // tslint:disable:trailing-comma
-        ...features: IReactFeature[]
+        ...features: FeautureParam[]
     ) {
         super(feature, ...features);
         this.logger = Logger.createLogger({

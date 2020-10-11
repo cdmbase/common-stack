@@ -1,6 +1,6 @@
 {
 	"name": "@common-stack/core",
-	"version": "0.0.229",
+	"version": "0.0.234",
 	"description": "Sample core for higher packages to depend on",
 	"main": "lib/index.js",
 	"scripts": {
@@ -43,5 +43,5 @@
 	"typescript": {
 		"definition": "lib/index.d.ts"
 	},
-	"gitHead": "54f97c47a19931115ffde924cd48716a1618fb8a"
+	"gitHead": "50daf85f9fe7c895298319ed9d0f060989564022"
 }

@@ -4,7 +4,6 @@ import { LocalStateFragmentMatcher, Resolvers } from 'apollo-client';
 import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 import { IdGetterObj } from 'apollo-cache-inmemory';
-import { IMappedData, IRouteData  } from './router';
 
 export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) |  ((service: any) => Resolvers)[]  | ((service: any) => any) | ((service: any) => any)[];
 export interface IClientStateConfig {
@@ -81,14 +80,6 @@ export interface IModuleShape {
      * @param route Route list
      */
     readonly route?: any;
-    /**
-     * @param routeConfig Custom route data to create React Routers
-     */
-    readonly routeConfig?: any;
-    /**
-     * @param menuConfig Menu data to create side menu
-     */
-    readonly menuConfig?: any;
     /**
      * @param navItem Top left navigation links
      */
@@ -167,10 +158,7 @@ export interface IFeature extends IModuleShape {
      * @returns client-side React route components list
      */
     readonly getRoutes;
-    readonly getConfiguredRoutes;
 
-    readonly getMenus;
-    readonly getConfiguredMenus;
     /**
      * @returns client-side top left navbar link component list
      */
@@ -201,9 +189,6 @@ export interface IFeature extends IModuleShape {
     readonly rightFooter;
     readonly middleLowerPanel;
     readonly dataIdFromObject;
-
-    readonly routeConfig: IRouteData<any>;
-    readonly menuConfig: IMappedData;
 
     /**
      * @param args Options to pass to each Container Module

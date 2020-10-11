@@ -100,7 +100,6 @@
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "^7.4.4",
     "@babel/runtime": "^7.4.4",
-    "@common-stack/server-core": "../../",
     "@graphql-codegen/add": "^1.5.0",
     "@graphql-codegen/cli": "^1.5.0",
     "@graphql-codegen/fragment-matcher": "^1.5.0",

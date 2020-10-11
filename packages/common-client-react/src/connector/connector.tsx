@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import {AbstractFeature, IModuleShape} from '@common-stack/client-core';
 import * as Logger from 'bunyan';
-import {IPlugin, IReactFeature} from '../interfaces';
+import {IPlugin, IReactFeature, IReactModuleShape} from '../interfaces';
 import {getMenus, getRoutes} from '../utils';
 import {castArray, map, union, without} from 'lodash';
 import {registerPlugin, getPlugins, getPlugin} from '../plugin-area/plugin-api';
@@ -10,10 +10,15 @@ import {registerPlugin, getPlugins, getPlugin} from '../plugin-area/plugin-api';
 const combine = (features, extractor) => without(union(...map(features,
         res => castArray(extractor(res)))), undefined);
 
-type FeautureParam = IModuleShape & Partial<IReactFeature>;
+type FeautureParam = IModuleShape & IReactModuleShape;
 export class Feature extends AbstractFeature implements IReactFeature {
     private logger;
     public componentFillPlugins;
+    
+    public routerFactory: any;
+    public route: any;
+    public routeConfig: any;
+    public menuConfig: any;
     constructor(
         feature?: FeautureParam,
         // tslint:disable:trailing-comma
@@ -23,8 +28,19 @@ export class Feature extends AbstractFeature implements IReactFeature {
         this.logger = Logger.createLogger({
             name: Feature.name
         });
+
+
+        // Navigation
+        this.routerFactory = combine(arguments, (arg: FeautureParam) => arg.routerFactory)
+            .slice(-1)
+            .pop();
+        this.route = combine(arguments, (arg: FeautureParam) => arg.route);
+        this.routeConfig = combine(arguments, (arg: FeautureParam) => arg.routeConfig);
+
+        this.menuConfig = combine(arguments, (arg: FeautureParam) => arg.menuConfig);
+
         this.componentFillPlugins = this.registerComponentFillPlugins(combine(arguments,
-            (arg: IReactFeature) => arg.componentFillPlugins));
+            (arg: FeautureParam) => arg.componentFillPlugins));
     }
 
     /* tslint:disable:jsx-no-lambda */

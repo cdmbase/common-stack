@@ -7,7 +7,7 @@ import {ComponentElement} from 'react';
 export interface IPlugin {
     name: string;
     icon?: string | ComponentElement<any, any> | Function;
-    render: React.FC;
+    render: React.FC<any>;
 }
 
 export type IReactFeature = IFeature & IReactModuleShape & {
@@ -31,8 +31,6 @@ export type IReactFeature = IFeature & IReactModuleShape & {
      * React component of all fill of each plugin.
      */
     getComponentFillPlugins(): IPlugin[];
-
-
 };
 
 export type IReactModuleShape = {
@@ -51,4 +49,4 @@ export type IReactModuleShape = {
     readonly menuConfig?: IMenuData | IMenuData[];
     // Related to React Slot Fill
     readonly componentFillPlugins?: IPlugin[];
-}
+};

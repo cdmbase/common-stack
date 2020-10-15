@@ -36,6 +36,9 @@ export interface IPreferencesData<T = ConfigurationScope> {
     settings?: string;
     enum?: any;
     enumDescriptions?: string[];
+    permissions?: {
+        [key: string]: string | boolean | unknown,
+    };
     [key: string]: any;
 }
 

@@ -4,7 +4,6 @@ import {
     IMongoMigration,
     IOverwritePreference,
     IPreferences,
-    IPreferncesTransformed,
     IResolverOptions,
     IRoles,
     IWebsocketConfig,
@@ -72,7 +71,7 @@ export type FeatureParams<T = ConfigurationScope> = {
 
 export interface IRoleUpdate<T> {
     createRoles?: IRoles<T>[] | IRoles<T>;
-    overwriteRolesPermissions?: any | any[];
+    overwriteRolesPermissions?: IRoles<T>[] | IRoles<T>;
 }
 
 const combine = <T>(features: FeatureParams<T>[], extractor): any =>
@@ -345,13 +344,13 @@ class Feature<T = ConfigurationScope> {
         return this.middleware;
     }
 
-    public getPreferences<S = ConfigurationScope>(): IPreferncesTransformed<S>[] {
+    public getPreferences<S = ConfigurationScope>(): IPreferences<S>[] {
         return transformPrefsToArray<S>(this.getPreferencesObj());
     }
 
     public getRoles(): IRoles[] {
         const { createRoles, overwriteRolesPermissions} = this.rolesUpdate;
-        const grouped = groupBy([...castArray(createRoles), ...overwriteRolesPermissions], (item) => {
+        const grouped = groupBy([...castArray(createRoles), ...castArray(overwriteRolesPermissions)], (item) => {
             return Object.keys(item)[0];
         });
         return Object.keys(grouped).reduce((acc, key) => {

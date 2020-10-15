@@ -1,4 +1,4 @@
-import { IPreferncesTransformed, IPreferences, IOverwritePreference } from '../interfaces';
+import {IPreferences, IOverwritePreference, IPreferencesData, IPreferncesTransformed} from '../interfaces';
 
 export function getCurrentPreferences<T>(preferencesDefaultArr: IPreferences<T>[], overwritePreferences: IOverwritePreference[]) {
   const preferencesArr = { ...preferencesDefaultArr };
@@ -15,10 +15,10 @@ export function getCurrentPreferences<T>(preferencesDefaultArr: IPreferences<T>[
     }
   });
   return preferencesArr;
-};
+}
 
 export function transformPrefsToArray<T>(preferences: IPreferences<T>[]) {
-  const resultArr: IPreferncesTransformed<T>[] = [];
+  const resultArr: IPreferencesData<T>[] = [];
   Object.keys(preferences).forEach(key => {
     const type = key.split('.')[0];
     const findType = resultArr.find(el => el.type === type);
@@ -38,4 +38,4 @@ export function transformPrefsToArray<T>(preferences: IPreferences<T>[]) {
     }
   });
   return resultArr;
-};
+}

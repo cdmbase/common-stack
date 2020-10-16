@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/components",
-  "version": "0.0.235",
+  "version": "0.0.236",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -42,9 +42,9 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@common-stack/client-core": "^0.0.235",
-    "@common-stack/client-react": "^0.0.235",
-    "@common-stack/core": "^0.0.235",
+    "@common-stack/client-core": "0.0.236",
+    "@common-stack/client-react": "0.0.236",
+    "@common-stack/core": "0.0.236",
     "antd": "^3.5.0"
   },
   "typings": "lib/index.d.ts",

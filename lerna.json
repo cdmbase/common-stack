@@ -16,7 +16,8 @@
       "allowBranch": [
         "master",
         "devpublish"
-      ]
+      ],
+      "exact": true
     },
     "bootstrap": {
       "npmClientArgs": [

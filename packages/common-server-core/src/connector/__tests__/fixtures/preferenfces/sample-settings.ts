@@ -1,4 +1,7 @@
-export const defaultSettings = {
+import { IPreferences } from "../../../../interfaces";
+
+
+export const defaultSettings: IPreferences = {
     'files.trimTrailingWhitespace': {
         type: 'boolean',
         default: false,

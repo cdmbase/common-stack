@@ -1,6 +1,6 @@
 import { ContainerModule, interfaces, Container, AsyncContainerModule } from 'inversify';
 import { Feature } from '../connector';
-import { defaultSettings, convertedDefaultSettings } from './fixtures/preferenfces/common-settings';
+import { defaultSettings, convertedDefaultSettings } from './fixtures/preferenfces/sample-settings';
 import 'jest';
 
 

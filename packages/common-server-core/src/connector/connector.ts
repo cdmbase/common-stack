@@ -9,6 +9,7 @@ import {
     IWebsocketConfig,
 } from '../interfaces';
 import {GraphqlRootType} from '../enums';
+import { logger } from '@cdm-logger/server';
 import {castArray, groupBy, map, merge, union, without} from 'lodash';
 import {Container} from 'inversify';
 import {getCurrentPreferences, transformPrefsToArray} from '../utils';
@@ -353,8 +354,11 @@ class Feature<T = ConfigurationScope> {
         const grouped = groupBy([...castArray(createRoles), ...castArray(overwriteRolesPermissions)], (item) => {
             return Object.keys(item)[0];
         });
+        logger.trace('-- Grouped Roles ---', grouped);
+        // Iterating Object with distinctive roles as keys
         return Object.keys(grouped).reduce((acc, key) => {
             const roles = grouped[key];
+            logger.trace(`-- Merging Role  ---`, key);
             const mergedRoles = roles.reduce((merged, curr) => {
                 return {
                     ...merged,
@@ -366,6 +370,7 @@ class Feature<T = ConfigurationScope> {
                     },
                 };
             }, {});
+            logger.trace(' --- Merged Role ---', mergedRoles);
             return [...acc, {[key]: mergedRoles}];
         }, []);
     }

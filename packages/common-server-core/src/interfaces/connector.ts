@@ -23,10 +23,6 @@ export interface IWebsocketConfig {
 export interface IPreferences<T = ConfigurationScope> {
     [key: string]: IPreferencesData<T>;
 }
-
-export interface IRoles<T = ConfigurationScope> {
-    [key: string]: IPreferencesData<T>;
-}
 export interface IPreferencesData<T = ConfigurationScope> {
     type?: string | string[];
     default?: string | boolean | number | any;

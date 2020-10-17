@@ -50,6 +50,7 @@ export type FeatureParams<T = ConfigurationScope> = {
     createWebsocketConfig?: IWebsocketConfig | IWebsocketConfig[],
     updateContainerFunc?: any | any[],
     createPreference?: IPreferences<T> | IPreferences<T>[],
+    overwritePreference?: IOverwritePreference | IOverwritePreference[],
     /**
      * Permissions Preferences
      */
@@ -62,7 +63,6 @@ export type FeatureParams<T = ConfigurationScope> = {
      * Roles to provide permissions to access resources.
      */
     rolesUpdate?: IRoleUpdate<T>,
-    overwritePreference?: IOverwritePreference | IOverwritePreference[],
     federation?: FederationServiceDeclaration | FederationServiceDeclaration[];
     dataIdFromObject?: Function | Function[],
     disposeFunc?: any | any[],
@@ -174,7 +174,6 @@ class Feature<T = ConfigurationScope> {
         };
         this.overwritePreference = combine<T>(args, (arg: FeatureParams<T>) => arg.overwritePreference);
         this._rules = combine<T>(args, (arg: FeatureParams<T>) => arg.rules);
-        // this.overwriteRole = combine<T>(args, (arg: FeatureParams<T>) => arg.overwriteRole);
     }
 
     get rules(): IGraphqlShieldRules {
@@ -396,8 +395,11 @@ class Feature<T = ConfigurationScope> {
     }
 
     public getRoles(): IRoles[] {
-        const { createRoles, overwriteRolesPermissions } = this.rolesUpdate;
-        const grouped = groupBy([...castArray(createRoles), ...castArray(overwriteRolesPermissions)], (item) => {
+        const { createRoles, overwriteRolesPermissions} = this.rolesUpdate;
+        const grouped = groupBy([
+            ...castArray(createRoles),
+            ...castArray(overwriteRolesPermissions)],
+            (item) => {
             return Object.keys(item)[0];
         });
         logger.trace('-- Grouped Roles ---', grouped);

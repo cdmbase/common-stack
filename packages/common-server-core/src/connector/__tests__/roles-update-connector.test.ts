@@ -94,7 +94,7 @@ describe('Should Test Role Update functionality of Feature Class', () => {
             });
 
 
-            const feature = new Feature(featureWithRoleB, overwritePermission);
+            const feature = new Feature(overwritePermission, featureWithRoleB);
             const featureRoles = feature.getRoles();
             expect(featureRoles).toEqual([
                 {

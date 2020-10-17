@@ -3,7 +3,7 @@ import 'jest';
 import {castArray} from 'lodash';
 
 describe('Should Test Role Update functionality of Feature Class', () => {
-    describe('Should Test Create Roles Functionality', function () {
+    describe('Should Test Create Roles Functionality',  () => {
         const featureWithRoleA = new Feature({
             rolesUpdate: {
                 createRoles: {
@@ -112,6 +112,11 @@ describe('Should Test Role Update functionality of Feature Class', () => {
                     },
                 },
             ]);
+        });
+    });
+    describe('Should test create roles and overwrite permissions', () => {
+        it('Should Merge Roles n Permissions', () => {
+
         });
     });
 });

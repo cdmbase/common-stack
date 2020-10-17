@@ -1,0 +1,74 @@
+{
+  "OWNER": {
+    "organization.billing.subscriptions.view": "Allow",
+    "organization.billing.subscriptions.create": "Deny",
+    "organization.billing.subscriptions.edit": "Deny",
+    "organization.billing.subscriptions.delete": "Deny",
+    "organization.billing.subscriptions.manage": "Deny",
+    "organization.billing.paymentMethods.view": "Allow",
+    "organization.billing.paymentMethods.create": "Deny",
+    "organization.billing.paymentMethods.edit": "Deny",
+    "organization.billing.paymentMethods.delete": "Deny",
+    "organization.billing.paymentMethods.manage": "Deny"
+  },
+  "ADMIN": {
+    "organization.billing.subscriptions.view": "Allow",
+    "organization.billing.subscriptions.create": "Allow",
+    "organization.billing.subscriptions.edit": "Allow",
+    "organization.billing.subscriptions.delete": "Allow",
+    "organization.billing.subscriptions.manage": "Allow",
+    "organization.billing.paymentMethods.view": "Allow",
+    "organization.billing.paymentMethods.create": "Allow",
+    "organization.billing.paymentMethods.edit": "Allow",
+    "organization.billing.paymentMethods.delete": "Allow",
+    "organization.billing.paymentMethods.manage": "Allow"
+  },
+  "PROJECT_ADMIN": {
+    "organization.billing.subscriptions.view": "Allow",
+    "organization.billing.subscriptions.create": "Allow",
+    "organization.billing.subscriptions.edit": "Allow",
+    "organization.billing.subscriptions.delete": "Allow",
+    "organization.billing.subscriptions.manage": "Allow",
+    "organization.billing.paymentMethods.view": "Allow",
+    "organization.billing.paymentMethods.create": "Allow",
+    "organization.billing.paymentMethods.edit": "Allow",
+    "organization.billing.paymentMethods.delete": "Allow",
+    "organization.billing.paymentMethods.manage": "Allow"
+  },
+  "CONTRIBUTORS": {
+    "organization.billing.subscriptions.view": "Allow",
+    "organization.billing.subscriptions.create": "Allow",
+    "organization.billing.subscriptions.edit": "Allow",
+    "organization.billing.subscriptions.delete": "Allow",
+    "organization.billing.subscriptions.manage": "Deny",
+    "organization.billing.paymentMethods.view": "Allow",
+    "organization.billing.paymentMethods.create": "Allow",
+    "organization.billing.paymentMethods.edit": "Allow",
+    "organization.billing.paymentMethods.delete": "Allow",
+    "organization.billing.paymentMethods.manage": "Allow"
+  },
+  "VIEWER": {
+    "organization.billing.subscriptions.view": "Allow",
+    "organization.billing.subscriptions.create": "Deny",
+    "organization.billing.subscriptions.edit": "Deny",
+    "organization.billing.subscriptions.delete": "Deny",
+    "organization.billing.subscriptions.manage": "Deny",
+    "organization.billing.paymentMethods.view": "Allow",
+    "organization.billing.paymentMethods.create": "Deny",
+    "organization.billing.paymentMethods.edit": "Deny",
+    "organization.billing.paymentMethods.delete": "Deny",
+    "organization.billing.paymentMethods.manage": "Deny"
+  },
+  "GUEST": {
+    "organization.billing.subscriptions.view": "Deny",
+    "organization.billing.subscriptions.create": "Deny",
+    "organization.billing.subscriptions.edit": "Deny",
+    "organization.billing.subscriptions.delete": "Deny",
+    "organization.billing.subscriptions.manage": "Deny",
+    "organization.billing.paymentMethods.view": "Deny",
+    "organization.billing.paymentMethods.create": "Deny",
+    "organization.billing.paymentMethods.edit": "Deny",
+    "organization.billing.paymentMethods.delete": "Deny",
+    "organization.billing.paymentMethods.manage": "Deny"
+  }
+}

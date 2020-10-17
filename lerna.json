@@ -16,7 +16,8 @@
       "allowBranch": [
         "master",
         "devpublish"
-      ]
+      ],
+      "exact": true
     },
     "bootstrap": {
       "npmClientArgs": [
@@ -29,5 +30,5 @@
     "packages/*",
     "servers/*"
   ],
-  "version": "0.0.234"
+  "version": "0.0.237"
 }

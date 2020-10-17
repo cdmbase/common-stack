@@ -52,11 +52,11 @@ export type FeatureParams<T = ConfigurationScope> = {
     createWebsocketConfig?: IWebsocketConfig | IWebsocketConfig[],
     updateContainerFunc?: any | any[],
     createPreference?: IPreferences<T> | IPreferences<T>[],
+    overwritePreference?: IOverwritePreference | IOverwritePreference[],
     /**
      * Roles to provide permissions to access resources.
      */
     rolesUpdate?: IRoleUpdate<T>,
-    overwritePreference?: IOverwritePreference | IOverwritePreference[],
     federation?: FederationServiceDeclaration | FederationServiceDeclaration[];
     dataIdFromObject?: Function | Function[],
     disposeFunc?: any | any[],
@@ -351,7 +351,10 @@ class Feature<T = ConfigurationScope> {
 
     public getRoles(): IRoles[] {
         const { createRoles, overwriteRolesPermissions} = this.rolesUpdate;
-        const grouped = groupBy([...castArray(createRoles), ...castArray(overwriteRolesPermissions)], (item) => {
+        const grouped = groupBy([
+            ...castArray(createRoles),
+            ...castArray(overwriteRolesPermissions)],
+            (item) => {
             return Object.keys(item)[0];
         });
         logger.trace('-- Grouped Roles ---', grouped);

@@ -12,7 +12,7 @@ import {
     IAddPolicies,
 } from '../interfaces';
 import { logger } from '@cdm-logger/server';
-import { castArray, groupBy, map, merge, union, without } from 'lodash';
+import { castArray, groupBy, map, merge, union, without, keyBy } from 'lodash';
 import { Container } from 'inversify';
 import { getCurrentPreferences, transformPrefsToArray } from '../utils';
 import { IRoleUpdate } from '../interfaces/roles';
@@ -153,7 +153,6 @@ class Feature<T = ConfigurationScope> {
         this.middleware = combine<T>(args, (arg: FeatureParams<T>) => arg.middleware);
         this.createWebsocketConfig = combine<T>(args, (arg: FeatureParams<T>) => arg.createWebsocketConfig);
         this.createPreference = combine<T>(args, (arg: FeatureParams<T>) => arg.createPreference);
-        this.addPermissions = combine<T>(args, (arg: FeatureParams<T>) => arg.addPermissions);
         this.addPermissions = {
             createPermissions: combine<T>(args, (arg: FeatureParams<T>) => arg.addPermissions &&
                 arg.addPermissions.createPermissions),
@@ -293,6 +292,8 @@ class Feature<T = ConfigurationScope> {
         // permissions
         this.container.bind('IDefaultPermissions').toConstantValue(this.getPermissionPreferences());
         this.container.bind('IDefaultPermissionsObj').toConstantValue(this.getPermissionPreferencesObj());
+        this.container.bind('IDefaultRoles').toConstantValue(this.getRoles());
+        this.container.bind('IDefaultPoliciesObj').toConstantValue(this.getPolicyPreferencesObj());
         return this.container;
     }
 
@@ -377,7 +378,7 @@ class Feature<T = ConfigurationScope> {
     }
 
     public getPermissionPreferencesObj<T>() {
-        const { createPermissions = [], overwritePermissions = []} = this.addPermissions;
+        const { createPermissions = [], overwritePermissions = [] } = this.addPermissions;
         const defaultPrefs: IPreferences<T>[] = merge([], ...castArray(createPermissions));
         const overwritePrefs: IOverwritePreference[] = merge([], ...castArray(overwritePermissions));
         return getCurrentPreferences<T>(defaultPrefs, overwritePrefs);
@@ -388,38 +389,26 @@ class Feature<T = ConfigurationScope> {
     }
 
     public getPolicyPreferencesObj<T>() {
-        const { createPolicies = [], overwritePolicies = []} = this.addPolicies;
+        const { createPolicies = [], overwritePolicies = [] } = this.addPolicies;
         const defaultPrefs: IPreferences<T>[] = merge([], ...castArray(createPolicies));
         const overwritePrefs: IOverwritePreference[] = merge([], ...castArray(overwritePolicies));
         return getCurrentPreferences<T>(defaultPrefs, overwritePrefs);
     }
 
-    public getRoles(): IRoles[] {
-        const { createRoles, overwriteRolesPermissions} = this.rolesUpdate;
-        const grouped = groupBy([
-            ...castArray(createRoles),
-            ...castArray(overwriteRolesPermissions)],
-            (item) => {
-            return Object.keys(item)[0];
-        });
-        logger.trace('-- Grouped Roles ---', grouped);
-        // Iterating Object with distinctive roles as keys
-        return Object.keys(grouped).reduce((acc, key) => {
-            const roles = grouped[key];
-            logger.trace(`-- Merging Role  ---`, key);
-            const mergedRoles = roles.reduce((merged, curr) => {
-                return {
-                    ...merged,
-                    ...curr[key],
-                    permissions: {
-                        ...(merged.permissions || {}),
-                        ...curr[key].permissions,
-                    },
-                };
-            }, {});
-            logger.trace(' --- Merged Role ---', mergedRoles);
-            return [...acc, { [key]: mergedRoles }];
-        }, []);
+    public getRoles() {
+        const { createRoles, overwriteRolesPermissions } = this.rolesUpdate;
+        const mergedRoles: IPreferences<T>[] = merge({}, ...castArray(createRoles));
+        const mergedOverwriteRolesPermissions = merge({}, ...castArray(overwriteRolesPermissions));
+        let result = {};
+        for (const role in mergedRoles) {
+            const rolePermission = mergedOverwriteRolesPermissions[role] ? merge({}, mergedRoles[role].permissions, mergedOverwriteRolesPermissions[role]) : mergedRoles[role].permissions;
+            const mmm = {
+                ...mergedRoles[role],
+                permissions: { ...rolePermission },
+            };
+            result = merge({}, result, { [role]: mmm });
+        }
+        return result;
     }
 
     public getRolesObj<S>() {
@@ -435,6 +424,11 @@ class Feature<T = ConfigurationScope> {
         }, {});
     }
 
+    private convertArrayToObject(arrayObject: any[]) {
+        return arrayObject.reduce((pre, curr) => {
+            return merge(pre, curr);
+        }, {})
+    }
 }
 
 export { Feature };

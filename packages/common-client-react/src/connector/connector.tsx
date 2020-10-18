@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import {AbstractFeature, IModuleShape} from '@common-stack/client-core';
 import * as Logger from 'bunyan';
-import {IPlugin, IReactFeature, IReactModuleShape} from '../interfaces';
+import {IReactFeature, IReactModuleShape} from '../interfaces';
 import {getMenus, getRoutes} from '../utils';
 import {castArray, map, union, without} from 'lodash';
 import {registerPlugin, getPlugins, getPlugin} from '../plugin-area/plugin-api';
@@ -10,19 +10,19 @@ import {registerPlugin, getPlugins, getPlugin} from '../plugin-area/plugin-api';
 const combine = (features, extractor) => without(union(...map(features,
         res => castArray(extractor(res)))), undefined);
 
-type FeautureParam = IModuleShape & IReactModuleShape;
+type FeatureParam = IModuleShape & IReactModuleShape;
 export class Feature extends AbstractFeature implements IReactFeature {
     private logger;
     public componentFillPlugins;
-    
+
     public routerFactory: any;
     public route: any;
     public routeConfig: any;
     public menuConfig: any;
     constructor(
-        feature?: FeautureParam,
+        feature?: FeatureParam,
         // tslint:disable:trailing-comma
-        ...features: FeautureParam[]
+        ...features: FeatureParam[]
     ) {
         super(feature, ...features);
         this.logger = Logger.createLogger({
@@ -31,16 +31,16 @@ export class Feature extends AbstractFeature implements IReactFeature {
 
 
         // Navigation
-        this.routerFactory = combine(arguments, (arg: FeautureParam) => arg.routerFactory)
+        this.routerFactory = combine(arguments, (arg: FeatureParam) => arg.routerFactory)
             .slice(-1)
             .pop();
-        this.route = combine(arguments, (arg: FeautureParam) => arg.route);
-        this.routeConfig = combine(arguments, (arg: FeautureParam) => arg.routeConfig);
+        this.route = combine(arguments, (arg: FeatureParam) => arg.route);
+        this.routeConfig = combine(arguments, (arg: FeatureParam) => arg.routeConfig);
 
-        this.menuConfig = combine(arguments, (arg: FeautureParam) => arg.menuConfig);
+        this.menuConfig = combine(arguments, (arg: FeatureParam) => arg.menuConfig);
 
         this.componentFillPlugins = this.registerComponentFillPlugins(combine(arguments,
-            (arg: FeautureParam) => arg.componentFillPlugins));
+            (arg: FeatureParam) => arg.componentFillPlugins));
     }
 
     /* tslint:disable:jsx-no-lambda */

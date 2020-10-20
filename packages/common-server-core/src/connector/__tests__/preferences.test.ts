@@ -1,6 +1,6 @@
 import { getCurrentPreferences, transformPrefsToArray } from '../../utils';
 import { Feature } from '../connector';
-import { defaultSettings, userSettings,  prefRes, prefsArrRes, finalSettings } from './fixtures/preferenfces/common-settings';
+import { defaultSettings, userSettings,  prefRes, prefsArrRes, finalSettings } from './fixtures/preferenfces/sample-settings';
 import 'jest';
 
 

@@ -2,9 +2,12 @@ import * as React from 'react';
 import 'jest';
 import { getRoutes } from '../utils';
 import { ConsoleLogger, IConsoleLoggerSettings } from '@cdm-logger/server';
-import { LoggerLevel } from '@cdm-logger/core';
-import * as Logger from 'bunyan';
-export const logger: Logger = ConsoleLogger.create('test', { level: 'trace' });
+import { CdmLogger } from '@cdm-logger/core';
+export const logger: CdmLogger.ILogger = ConsoleLogger.create('test', { level: 'trace' });
+
+
+
+
 function MyComponent(props) {
     return <div>MyComponent {JSON.stringify(props)}</div>;
 }

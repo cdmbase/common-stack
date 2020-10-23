@@ -46,7 +46,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
     /* tslint:disable:jsx-no-lambda */
     private renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps = {}) =>
         routes ? (
-            <Switch {...switchProps}>
+            <>
                 {[
                     ...solidRoutes, ...routes.map((route, i) => (
                         <Route
@@ -60,7 +60,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
                         />
                     )),
                 ]}
-            </Switch>
+            </>
         ) : null
 
     /**

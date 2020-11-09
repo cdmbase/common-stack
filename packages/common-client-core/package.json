@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-core",
-  "version": "0.0.241",
+  "version": "0.0.242",
   "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "dependencies": {
-    "@common-stack/core": "0.0.241"
+    "@common-stack/core": "0.0.242"
   },
   "peerDependencies": {
     "apollo-client": ">=2.4.0",

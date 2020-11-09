@@ -7,6 +7,7 @@ import { Feature } from '../connector';
 import { FeatureWithRouterFactory } from '../router';
 import { IMenuData } from '../interfaces';
 import { isUrl, getMenus } from '../utils';
+import {sortBy} from 'lodash';
 import 'jest';
 
 
@@ -21,6 +22,113 @@ const genMenuData: (namespace?: string) => IMenuData = (namespace = '') => ({
     ['/b/b2']: { name: 'b2', icon: 'b2' },
     ['/a/m/a1']: { name: 'a1', icon: 'a1', category: 'middle' },
     [namespace + '/a/m/a2']: { name: 'a2', icon: 'a2', category: 'top' },
+});
+
+describe('sort menu by priority', () => {
+
+    const sortMenuByPriority = (menu_route) => {
+        return sortBy(menu_route, (obj) => parseInt(obj.priority, 10));
+    }
+    
+    const routeSorting = (routes) => {
+        const routesDAta = sortMenuByPriority(routes);
+        return routesDAta.map(route => {
+            return {
+                children: route.children && routeSorting(route.children),
+                info: route.info,
+                priority: route.priority
+            }
+        });
+    }
+
+    const input = [
+        {
+            children: [
+                {
+                    info: 'aa1',
+                    priority: 1
+                },
+                {
+                    info: 'aa3',
+                    priority: 3
+                },
+                {
+                    info: 'aa2',
+                    priority: 2
+                }
+            ],
+            info: 'aa',
+            priority: 2
+        },
+        {
+            children: [
+                {
+                    info: 'bb1',
+                    priority: 1
+                },
+                {
+                    info: 'bb3',
+                    priority: 3
+                },
+                {
+                    info: 'bb2',
+                    priority: 2
+                }
+            ],
+            info: 'bb',
+            priority: 1
+        }
+    
+    ];
+
+    const output = [
+        {
+            children: [
+                {
+                    info: 'bb1',
+                    priority: 1,
+                    children: undefined
+                },
+                {
+                    info: 'bb2',
+                    priority: 2,
+                    children: undefined
+                },
+                {
+                    info: 'bb3',
+                    priority: 3,
+                    children: undefined
+                }
+            ],
+            info: 'bb',
+            priority: 1
+        },
+        {
+            children: [
+                {
+                    info: 'aa1',
+                    priority: 1,
+                    children: undefined
+                },
+                {
+                    info: 'aa2',
+                    priority: 2,
+                    children: undefined
+                },
+                {
+                    info: 'aa3',
+                    priority: 3,
+                    children: undefined
+                }
+            ],
+            info: 'aa',
+            priority: 2
+        }
+    ];
+
+    test('test sort menus', () => {
+        expect(routeSorting(input)).toEqual(output);
+    });
 });
 
 describe('getMenu utility with basic paths', () => {

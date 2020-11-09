@@ -4,7 +4,7 @@ import {AbstractFeature, IModuleShape} from '@common-stack/client-core';
 import * as Logger from 'bunyan';
 import {IReactFeature, IReactModuleShape} from '../interfaces';
 import {getMenus, getRoutes} from '../utils';
-import {castArray, map, union, without} from 'lodash';
+import {castArray, map, union, without, sortBy} from 'lodash';
 import {registerPlugin, getPlugins, getPlugin} from '../plugin-area/plugin-api';
 
 const combine = (features, extractor) => without(union(...map(features,
@@ -76,7 +76,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
     /**
      * Get menus
      */
-    public getMenus(withRoot?: boolean, rootComponent?: any) {
+    public getMenus(sortByPriority = true) {
         return this.getConfiguredMenus();
     }
 
@@ -100,6 +100,28 @@ export class Feature extends AbstractFeature implements IReactFeature {
         const routes = Object.assign({}, ...this.menuConfig);
         return getMenus(searchPath, {...routes});
     }
+
+    public sortMenuByPriority = (menu_route) => {
+        return sortBy(menu_route, (obj) => parseInt(obj.priority, 10));
+    }
+    
+    public routeSorting = (routes) => {
+        const routesDAta = this.sortMenuByPriority(routes);
+        return routesDAta.map(route => {
+            return {
+                children: route.children && this.routeSorting(route.children),
+                path: route.path,
+                key: route.key,
+                tab: route.tab,
+                name: route.name,
+                component: route.component,
+                position: route.position,
+                exact: route.exact,
+                priority: route.priority,
+                icon: route.icon
+            }
+        });
+    }    
 
     get navItems() {
         return this.navItem.map((component: React.ReactElement<any>, idx: number) =>

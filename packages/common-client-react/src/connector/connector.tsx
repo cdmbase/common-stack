@@ -102,32 +102,6 @@ export class Feature extends AbstractFeature implements IReactFeature {
         return getMenus(searchPath, {...routes});
     }
 
-    private sortMenusByPriority = (menus) => {
-        return sortBy(menus, (obj) => parseInt(obj.priority, 10));
-    }
-    
-    private sortMenus = (sortByPriority, menus) => {
-        if (sortByPriority) {
-            const menuData = this.sortMenusByPriority(menus);
-            return menuData.map(menu => {
-                return {
-                    children: menu.children && this.sortMenus(sortByPriority, menu.children),
-                    path: menu.path,
-                    key: menu.key,
-                    tab: menu.tab,
-                    name: menu.name,
-                    component: menu.component,
-                    position: menu.position,
-                    exact: menu.exact,
-                    priority: menu.priority,
-                    icon: menu.icon
-                }
-            });
-        } else {
-            return menus;
-        }
-    }    
-
     get navItems() {
         return this.navItem.map((component: React.ReactElement<any>, idx: number) =>
             React.cloneElement(component, {
@@ -180,4 +154,24 @@ export class Feature extends AbstractFeature implements IReactFeature {
     public getComponentFillPlugins() {
         return getPlugins();
     }
+
+
+    private sortMenusByPriority = (menus) => {
+        return sortBy(menus, (obj) => parseInt(obj.priority, 10));
+    }
+    
+    private sortMenus = (sortByPriority, menus) => {
+        if (sortByPriority) {
+            const menuData = this.sortMenusByPriority(menus);
+            return menuData.map(menu => {
+                return {
+                    ...menu,
+                    children: menu.children && this.sortMenus(sortByPriority, menu.children),
+                }
+            });
+        } else {
+            return menus;
+        }
+    }    
+
 }

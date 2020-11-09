@@ -54,5 +54,5 @@
     "peerDependencies": {
         "ioredis": ">=4.0.0"
     },
-    "gitHead": "b1dda97ccfe924ce03a433d974ad46e0e7a606d0"
+    "gitHead": "5eb5d6554be1ecbbf4b43bcde59b35e018fd0309"
 }

@@ -26,19 +26,23 @@ const genMenuData: (namespace?: string) => IMenuData = (namespace = '') => ({
 
 describe('sort menu by priority', () => {
 
-    const sortMenuByPriority = (menu_route) => {
-        return sortBy(menu_route, (obj) => parseInt(obj.priority, 10));
+    const sortMenusByPriority = (menus) => {
+        return sortBy(menus, (obj) => parseInt(obj.priority, 10));
     }
     
-    const routeSorting = (routes) => {
-        const routesDAta = sortMenuByPriority(routes);
-        return routesDAta.map(route => {
-            return {
-                children: route.children && routeSorting(route.children),
-                info: route.info,
-                priority: route.priority
-            }
-        });
+    const sortMenus = (sortByPriority, menus) => {
+        if (sortByPriority) {
+            const menuData = sortMenusByPriority(menus);
+            return menuData.map(menu => {
+                return {
+                    children: menu.children && sortMenus(sortByPriority, menu.children),
+                    info: menu.info,
+                    priority: menu.priority
+                }
+            });
+        } else {
+            return menus;
+        }
     }
 
     const input = [
@@ -127,7 +131,10 @@ describe('sort menu by priority', () => {
     ];
 
     test('test sort menus', () => {
-        expect(routeSorting(input)).toEqual(output);
+        let sortByPriority = true;
+        expect(sortMenus(sortByPriority, input)).toEqual(output);
+        sortByPriority = false;
+        expect(sortMenus(sortByPriority, input)).toEqual(input);
     });
 });
 

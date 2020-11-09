@@ -101,26 +101,30 @@ export class Feature extends AbstractFeature implements IReactFeature {
         return getMenus(searchPath, {...routes});
     }
 
-    public sortMenuByPriority = (menu_route) => {
-        return sortBy(menu_route, (obj) => parseInt(obj.priority, 10));
+    public sortMenusByPriority = (menus) => {
+        return sortBy(menus, (obj) => parseInt(obj.priority, 10));
     }
     
-    public routeSorting = (routes) => {
-        const routesDAta = this.sortMenuByPriority(routes);
-        return routesDAta.map(route => {
-            return {
-                children: route.children && this.routeSorting(route.children),
-                path: route.path,
-                key: route.key,
-                tab: route.tab,
-                name: route.name,
-                component: route.component,
-                position: route.position,
-                exact: route.exact,
-                priority: route.priority,
-                icon: route.icon
-            }
-        });
+    public sortMenus = (sortByPriority, menus) => {
+        if (sortByPriority) {
+            const menuData = this.sortMenusByPriority(menus);
+            return menuData.map(menu => {
+                return {
+                    children: menu.children && this.sortMenus(sortByPriority, menu.children),
+                    path: menu.path,
+                    key: menu.key,
+                    tab: menu.tab,
+                    name: menu.name,
+                    component: menu.component,
+                    position: menu.position,
+                    exact: menu.exact,
+                    priority: menu.priority,
+                    icon: menu.icon
+                }
+            });
+        } else {
+            return menus;
+        }
     }    
 
     get navItems() {

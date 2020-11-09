@@ -228,7 +228,7 @@
     "source-list-map": "^2.0.1",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.12",
-    "standard-version": "^5.0.2",
+    "standard-version": "^8.0.1",
     "style-loader": "^0.23.1",
     "svg-url-loader": "^2.3.2",
     "tcomb": "^3.2.29",

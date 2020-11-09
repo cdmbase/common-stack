@@ -77,7 +77,8 @@ export class Feature extends AbstractFeature implements IReactFeature {
      * Get menus
      */
     public getMenus(sortByPriority = true) {
-        return this.getConfiguredMenus();
+        const menus = this.getConfiguredMenus();
+        return this.sortMenus(sortByPriority, menus);
     }
 
     /**
@@ -101,11 +102,11 @@ export class Feature extends AbstractFeature implements IReactFeature {
         return getMenus(searchPath, {...routes});
     }
 
-    public sortMenusByPriority = (menus) => {
+    private sortMenusByPriority = (menus) => {
         return sortBy(menus, (obj) => parseInt(obj.priority, 10));
     }
     
-    public sortMenus = (sortByPriority, menus) => {
+    private sortMenus = (sortByPriority, menus) => {
         if (sortByPriority) {
             const menuData = this.sortMenusByPriority(menus);
             return menuData.map(menu => {

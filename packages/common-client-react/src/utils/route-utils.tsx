@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IRouteData, IMappedData, IMenuData, IMenuItem, IMenuPosition } from '../interfaces';
-import { matchRoutes, renderRoutes } from 'react-router-config';
 import { RouteProps } from 'react-router';
+import {Route} from 'react-router-dom';
 
 
 /* eslint no-useless-escape:0 */
@@ -134,3 +134,22 @@ export function getMenus(path: string, menuData: IMenuData) {
   return root.children;
 }
 
+
+export const renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps = {}) =>
+    routes ? (
+        <>
+          {[
+            ...solidRoutes, ...routes.map((route, i) => (
+                <Route
+                    key={route.key || i}
+                    path={route.path}
+                    exact={route.exact}
+                    strict={route.strict}
+                    render={props => (
+                        <route.component {...props} {...extraProps} route={route}/>
+                    )}
+                />
+            )),
+          ]}
+        </>
+    ) : null;

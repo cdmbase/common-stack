@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {Route, Switch} from 'react-router-dom';
 import {AbstractFeature, IModuleShape} from '@common-stack/client-core';
 import * as Logger from 'bunyan';
 import {IReactFeature, IReactModuleShape} from '../interfaces';
-import {getMenus, getRoutes} from '../utils';
+import {getMenus, getRoutes, renderRoutes} from '../utils';
 import {castArray, map, union, without, sortBy} from 'lodash';
-import {registerPlugin, getPlugins, getPlugin} from '../plugin-area/plugin-api';
+import {registerPlugin, getPlugins, getPlugin} from '../plugin-area';
 
 const combine = (features, extractor) => without(union(...map(features,
         res => castArray(extractor(res)))), undefined);
@@ -44,24 +43,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
     }
 
     /* tslint:disable:jsx-no-lambda */
-    private renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps = {}) =>
-        routes ? (
-            <>
-                {[
-                    ...solidRoutes, ...routes.map((route, i) => (
-                        <Route
-                            key={route.key || i}
-                            path={route.path}
-                            exact={route.exact}
-                            strict={route.strict}
-                            render={props => (
-                                <route.component {...props} {...extraProps} route={route}/>
-                            )}
-                        />
-                    )),
-                ]}
-            </>
-        ) : null
+    private renderRoutes = renderRoutes;
 
     /**
      * Get the routes
@@ -159,7 +141,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
     private sortMenusByPriority = (menus) => {
         return sortBy(menus, (obj) => parseInt(obj.priority, 10));
     }
-    
+
     private sortMenus = (sortByPriority, menus) => {
         if (sortByPriority) {
             const menuData = this.sortMenusByPriority(menus);
@@ -167,11 +149,11 @@ export class Feature extends AbstractFeature implements IReactFeature {
                 return {
                     ...menu,
                     children: menu.children && this.sortMenus(sortByPriority, menu.children),
-                }
+                };
             });
         } else {
             return menus;
         }
-    }    
+    }
 
 }

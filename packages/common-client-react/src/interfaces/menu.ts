@@ -8,6 +8,7 @@ export interface IMenuData {
         authority?: any;
         exact?: boolean;
         strict?: boolean;
+        permissions?: string[],
         [key: string]: any;
     };
 }
@@ -22,7 +23,7 @@ export interface IMenuItem {
     exact?: boolean;
     strict?: boolean;
     children?: IMenuItem[];
-    priority?: number
+    priority?: number;
 }
 
 export enum IMenuPosition {

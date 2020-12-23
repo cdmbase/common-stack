@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/store-mongo",
-  "version": "0.0.246",
+  "version": "0.0.247",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -40,7 +40,7 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@common-stack/core": "0.0.246",
+    "@common-stack/core": "0.0.247",
     "sequelize": "^5.7.6"
   },
   "typings": "lib/index.d.ts",

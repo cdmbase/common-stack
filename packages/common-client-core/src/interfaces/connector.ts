@@ -5,7 +5,7 @@ import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 import { IdGetterObj } from 'apollo-cache-inmemory';
 
-export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) |  ((service: any) => Resolvers)[]  | ((service: any) => any) | ((service: any) => any)[];
+export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) | ((service: any) => Resolvers)[] | ((service: any) => any) | ((service: any) => any)[];
 export interface IClientStateConfig {
     resolvers?: ResolverType; // don't need `Resolvers` type as it may conflict with the usage
     defaults?: object;
@@ -64,7 +64,7 @@ export interface IModuleShape {
      * object.
      * @inheritdoc https://github.com/apollographql/apollo-client/tree/ed66999bac40226abfeada8d6c83b454636bb4b0/packages/apollo-cache-inmemory#configuration
      */
-    readonly dataIdFromObject?: {[key: string]: (value: any) => string } |  {[key: string]: (value: any) => string }[] | IdGetterObj;
+    readonly dataIdFromObject?: { [key: string]: (value: any) => string } | { [key: string]: (value: any) => string }[] | IdGetterObj;
     /**
      * @param createContainerFunc Synchronous Container Modules of inversify.
      * @inheritdoc https://github.com/inversify/InversifyJS/blob/master/wiki/container_modules.md
@@ -202,7 +202,12 @@ export interface IFeature extends IModuleShape {
      * @param args Provide resolverContext which can be passed to all resolver functions.
      * @returns IClientState
      */
-    getStateParams(args?: {resolverContex?: any }): IClientState;
+    getStateParams(args?: { resolverContex?: any }): IClientState;
+
+    getDataIdFromObject(result: {
+        [key: string]: string | number;
+        __typename?: string;
+    } | IdGetterObj): any;
     /**
      * @arguments root React tree root component
      * @arguments req Http Request

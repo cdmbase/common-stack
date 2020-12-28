@@ -1,5 +1,375 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`connector configuredRoutes with no arguments passed 1`] = `
+Array [
+  Object {
+    "component": [Function],
+    "exact": false,
+    "path": "/a",
+    "routes": Array [
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/:b/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/:c/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": false,
+        "path": "/a/2",
+        "routes": Array [
+          Object {
+            "component": [Function],
+            "exact": true,
+            "path": "/a/2/1",
+          },
+        ],
+      },
+    ],
+  },
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/ab/2/1",
+  },
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/b/1",
+  },
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/b/login/register",
+  },
+]
+`;
+
+exports[`connector getRoutes with multiple Features 1`] = `
+<React.Fragment>
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static1"
+  />
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static2"
+  />
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static3"
+  />
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static4"
+  />
+  <Route
+    exact={false}
+    path="/a"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/ab/2/1"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/b/1"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/b/login/register"
+    render={[Function]}
+  />
+  <Route
+    exact={false}
+    path="/ac/a"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/ac/ab/2/1"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/ac/b/1"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/ac/b/login/register"
+    render={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`connector getRoutes with only configurable routes 1`] = `
+<React.Fragment>
+  <Route
+    exact={false}
+    path="/a"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/ab/2/1"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/b/1"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/b/login/register"
+    render={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`connector getRoutes with only static routes 1`] = `<Switch />`;
+
+exports[`connector getRoutes with static routes and configurable routes 1`] = `
+<React.Fragment>
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static1"
+  />
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/static2"
+  />
+  <Route
+    exact={false}
+    path="/a"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/ab/2/1"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/b/1"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/b/login/register"
+    render={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`getRoutes utility with basic routes getRoutes utility with realistic routes with realistic routes 1`] = `
+Array [
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/path",
+    "routes": Array [
+      Object {
+        "component": [Function],
+        "exact": false,
+        "path": "/path/a",
+        "routes": Array [
+          Object {
+            "component": [Function],
+            "exact": true,
+            "path": "/path/a/b",
+          },
+        ],
+      },
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/path/child",
+      },
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/path/child1",
+      },
+    ],
+  },
+]
+`;
+
+exports[`getRoutes utility with basic routes with / 1`] = `
+Array [
+  Object {
+    "component": [Function],
+    "exact": false,
+    "path": "/a",
+    "routes": Array [
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/:b/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/:c/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": false,
+        "path": "/a/2",
+        "routes": Array [
+          Object {
+            "component": [Function],
+            "exact": true,
+            "path": "/a/2/1",
+          },
+        ],
+      },
+    ],
+  },
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/ab/2/1",
+  },
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/b/1",
+  },
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/b/login/register",
+  },
+]
+`;
+
+exports[`getRoutes utility with basic routes with /a 1`] = `
+Array [
+  Object {
+    "component": [Function],
+    "exact": false,
+    "path": "/a",
+    "routes": Array [
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/:b/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/a/:c/1",
+      },
+      Object {
+        "component": [Function],
+        "exact": false,
+        "path": "/a/2",
+        "routes": Array [
+          Object {
+            "component": [Function],
+            "exact": true,
+            "path": "/a/2/1",
+          },
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`getRoutes utility with basic routes with root 1`] = `
+Array [
+  Object {
+    "component": [Function],
+    "exact": false,
+    "path": "/",
+  },
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/ghost",
+  },
+  Object {
+    "component": [Function],
+    "exact": false,
+    "path": "/pepper",
+    "routes": Array [
+      Object {
+        "component": [Function],
+        "exact": false,
+        "path": "/pepper/:type",
+        "routes": Array [
+          Object {
+            "component": [Function],
+            "exact": false,
+            "path": "/pepper/:type/scoville",
+          },
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`loading success 1`] = `
+<div>
+  MyLoadingComponent 
+  {"isLoading":true,"pastDelay":false,"timedOut":false,"error":null}
+</div>
+`;
+
+exports[`loading success 2`] = `
+<div>
+  MyLoadingComponent 
+  {"isLoading":true,"pastDelay":true,"timedOut":false,"error":null}
+</div>
+`;
+
+exports[`loading success 3`] = `
+<div>
+  MyComponent 
+  {"prop":"foo"}
+</div>
+`;
+
+exports[`loading success 4`] = `
+<div>
+  MyComponent 
+  {"prop":"bar"}
+</div>
+`;
+
 exports[`with root 1`] = `
 Array [
   Object {

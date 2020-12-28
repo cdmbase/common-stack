@@ -48,8 +48,8 @@ export class Feature extends AbstractFeature implements IReactFeature {
     /**
      * Get the routes
      */
-    public getRoutes(withRoot?: boolean, rootComponent?: any) {
-        const configuredRoutes = this.getConfiguredRoutes();
+    public getRoutes(searchPath?: RegExp) {
+        const configuredRoutes = this.getConfiguredRoutes(searchPath);
         const solidRoutes = this.route.map((component: React.ReactElement<any>, idx: number) =>
             React.cloneElement(component, {key: component.props.path}));
         return this.renderRoutes(configuredRoutes, solidRoutes);
@@ -68,7 +68,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
      * Note: It overwrites the any duplicate key with latest loaded key.
      * TODO: Find a way to warn when there are duplicate keys.
      */
-    public getConfiguredRoutes(searchPath = '/') {
+    public getConfiguredRoutes(searchPath = /^\/.*/) {
         const routes = Object.assign({}, ...this.routeConfig);
         return getRoutes(searchPath, {...routes});
     }

@@ -96,7 +96,7 @@ const routerConfig = (namespace = '') => ({
   },
 });
 
-xdescribe('getRoutes utility with basic routes', () => {
+describe('getRoutes utility with basic routes', () => {
 
 
   test('with /a', async () => {
@@ -111,7 +111,7 @@ xdescribe('getRoutes utility with basic routes', () => {
       }],
     };
 
-    const routes = getRoutes('/a', routerConfig());
+    const routes = getRoutes(/^\/a.*/, routerConfig());
     expect(routes).toMatchSnapshot();
   });
 
@@ -134,14 +134,14 @@ xdescribe('getRoutes utility with basic routes', () => {
       { path: '/ab/2/1', exact: true },
       { path: '/b/1', exact: true },
       { path: '/b/login/register', exact: true }];
-    const routes = getRoutes('/', routerConfig());
+    const routes = getRoutes(/^\/.*/, routerConfig());
     expect(routes).toMatchSnapshot();
     expect(JSON.parse(JSON.stringify(routes))).toMatchObject(result);
   });
 
   test('with `@`in root throws error', async () => {
     try {
-      getRoutes('@namespace', routerConfig('@namespace'));
+      getRoutes(/^\/@namespace.*/, routerConfig('@namespace'));
     } catch (e) {
       expect(e.message).toEqual('Invalid path!');
     }
@@ -159,7 +159,7 @@ xdescribe('getRoutes utility with basic routes', () => {
         ['/path/child']: { component: MyComponent, exact: true },
         ['/path/child1']: { component: MyComponent, exact: true },
       };
-      const routes = getRoutes('/', genRoutes);
+      const routes = getRoutes(/^\/.*/, genRoutes);
 
       const result = [
         {
@@ -352,7 +352,7 @@ xdescribe('connector getRoutes', () => {
 
 });
 
-describe('filter routes with realizting routes', () => {
+xdescribe('filter routes with realizting routes', () => {
 
   const genRoutes = {
     ['/']: { component: MyComponent, exact: true },
@@ -372,10 +372,12 @@ describe('filter routes with realizting routes', () => {
       { path: '/:or/b/login/register', exact: true }];
 
       const connector = new Feature({ routeConfig: genRoutes });
-      const connectorRoutes = connector.getConfiguredRoutes('/:or');
+      const regexExpNotStartWithColon = /^\/(?!(:)).*/;
+      const connectorRoutes = connector.getConfiguredRoutes(regexExpNotStartWithColon);
 
       // TODO now need to filter routes which don't start with `/:or`. Something
       // similar to regex, we need to a netgaive `connector.getConfiguredRoutes('^/:or');`
-      console.log('---ConnectorRoutes', connectorRoutes)
+      console.log('---ConnectorRoutes', connectorRoutes);
+      // connectorRoutes.
 });
 

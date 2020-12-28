@@ -305,6 +305,11 @@ Array [
       },
     ],
   },
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/ab/2/1",
+  },
 ]
 `;
 
@@ -368,38 +373,4 @@ exports[`loading success 4`] = `
   MyComponent 
   {"prop":"bar"}
 </div>
-`;
-
-exports[`with root 1`] = `
-Array [
-  Object {
-    "component": [Function],
-    "exact": false,
-    "path": "/",
-  },
-  Object {
-    "component": [Function],
-    "exact": true,
-    "path": "/ghost",
-  },
-  Object {
-    "component": [Function],
-    "exact": false,
-    "path": "/pepper",
-    "routes": Array [
-      Object {
-        "component": [Function],
-        "exact": false,
-        "path": "/pepper/:type",
-        "routes": Array [
-          Object {
-            "component": [Function],
-            "exact": false,
-            "path": "/pepper/:type/scoville",
-          },
-        ],
-      },
-    ],
-  },
-]
 `;

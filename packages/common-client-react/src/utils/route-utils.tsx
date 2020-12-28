@@ -14,21 +14,12 @@ export function isUrl(path) {
  * Generates Routes based on the key value, where key has the path of the route and value
  * has rest of the values for building a `<Router ../>` component.
  *
- * @param path
+ * @param path: RegExp
  * @param routerData
  */
-export function getRoutes(path: string, routerData: IRouteData) {
-  if (!path.startsWith('/')) {
-    throw new Error('Invalid path!');
-  }
-  let searchPath = path;
-  if (path[path.length - 1] !== '/') {
-    searchPath = path + '/';
-  }
-  // console.log(searchPath);
-
+export function getRoutes(path: RegExp, routerData: IRouteData) {
   const routes = Object.keys(routerData).filter(routePath => {
-    return routePath.indexOf(searchPath) === 0 || routePath === path;
+    return routePath.match(path);
   });
   const mappedRoutes: Array<IMappedData> = routes.map(paths => {
     return {

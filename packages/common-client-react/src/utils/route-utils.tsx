@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IRouteData, IMappedData, IMenuData, IMenuItem, IMenuPosition } from '../interfaces';
-import { matchRoutes, renderRoutes } from 'react-router-config';
 import { RouteProps } from 'react-router';
+import {Route} from 'react-router-dom';
 
 
 /* eslint no-useless-escape:0 */
@@ -14,21 +14,12 @@ export function isUrl(path) {
  * Generates Routes based on the key value, where key has the path of the route and value
  * has rest of the values for building a `<Router ../>` component.
  *
- * @param path
+ * @param path: RegExp
  * @param routerData
  */
-export function getRoutes(path: string, routerData: IRouteData) {
-  if (!path.startsWith('/')) {
-    throw new Error('Invalid path!');
-  }
-  let searchPath = path;
-  if (path[path.length - 1] !== '/') {
-    searchPath = path + '/';
-  }
-  // console.log(searchPath);
-
+export function getRoutes(path: RegExp, routerData: IRouteData) {
   const routes = Object.keys(routerData).filter(routePath => {
-    return routePath.indexOf(searchPath) === 0 || routePath === path;
+    return routePath.match(path);
   });
   const mappedRoutes: Array<IMappedData> = routes.map(paths => {
     return {
@@ -134,3 +125,22 @@ export function getMenus(path: string, menuData: IMenuData) {
   return root.children;
 }
 
+
+export const renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps = {}) =>
+    routes ? (
+        <>
+          {[
+            ...solidRoutes, ...routes.map((route, i) => (
+                <Route
+                    key={route.key || i}
+                    path={route.path}
+                    exact={route.exact}
+                    strict={route.strict}
+                    render={props => (
+                        <route.component {...props} {...extraProps} route={route}/>
+                    )}
+                />
+            )),
+          ]}
+        </>
+    ) : null;

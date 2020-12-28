@@ -1,15 +1,14 @@
-import * as Logger from 'bunyan';
-import { PubSub } from 'graphql-subscriptions';
+import { CdmLogger } from '@cdm-logger/core';
 
 export interface IResolverOptions {
     pubsub: any;
-    logger?: Logger;
+    logger?: CdmLogger.ILogger;
     [key: string]: any;
 }
 
 export interface IDirectiveOptions {
     [key: string]: any;
-    logger?: Logger;
+    logger?: CdmLogger.ILogger;
 }
 
 export enum ConfigurationScope {
@@ -24,10 +23,6 @@ export interface IWebsocketConfig {
 export interface IPreferences<T = ConfigurationScope> {
     [key: string]: IPreferencesData<T>;
 }
-
-export interface IRoles<T = ConfigurationScope> {
-    [key: string]: IPreferencesData<T>;
-}
 export interface IPreferencesData<T = ConfigurationScope> {
     type?: string | string[];
     default?: string | boolean | number | any;
@@ -37,6 +32,9 @@ export interface IPreferencesData<T = ConfigurationScope> {
     settings?: string;
     enum?: any;
     enumDescriptions?: string[];
+    permissions?: {
+        [key: string]: string | boolean | unknown,
+    };
     [key: string]: any;
 }
 

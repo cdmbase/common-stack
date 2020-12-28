@@ -22,6 +22,7 @@ export interface IMenuItem {
     exact?: boolean;
     strict?: boolean;
     children?: IMenuItem[];
+    priority?: number
 }
 
 export enum IMenuPosition {

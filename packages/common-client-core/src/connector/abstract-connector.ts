@@ -23,8 +23,6 @@ export abstract class AbstractFeature implements IFeature {
     public sidebarSegments: any[];
     public routerFactory: any;
     public route: any;
-    public routeConfig: any;
-    public menuConfig: any;
     public navItem: any;
     public navItemRight: any;
     public rootComponentFactory: any[];
@@ -88,14 +86,7 @@ export abstract class AbstractFeature implements IFeature {
         this.middleLowerPanelItems = combine(arguments, (arg: IModuleShape) => arg.middleLowerPanelItems);
         this.dataIdFromObject = combine(arguments, (arg: IModuleShape) => arg.dataIdFromObject);
 
-        // Navigation
-        this.routerFactory = combine(arguments, (arg: IModuleShape) => arg.routerFactory)
-            .slice(-1)
-            .pop();
-        this.route = combine(arguments, (arg: IModuleShape) => arg.route);
-        this.routeConfig = combine(arguments, (arg: IModuleShape) => arg.routeConfig);
 
-        this.menuConfig = combine(arguments, (arg: IModuleShape) => arg.menuConfig);
         this.navItem = combine(arguments, (arg: IModuleShape) => arg.navItem);
         this.navItemRight = combine(arguments, (arg: IModuleShape) => arg.navItemRight);
 
@@ -134,16 +125,10 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     public getRouter(withRoot?: boolean, rootComponent?: any) {
-        return this.routerFactory(this.getRoutes(withRoot, rootComponent));
+        return this.routerFactory(this.getRoutes());
     }
 
-    public abstract getRoutes(withRoot?: boolean, rootComponent?: any);
-
-    public abstract getConfiguredRoutes(routeSearch?: string);
-
-    public abstract getMenus(withRoot?: boolean, rootComponent?: any);
-
-    public abstract getConfiguredMenus(routeSearch?: string);
+    public abstract getRoutes(searchPath?: RegExp);
 
     public abstract get navItems();
 

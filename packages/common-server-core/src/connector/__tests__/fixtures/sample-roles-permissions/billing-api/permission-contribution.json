@@ -1,0 +1,152 @@
+{
+  "organization.billing.paymentMethods.view": {
+    "enumDescriptions": [
+      "Has ability to view existing Payment Methods",
+      "No ability to create existing Payment Methods"
+    ],
+    "description": "View Payment Methods",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.paymentMethods.create": {
+    "enumDescriptions": [
+      "Has ability to view existing Payment Methods",
+      "No ability to create existing Payment Methods"
+    ],
+    "description": "Create Payment Methods",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.paymentMethods.edit": {
+    "enumDescriptions": [
+      "Has ability to view existing Payment Methods",
+      "No ability to create existing Payment Methods"
+    ],
+    "description": "Edit Payment Methods",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.paymentMethods.delete": {
+    "enumDescriptions": [
+      "Has ability to view existing Payment Methods",
+      "No ability to create existing Payment Methods"
+    ],
+    "description": "Delete Payment Methods",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.paymentMethods.manage": {
+    "enumDescriptions": [
+      "Has ability to view existing Payment Methods",
+      "No ability to create existing Payment Methods"
+    ],
+    "description": "Manage Payment Methods",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.subscriptions.view": {
+    "enumDescriptions": [
+      "Has ability to view existing Subscriptions",
+      "No ability to create existing Subscriptions"
+    ],
+    "description": "View Subscriptions",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.subscriptions.create": {
+    "enumDescriptions": [
+      "Has ability to view existing Subscriptions",
+      "No ability to create existing Subscriptions"
+    ],
+    "description": "Create Subscriptions",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.subscriptions.edit": {
+    "enumDescriptions": [
+      "Has ability to view existing Subscriptions",
+      "No ability to create existing Subscriptions"
+    ],
+    "description": "Edit Subscriptions",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.subscriptions.delete": {
+    "enumDescriptions": [
+      "Has ability to view existing Subscriptions",
+      "No ability to create existing Subscriptions"
+    ],
+    "description": "Delete Subscriptions",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  },
+  "organization.billing.subscriptions.manage": {
+    "enumDescriptions": [
+      "Has ability to view existing Subscriptions",
+      "No ability to create existing Subscriptions"
+    ],
+    "description": "Manage Subscriptions",
+    "type": "string",
+    "enum": [
+      "Allow",
+      "Deny",
+      "NotSet"
+    ],
+    "default": "NotSet",
+    "scope": 3
+  }
+}

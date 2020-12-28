@@ -1,0 +1,67 @@
+{
+  "OWNER": {
+    "organization.teams.inviteMember": "Deny",
+    "organization.teams.view": "Allow",
+    "organization.teams.create": "Allow",
+    "organization.teams.edit": "Allow",
+    "organization.teams.delete": "Allow",
+    "organization.teams.manage": "Allow",
+    "organization.projects.view": "Allow",
+    "organization.projects.create": "Allow",
+    "organization.projects.edit": "Allow",
+    "organization.projects.delete": "Allow",
+    "organization.projects.manage": "Allow"
+  },
+  "PROJECT_ADMIN": {
+    "organization.teams.inviteMember": "Deny",
+    "organization.teams.view": "Allow",
+    "organization.teams.create": "Allow",
+    "organization.teams.edit": "Allow",
+    "organization.teams.delete": "Allow",
+    "organization.teams.manage": "Allow",
+    "organization.projects.view": "Allow",
+    "organization.projects.create": "Allow",
+    "organization.projects.edit": "Allow",
+    "organization.projects.delete": "Allow",
+    "organization.projects.manage": "Allow"
+  },
+  "ADMIN": {
+    "organization.teams.inviteMember": "Deny",
+    "organization.teams.view": "Allow",
+    "organization.teams.create": "Allow",
+    "organization.teams.edit": "Allow",
+    "organization.teams.delete": "Allow",
+    "organization.teams.manage": "Allow",
+    "organization.projects.view": "Allow",
+    "organization.projects.create": "Allow",
+    "organization.projects.edit": "Allow",
+    "organization.projects.delete": "Allow",
+    "organization.projects.manage": "Allow"
+  },
+  "VIEWER": {
+    "organization.teams.inviteMember": "Deny",
+    "organization.teams.view": "Allow",
+    "organization.teams.create": "Deny",
+    "organization.teams.edit": "Deny",
+    "organization.teams.delete": "Deny",
+    "organization.teams.manage": "Deny",
+    "organization.projects.view": "Allow",
+    "organization.projects.create": "Deny",
+    "organization.projects.edit": "Deny",
+    "organization.projects.delete": "Deny",
+    "organization.projects.manage": "Deny"
+  },
+  "GUEST": {
+    "organization.teams.inviteMember": "Deny",
+    "organization.teams.view": "Deny",
+    "organization.teams.create": "Deny",
+    "organization.teams.edit": "Deny",
+    "organization.teams.delete": "Deny",
+    "organization.teams.manage": "Deny",
+    "organization.projects.view": "Deny",
+    "organization.projects.create": "Deny",
+    "organization.projects.edit": "Deny",
+    "organization.projects.delete": "Deny",
+    "organization.projects.manage": "Deny"
+  }
+}

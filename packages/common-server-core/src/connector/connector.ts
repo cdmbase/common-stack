@@ -4,22 +4,24 @@ import {
     IMongoMigration,
     IOverwritePreference,
     IPreferences,
-    IPreferncesTransformed,
     IResolverOptions,
     IRoles,
     IWebsocketConfig,
+    IGraphqlShieldRules,
+    IAddPermissions,
+    IAddPolicies,
 } from '../interfaces';
-import {castArray, groupBy, map, merge, union, without} from 'lodash';
-import {Container} from 'inversify';
-import {getCurrentPreferences, transformPrefsToArray} from '../utils';
-
+import { logger } from '@cdm-logger/server';
+import { castArray, groupBy, map, merge, union, without, keyBy } from 'lodash';
+import { Container } from 'inversify';
+import { getCurrentPreferences, transformPrefsToArray } from '../utils';
+import { IRoleUpdate } from '../interfaces/roles';
 export const featureCatalog: any = {};
 
 export interface IFederationServiceOptions {
     port: number;
     config?: any; // for apollo-server
 }
-
 export type FederationServiceDeclaration = (options: IFederationServiceOptions) => Promise<void>;
 
 /**
@@ -48,23 +50,33 @@ export type FeatureParams<T = ConfigurationScope> = {
     createWebsocketConfig?: IWebsocketConfig | IWebsocketConfig[],
     updateContainerFunc?: any | any[],
     createPreference?: IPreferences<T> | IPreferences<T>[],
+    overwritePreference?: IOverwritePreference | IOverwritePreference[],
+    /**
+     * Permissions Preferences
+     */
+    addPermissions?: IAddPermissions<T>,
+    /**
+     * Policies Preferences
+     */
+    addPolicies?: IAddPolicies<T>,
     /**
      * Roles to provide permissions to access resources.
      */
     rolesUpdate?: IRoleUpdate<T>,
-    overwritePreference?: IOverwritePreference | IOverwritePreference[],
     federation?: FederationServiceDeclaration | FederationServiceDeclaration[];
     dataIdFromObject?: Function | Function[],
     disposeFunc?: any | any[],
     beforeware?: any | any[],
     middleware?: any | any[],
     catalogInfo?: any | any[],
+    /**
+     *  Graphql shields rules, a graphql middleware for authorization
+     *  based on defined permissions
+     */
+    rules?: IGraphqlShieldRules;
 };
 
-export interface IRoleUpdate<T> {
-    createRoles?: IRoles<T>[] | IRoles<T>;
-    overwriteRolesPermissions?: any | any[];
-}
+
 
 const combine = <T>(features: FeatureParams<T>[], extractor): any =>
     without(union(...map(features, (res: FeatureParams<T>) => castArray(extractor(res)))), undefined);
@@ -96,10 +108,14 @@ class Feature<T = ConfigurationScope> {
     public middleware: Function[];
     public createWebsocketConfig: IWebsocketConfig[];
     public createPreference: IPreferences<T>[];
+    public addPermissions?: IAddPermissions<T>;
+    public addPolicies: IAddPolicies<T>;
     public rolesUpdate: IRoleUpdate<T>;
     public overwritePreference: IOverwritePreference[];
     public overwriteRole: IOverwritePreference[];
     public migrations?: Array<{ [id: string]: IMongoMigration }>;
+    private _rules: IGraphqlShieldRules[];
+
     private services;
     private container;
     private hemeraContainer;
@@ -137,15 +153,33 @@ class Feature<T = ConfigurationScope> {
         this.middleware = combine<T>(args, (arg: FeatureParams<T>) => arg.middleware);
         this.createWebsocketConfig = combine<T>(args, (arg: FeatureParams<T>) => arg.createWebsocketConfig);
         this.createPreference = combine<T>(args, (arg: FeatureParams<T>) => arg.createPreference);
-        this.rolesUpdate = {};
-        this.rolesUpdate.createRoles = combine<T>(args, (arg: FeatureParams<T>) => {
-            return arg.rolesUpdate.createRoles;
-        });
-        this.rolesUpdate.overwriteRolesPermissions = combine<T>(args, (arg: FeatureParams<T>) => arg.rolesUpdate.overwriteRolesPermissions);
+        this.addPermissions = {
+            createPermissions: combine<T>(args, (arg: FeatureParams<T>) => arg.addPermissions &&
+                arg.addPermissions.createPermissions),
+            overwritePermissions: combine<T>(args, (arg: FeatureParams<T>) => arg.addPermissions &&
+                arg.addPermissions.overwritePermissions),
+        };
+        this.addPolicies = {
+            createPolicies: combine<T>(args, (arg: FeatureParams<T>) => arg.addPolicies &&
+                arg.addPolicies.createPolicies),
+            overwritePolicies: combine<T>(args, (arg: FeatureParams<T>) => arg.addPolicies &&
+                arg.addPolicies.overwritePolicies),
+        };
+        this.rolesUpdate = {
+            createRoles: combine<T>(args, (arg: FeatureParams<T>) => arg.rolesUpdate &&
+                arg.rolesUpdate.createRoles),
+            overwriteRolesPermissions: combine<T>(args, (arg: FeatureParams<T>) => arg.rolesUpdate &&
+                arg.rolesUpdate.overwriteRolesPermissions),
+        };
         this.overwritePreference = combine<T>(args, (arg: FeatureParams<T>) => arg.overwritePreference);
-        // this.overwriteRole = combine<T>(args, (arg: FeatureParams<T>) => arg.overwriteRole);
+        this._rules = combine<T>(args, (arg: FeatureParams<T>) => arg.rules);
     }
 
+    get rules(): IGraphqlShieldRules {
+        return this._rules.reduce((acc: IGraphqlShieldRules, curr) => {
+            return merge(acc, curr) as IGraphqlShieldRules;
+        }, {}) as IGraphqlShieldRules;
+    }
     get schemas(): string[] {
         return this.schema;
     }
@@ -175,7 +209,7 @@ class Feature<T = ConfigurationScope> {
             const results = await Promise.all(
                 this.createContextFunc.map(createContext => createContext(req, connectionParams, webSocket)),
             );
-            return merge({}, ...results, {...this.services});
+            return merge({}, ...results, { ...this.services });
         };
 
     }
@@ -255,9 +289,11 @@ class Feature<T = ConfigurationScope> {
             }));
         this.container.bind('IDefaultSettings').toConstantValue(this.getPreferences());
         this.container.bind('IDefaultSettingsObj').toConstantValue(this.getPreferencesObj());
-        // roles
+        // permissions
+        this.container.bind('IDefaultPermissions').toConstantValue(this.getPermissionPreferences());
+        this.container.bind('IDefaultPermissionsObj').toConstantValue(this.getPermissionPreferencesObj());
         this.container.bind('IDefaultRoles').toConstantValue(this.getRoles());
-        this.container.bind('IDefaultRolesObj').toConstantValue(this.getRolesObj());
+        this.container.bind('IDefaultPoliciesObj').toConstantValue(this.getPolicyPreferencesObj());
         return this.container;
     }
 
@@ -307,12 +343,12 @@ class Feature<T = ConfigurationScope> {
         matchingModules.map(createModule => this.container.load(createModule(options)));
     }
 
-    public loadMainMoleculerService({container, broker, settings}: { container: Container, broker: any, settings: unknown }) {
-        this.addBrokerMainServiceClass.map(serviceClass => broker.createService(serviceClass, {container, settings}));
+    public loadMainMoleculerService({ container, broker, settings }: { container: Container, broker: any, settings: unknown }) {
+        this.addBrokerMainServiceClass.map(serviceClass => broker.createService(serviceClass, { container, settings }));
     }
 
-    public loadClientMoleculerService({container, broker, settings}: { container: Container, broker: any, settings: unknown }) {
-        this.addBrokerClientServiceClass.map(serviceClass => broker.createService(serviceClass, {container, settings}));
+    public loadClientMoleculerService({ container, broker, settings }: { container: Container, broker: any, settings: unknown }) {
+        this.addBrokerClientServiceClass.map(serviceClass => broker.createService(serviceClass, { container, settings }));
     }
 
     public createDefaultPreferences() {
@@ -327,30 +363,52 @@ class Feature<T = ConfigurationScope> {
         return this.middleware;
     }
 
-    public getPreferences<S = ConfigurationScope>(): IPreferncesTransformed<S>[] {
+    public getPreferences<S = ConfigurationScope>(): IPreferences<S>[] {
         return transformPrefsToArray<S>(this.getPreferencesObj());
     }
 
-    public getRoles(): IRoles[] {
-        const { createRoles, overwriteRolesPermissions} = this.rolesUpdate;
-        const grouped = groupBy([...castArray(createRoles), ...overwriteRolesPermissions], (item) => {
-            return Object.keys(item)[0];
-        });
-        return Object.keys(grouped).reduce((acc, key) => {
-            const roles = grouped[key];
-            const mergedRoles = roles.reduce((merged, curr) => {
-                return {
-                    ...merged,
-                    ...curr[key],
-                    permissions: {
-                        // @ts-ignore
-                        ...(merged.permissions || {} ),
-                        ...curr[key].permissions,
-                    },
-                };
-            }, {});
-            return [...acc, {[key]: mergedRoles}];
-        }, []);
+    public getPreferencesObj<S>() {
+        const defaultPrefs: IPreferences<S>[] = merge([], ...this.createPreference);
+        const overwritePrefs: IOverwritePreference[] = merge([], ...this.overwritePreference);
+        return getCurrentPreferences<S>(defaultPrefs, overwritePrefs);
+    }
+
+    public getPermissionPreferences<T = ConfigurationScope>(): IPreferences<T>[] {
+        return transformPrefsToArray<T>(this.getPermissionPreferencesObj());
+    }
+
+    public getPermissionPreferencesObj<T>() {
+        const { createPermissions = [], overwritePermissions = [] } = this.addPermissions;
+        const defaultPrefs: IPreferences<T>[] = merge([], ...castArray(createPermissions));
+        const overwritePrefs: IOverwritePreference[] = merge([], ...castArray(overwritePermissions));
+        return getCurrentPreferences<T>(defaultPrefs, overwritePrefs);
+    }
+
+    public getPolicyPreferences<T = ConfigurationScope>(): IPreferences<T>[] {
+        return transformPrefsToArray<T>(this.getPolicyPreferencesObj());
+    }
+
+    public getPolicyPreferencesObj<T>() {
+        const { createPolicies = [], overwritePolicies = [] } = this.addPolicies;
+        const defaultPrefs: IPreferences<T>[] = merge([], ...castArray(createPolicies));
+        const overwritePrefs: IOverwritePreference[] = merge([], ...castArray(overwritePolicies));
+        return getCurrentPreferences<T>(defaultPrefs, overwritePrefs);
+    }
+
+    public getRoles() {
+        const { createRoles, overwriteRolesPermissions } = this.rolesUpdate;
+        const mergedRoles: IPreferences<T>[] = merge({}, ...castArray(createRoles));
+        const mergedOverwriteRolesPermissions = merge({}, ...castArray(overwriteRolesPermissions));
+        let result = {};
+        for (const role in mergedRoles) {
+            const rolePermission = mergedOverwriteRolesPermissions[role] ? merge({}, mergedRoles[role].permissions, mergedOverwriteRolesPermissions[role]) : mergedRoles[role].permissions;
+            const mmm = {
+                ...mergedRoles[role],
+                permissions: { ...rolePermission },
+            };
+            result = merge({}, result, { [role]: mmm });
+        }
+        return result;
     }
 
     public getRolesObj<S>() {
@@ -360,18 +418,17 @@ class Feature<T = ConfigurationScope> {
         return getCurrentPreferences<S>(defaultPrefs, overwritePrefs);
     }
 
-    public getPreferencesObj<S>() {
-        const defaultPrefs: IPreferences<S>[] = merge([], ...this.createPreference);
-        const overwritePrefs: IOverwritePreference[] = merge([], ...this.overwritePreference);
-        return getCurrentPreferences<S>(defaultPrefs, overwritePrefs);
-    }
-
     public getWebsocketConfig() {
         return this.createWebsocketConfig.reduce((pre, curr) => {
             return merge(pre, curr);
         }, {});
     }
 
+    private convertArrayToObject(arrayObject: any[]) {
+        return arrayObject.reduce((pre, curr) => {
+            return merge(pre, curr);
+        }, {})
+    }
 }
 
-export {Feature};
+export { Feature };

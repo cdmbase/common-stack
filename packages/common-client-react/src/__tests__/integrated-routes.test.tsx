@@ -4,9 +4,9 @@ import StaticRouter from 'react-router/StaticRouter';
 import { renderRoutes, matchRoutes } from 'react-router-config';
 import { Feature } from '../connector';
 import { ConsoleLogger, IConsoleLoggerSettings } from '@cdm-logger/server';
-import { LoggerLevel } from '@cdm-logger/core';
-import * as Logger from 'bunyan';
-export const logger: Logger = ConsoleLogger.create('test', { level: 'trace' });
+import { CdmLogger } from '@cdm-logger/core';
+const logger: CdmLogger.ILogger = ConsoleLogger.create('test', { level: 'trace' });
+import 'jest';
 
 describe('integration', () => {
     it('generates the same matches in renderRoutes and matchRoutes', () => {

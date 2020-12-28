@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-react",
-  "version": "0.0.224",
+  "version": "0.0.247",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -56,11 +56,13 @@
     "redux": ">=4.0.1"
   },
   "dependencies": {
-    "@common-stack/client-core": "file:../common-client-core",
-    "@common-stack/core": "file:../common-core"
+    "@common-stack/client-core": "0.0.247",
+    "@common-stack/core": "0.0.247",
+    "@wordpress/hooks": "^2.10.0"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "5eb5d6554be1ecbbf4b43bcde59b35e018fd0309"
 }

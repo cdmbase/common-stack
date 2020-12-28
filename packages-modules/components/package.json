@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/components",
-  "version": "0.0.224",
+  "version": "0.0.247",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -42,13 +42,14 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@common-stack/client-core": "file:../../packages/common-client-core",
-    "@common-stack/client-react": "file:../../packages/common-client-react",
-    "@common-stack/core": "file:../../packages/common-core",
+    "@common-stack/client-core": "0.0.247",
+    "@common-stack/client-react": "0.0.247",
+    "@common-stack/core": "0.0.247",
     "antd": "^3.5.0"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "5eb5d6554be1ecbbf4b43bcde59b35e018fd0309"
 }

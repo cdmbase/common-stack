@@ -1,7 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { Feature } from '@common-stack/server-core';
 import { logger } from '@cdm-logger/server';
-import CounterModule from '@common-stack/counter-module-server';
 import { pubsubGen } from './pubsub';
 // import { generateMongo } from '@common-stack/store-mongo-mongo';
 import { config } from '../config';
@@ -33,4 +32,4 @@ const DefaultFeature = new Feature({
 });
 
 
-export default new Feature(DefaultFeature, CounterModule);
+export default new Feature(DefaultFeature);

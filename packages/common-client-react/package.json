@@ -58,7 +58,9 @@
   "dependencies": {
     "@common-stack/client-core": "0.0.248",
     "@common-stack/core": "0.0.248",
-    "@wordpress/hooks": "^2.10.0"
+    "@wordpress/hooks": "^2.10.0",
+    "history-with-query": "^4.10.4",
+    "sort-keys": "^4.1.0"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

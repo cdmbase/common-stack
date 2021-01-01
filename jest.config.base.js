@@ -48,11 +48,13 @@ module.exports = {
     "/node_modules/(?!(babel-runtime|antd)).*/",
     "<rootDir>/node_modules/(?!lodash-es/.*)"
   ],
+  setupFiles: ["core-js"],
   clearMocks: true,
   globals: {
     __BACKEND_URL__: 'http://localhost:3010',
     __GRAPHQL_URL__: 'http://localhost:8085/graphql',
     "ts-jest": {
+      "babelConfig": true,
       // tsConfig: "<rootDir>/src/__tests__/tsconfig.json",
       // https://github.com/kulshekhar/ts-jest/issues/766
       "diagnostics": {

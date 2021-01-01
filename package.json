@@ -70,9 +70,11 @@
     "@common-stack/core": "file:packages/common-core",
     "@common-stack/server-core": "file:packages/common-server-core",
     "@common-stack/store-mongo-mongo": "file:packages/common-store-mongo",
+    "@umijs/route-utils": "^1.0.34",
     "common-stack-backend-server": "file:servers/backend-server",
     "common-stack-frontend-server": "file:servers/frontend-server",
-    "common-stack-hemera-server": "file:servers/hemera-server"
+    "common-stack-hemera-server": "file:servers/hemera-server",
+    "core-js": "^3.8.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -110,6 +112,7 @@
     "@graphql-codegen/typescript-resolvers": "^1.5.0",
     "@hot-loader/react-dom": "^16.8.6",
     "@larix/zen": "0.1.13",
+    "@testing-library/react": "^11.2.2",
     "@types/async": "^2.4.1",
     "@types/body-parser": "1.17.0",
     "@types/bunyan": "^1.8.6",

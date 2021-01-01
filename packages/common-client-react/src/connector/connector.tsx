@@ -2,7 +2,7 @@ import * as React from 'react';
 import {AbstractFeature, IModuleShape} from '@common-stack/client-core';
 import * as Logger from 'bunyan';
 import {IReactFeature, IReactModuleShape} from '../interfaces';
-import {getMenus, getRoutes, renderRoutes} from '../utils';
+import {getMenus, getSortedRoutes, renderRoutes} from '../utils';
 import {castArray, map, union, without, sortBy} from 'lodash';
 import {registerPlugin, getPlugins, getPlugin} from '../plugin-area';
 
@@ -10,6 +10,7 @@ const combine = (features, extractor) => without(union(...map(features,
         res => castArray(extractor(res)))), undefined);
 
 type FeatureParam = IModuleShape & IReactModuleShape;
+
 export class Feature extends AbstractFeature implements IReactFeature {
     private logger;
     public componentFillPlugins;
@@ -48,7 +49,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
     /**
      * Get the routes
      */
-    public getRoutes(searchPath?: RegExp) {
+    public getRoutes(searchPath?: any) {
         const configuredRoutes = this.getConfiguredRoutes(searchPath);
         const solidRoutes = this.route.map((component: React.ReactElement<any>, idx: number) =>
             React.cloneElement(component, {key: component.props.path}));
@@ -68,9 +69,8 @@ export class Feature extends AbstractFeature implements IReactFeature {
      * Note: It overwrites the any duplicate key with latest loaded key.
      * TODO: Find a way to warn when there are duplicate keys.
      */
-    public getConfiguredRoutes(searchPath = /^\/.*/) {
-        const routes = Object.assign({}, ...this.routeConfig);
-        return getRoutes(searchPath, {...routes});
+    public getConfiguredRoutes(searchPath = '/') {
+        return getSortedRoutes(searchPath, Object.assign({}, ...this.routeConfig));
     }
 
 

@@ -1,6 +1,6 @@
 {
     "name": "@common-stack/cache-api-server",
-    "version": "0.0.248",
+    "version": "0.0.249",
     "description": "Sample core for higher packages to depend on",
     "main": "lib/index.js",
     "scripts": {
@@ -46,7 +46,7 @@
         "definition": "lib/index.d.ts"
     },
     "dependencies": {
-        "@common-stack/server-core": "0.0.248",
+        "@common-stack/server-core": "0.0.249",
         "nodemailer": "^4.6.7",
         "query-string": "^6.1.0",
         "underscore": "^1.9.1"

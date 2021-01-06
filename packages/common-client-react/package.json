@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-react",
-  "version": "0.0.250",
+  "version": "0.0.251",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -56,8 +56,8 @@
     "redux": ">=4.0.1"
   },
   "dependencies": {
-    "@common-stack/client-core": "0.0.250",
-    "@common-stack/core": "0.0.250",
+    "@common-stack/client-core": "0.0.251",
+    "@common-stack/core": "0.0.251",
     "@wordpress/hooks": "^2.10.0",
     "history-with-query": "^4.10.4",
     "sort-keys": "^4.1.0"

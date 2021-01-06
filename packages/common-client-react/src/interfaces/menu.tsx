@@ -1,5 +1,9 @@
+import * as React from 'react';
+import { deprecate } from 'util';
 
-
+/**
+ * @deprecated Will be removed, don't use it. It is replaced by 
+ */
 export interface IMenuData {
     [key: string]: {
         name: any;
@@ -12,6 +16,10 @@ export interface IMenuData {
     };
 }
 
+
+/**
+ * @deprecated Will be removed, don't use it. Replaced by IMenuDataItem
+ */
 export interface IMenuItem {
     path?: string;
     name: any;
@@ -71,6 +79,23 @@ export interface IMenuDataItem {
      * @name hides itself and elevates child nodes to its level
      */
     flatMenu?: boolean;
+
+    /**
+     * @name position of the Menu
+     */
+    position?: IMenuPosition;
+
+
+    /**
+     * @name permissions to determine whether to render menu or not
+     */
+    authority?: string[];
+
+    /**
+     * @name priority of the menu to display in the order. Lower values shows first. 
+     */
+    priority?: number;
+
     [key: string]: any;
 }
 

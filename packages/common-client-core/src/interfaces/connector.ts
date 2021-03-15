@@ -1,23 +1,23 @@
 // tslint:disable:max-line-length
 
-import { LocalStateFragmentMatcher, Resolvers } from 'apollo-client';
+import { Resolvers, IdGetterObj, PossibleTypesMap, TypePolicies } from '@apollo/client';
 import { ReducersMapObject } from 'redux';
-import { ErrorLink } from 'apollo-link-error';
-import { IdGetterObj } from 'apollo-cache-inmemory';
+import { ErrorLink } from '@apollo/client/link/error';
 
 export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) | ((service: any) => Resolvers)[] | ((service: any) => any) | ((service: any) => any)[];
 export interface IClientStateConfig {
     resolvers?: ResolverType; // don't need `Resolvers` type as it may conflict with the usage
     defaults?: object;
     typeDefs?: string | string[];
-    fragmentMatcher?: LocalStateFragmentMatcher;
+    possibleTypes?: PossibleTypesMap,
+    typePolicies?: TypePolicies;
 }
 
 export interface IClientState {
     resolvers?: Resolvers; // don't need `Resolvers` type as it may conflict with the usage
     defaults?: object;
     typeDefs?: string | string[];
-    fragmentMatcher?: LocalStateFragmentMatcher;
+    possibleTypes?: PossibleTypesMap,
 }
 
 /**

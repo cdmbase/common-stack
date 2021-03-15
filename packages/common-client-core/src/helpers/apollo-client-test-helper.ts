@@ -1,5 +1,4 @@
-import { ApolloClient, ApolloClientOptions } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient, ApolloClientOptions, InMemoryCache } from '@apollo/client';
 import { interfaces } from 'inversify';
 import { logger } from '@cdm-logger/client';
 import { IFeature } from '../interfaces';
@@ -24,7 +23,7 @@ export const apolloClientHelper = (modules: IFeature) => {
     const dataIdFromObject = (result) => modules.getDataIdFromObject(result);
     const cache = new InMemoryCache({
         dataIdFromObject,
-        fragmentMatcher: clientState.fragmentMatcher as any,
+        possibleTypes: clientState.possibleTypes
     });
 
     const schema = ``;

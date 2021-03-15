@@ -27,8 +27,7 @@
   },
   "packages": [
     "packages-modules/**",
-    "packages/*",
-    "servers/*"
+    "packages/*"
   ],
   "version": "0.0.251"
 }

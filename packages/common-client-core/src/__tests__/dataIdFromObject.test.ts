@@ -1,5 +1,5 @@
 import { TestFeature as Feature } from './test-feature';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client';
 import 'jest';
 
 const finalSettings = [

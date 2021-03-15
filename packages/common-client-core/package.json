@@ -53,7 +53,7 @@
     "@common-stack/core": "0.0.251"
   },
   "peerDependencies": {
-    "apollo-client": ">=2.4.0",
+    "@apollo/client": ">=3.0.0",
     "redux": ">=4.0.1"
   },
   "typings": "lib/index.d.ts",

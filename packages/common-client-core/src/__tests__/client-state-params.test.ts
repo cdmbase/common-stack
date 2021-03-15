@@ -1,9 +1,7 @@
 
 import gql from 'graphql-tag';
 import { TestFeature } from './test-feature';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
-import { Observable, ApolloLink, execute } from 'apollo-link';
+import { InMemoryCache, ApolloClient, Observable, ApolloLink,  } from '@apollo/client';
 import { merge } from 'lodash';
 
 describe('client-state-params', () => {

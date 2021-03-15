@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { IFeature, IModuleShape, IClientStateConfig, IClientState, ResolverType } from '../interfaces';
-import { Resolvers } from 'apollo-client';
+import { IdGetterObj, Resolvers } from '@apollo/client';
+import { ErrorLink } from '@apollo/client/link/error'
 import { merge, map, union, without, castArray } from 'lodash';
-import { ErrorLink } from 'apollo-link-error';
 import { ReducersMapObject } from 'redux';
 import { interfaces, Container } from 'inversify';
-import { IdGetterObj } from 'apollo-cache-inmemory';
 
 const combine = (features, extractor) => without(union(...map(features, res => castArray(extractor(res)))), undefined);
 export const featureCatalog = {};
@@ -181,8 +180,8 @@ export abstract class AbstractFeature implements IFeature {
             const defaults = merge(acc.defaults, curr.defaults);
 
             const resolvers = merge(acc.resolvers, consoldidatedResolvers(curr.resolvers, args.resolverContex)) as Resolvers;
-            const fragmentMatcher = merge(acc.fragmentMatcher, curr.fragmentMatcher);
-            return { defaults, resolvers, typeDefs, fragmentMatcher };
+            const possibleTypes = merge(acc.possibleTypes, curr.possibleTypes);
+            return { defaults, resolvers, typeDefs, possibleTypes };
         }, {} as IClientState);
     }
 

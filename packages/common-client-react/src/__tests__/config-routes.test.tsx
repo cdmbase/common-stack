@@ -111,7 +111,7 @@ describe('getRoutes utility with basic routes', () => {
       }],
     };
 
-    const routes = getRoutes(/^\/a.*/, routerConfig());
+    const routes = getRoutes('/', routerConfig());
     expect(routes).toMatchSnapshot();
   });
 
@@ -134,14 +134,14 @@ describe('getRoutes utility with basic routes', () => {
       { path: '/ab/2/1', exact: true },
       { path: '/b/1', exact: true },
       { path: '/b/login/register', exact: true }];
-    const routes = getRoutes(/^\/.*/, routerConfig());
+    const routes = getRoutes('/', routerConfig());
     expect(routes).toMatchSnapshot();
     expect(JSON.parse(JSON.stringify(routes))).toMatchObject(result);
   });
 
   test('with `@`in root throws error', async () => {
     try {
-      getRoutes(/^\/@namespace.*/, routerConfig('@namespace'));
+      getRoutes('@namespace.', routerConfig('@namespace'));
     } catch (e) {
       expect(e.message).toEqual('Invalid path!');
     }
@@ -159,7 +159,7 @@ describe('getRoutes utility with basic routes', () => {
         ['/path/child']: { component: MyComponent, exact: true },
         ['/path/child1']: { component: MyComponent, exact: true },
       };
-      const routes = getRoutes(/^\/.*/, genRoutes);
+      const routes = getRoutes('/', genRoutes);
 
       const result = [
         {
@@ -373,7 +373,7 @@ xdescribe('filter routes with realizting routes', () => {
 
       const connector = new Feature({ routeConfig: genRoutes });
       const regexExpNotStartWithColon = /^\/(?!(:)).*/;
-      const connectorRoutes = connector.getConfiguredRoutes(regexExpNotStartWithColon);
+      const connectorRoutes = connector.getConfiguredRoutes('/');
 
       // TODO now need to filter routes which don't start with `/:or`. Something
       // similar to regex, we need to a netgaive `connector.getConfiguredRoutes('^/:or');`

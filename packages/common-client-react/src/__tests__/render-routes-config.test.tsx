@@ -67,5 +67,5 @@ test('loading success', async () => {
 
 
 
-    console.log(getRoutes(/^\/.*/, routerConfig('@test')));
+    console.log(getRoutes('/', routerConfig('@test')));
 });

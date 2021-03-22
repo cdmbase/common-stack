@@ -23,6 +23,7 @@ export abstract class AbstractFeature implements IFeature {
     public sidebarSegments: any[];
     public routerFactory: any;
     public route: any;
+    public drawerItem: any;
     public navItem: any;
     public navItemRight: any;
     public rootComponentFactory: any[];
@@ -86,6 +87,7 @@ export abstract class AbstractFeature implements IFeature {
         this.middleLowerPanelItems = combine(arguments, (arg: IModuleShape) => arg.middleLowerPanelItems);
         this.dataIdFromObject = combine(arguments, (arg: IModuleShape) => arg.dataIdFromObject);
 
+        this.drawerItem = combine(arguments, (arg: IModuleShape) => arg.drawerItem);
 
         this.navItem = combine(arguments, (arg: IModuleShape) => arg.navItem);
         this.navItemRight = combine(arguments, (arg: IModuleShape) => arg.navItemRight);
@@ -129,6 +131,8 @@ export abstract class AbstractFeature implements IFeature {
     }
 
     public abstract getRoutes(searchPath?: RegExp);
+
+    public abstract get drawerItems();
 
     public abstract get navItems();
 

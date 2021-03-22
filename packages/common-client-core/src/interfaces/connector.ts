@@ -81,6 +81,10 @@ export interface IModuleShape {
      */
     readonly route?: any;
     /**
+     * @param drawerItem Item List for navigation drawer
+     */
+    readonly drawerItem?: any;
+    /**
      * @param navItem Top left navigation links
      */
     readonly navItem?: any;
@@ -159,6 +163,10 @@ export interface IFeature extends IModuleShape {
      */
     readonly getRoutes;
 
+    /**
+     * Item list for Navigation drawer
+     */
+    readonly drawerItems;
     /**
      * @returns client-side top left navbar link component list
      */

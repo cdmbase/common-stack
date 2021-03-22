@@ -84,6 +84,9 @@ export class Feature extends AbstractFeature implements IReactFeature {
         return getMenus(searchPath, {...routes});
     }
 
+    get drawerItems() {
+        return null;
+    }
     get navItems() {
         return this.navItem.map((component: React.ReactElement<any>, idx: number) =>
             React.cloneElement(component, {

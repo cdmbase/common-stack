@@ -20,6 +20,7 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "preset": "react-native",
     "roots": [
       "src"
     ],

@@ -8,7 +8,11 @@
     "rootDir": "./src",
     "outDir": "../lib",
     "jsx": "react",
-    "declarationDir": "lib"
+    "declarationDir": "lib",
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "exclude": [
     "node_modules",

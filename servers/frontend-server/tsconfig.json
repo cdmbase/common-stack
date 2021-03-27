@@ -7,8 +7,19 @@
     "declaration": false,
     "jsx": "react",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "types": [
+      "jest",
+      "node"
+    ]
   },
-  "include": ["../../typings/*.d.ts"],
-  "exclude": ["node_modules", "lib", "dist", "webpack.config.js"]
+  "include": [
+    "../../typings/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "dist",
+    "webpack.config.js"
+  ]
 }

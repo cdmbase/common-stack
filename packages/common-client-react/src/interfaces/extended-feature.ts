@@ -3,7 +3,7 @@ import {IFeature} from '@common-stack/client-core';
 import {IMappedData, IRouteData} from './router';
 import { IMenuData } from './menu';
 import {ComponentElement} from 'react';
-
+import { DrawerNavigationConfig } from '@react-navigation/core'
 export interface IPlugin {
     name: string;
     icon?: string | ComponentElement<any, any> | Function;
@@ -34,6 +34,8 @@ export type IReactFeature = IFeature & IReactModuleShape & {
 };
 
 export type IReactModuleShape = {
+
+    readonly drawerItem?: DrawerNavigationConfig | DrawerNavigationConfig[]
     /**
      * @param route Route list
      */

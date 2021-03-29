@@ -9,7 +9,7 @@ const config = {
             entry: './src/index.ts',
             stack: ['server'],
             tsLoaderOptions: {
-                "configFileName": "./tsconfig.json"
+                // "configFile": "./tsconfig.json"
             },
             defines: {
                 __SERVER__: true
@@ -20,14 +20,16 @@ const config = {
                     filename: 'main.js',
                 },
                 plugins: [
-                    new CopyWebpackPlugin([{
-                        from: '../../tools/esm-wrapper.js',
-                        to: 'index.js',
-                    }]),
+                    new CopyWebpackPlugin({
+                        patterns: [{
+                            from: '../../tools/esm-wrapper.js',
+                            to: 'index.js',
+                        }],
+                    }),
                 ],
                 externals: [
                     nodeExternals({}),
-                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/], modulesDir: "../../node_modules" })
+                    nodeExternals({ whitelist: [/webpack\/hot/i], modulesDir: "../../node_modules" })
                 ],
             }
         },
@@ -41,9 +43,8 @@ const config = {
     },
     options: {
         stack: [
-            'apollo',
             'ts',
-            'css',
+            "apollo",
             'webpack'
         ],
         cache: '../../.cache',
@@ -52,7 +53,6 @@ const config = {
         frontendBuildDir: "dist",
         dllBuildDir: "dist/.build/dll",
         webpackDll: false,
-        reactHotLoader: false,
         persistGraphQL: false,
         backendUrl: "http://{ip}:8080",
         frontendRefreshOnBackendChange: true,

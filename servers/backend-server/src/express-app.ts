@@ -3,19 +3,26 @@ import * as express from 'express';
 const cookiesMiddleware = require('universal-cookie-express');
 import modules from './modules';
 import { errorMiddleware } from './middleware/error';
+import { contextServicesMiddleware } from './middleware/services';
+import { IModuleService } from './interfaces';
 
-
-
-export function expressApp(options, middlewares) {
+export function expressApp(options: IModuleService, middlewares, http?) {
     const app: express.Express = express();
+
+    app.use(contextServicesMiddleware(options.createContext, options.serviceContext));
 
     for (const applyBeforeware of modules.beforewares) {
         applyBeforeware(app);
     }
+
     app.use(cookiesMiddleware());
+
     // Don't rate limit heroku
     app.enable('trust proxy');
 
+    if (middlewares !== null) {
+        app.use(middlewares);
+    }
 
     // app.use(corsMiddleware);
     app.use(function (req, res, next) {
@@ -27,8 +34,8 @@ export function expressApp(options, middlewares) {
     });
 
     const corsOptions = {
-        credentials: true,
         origin: true,
+        credentials: true,
     };
 
     for (const applyMiddleware of modules.middlewares) {
@@ -41,4 +48,3 @@ export function expressApp(options, middlewares) {
 
     return app;
 }
-

@@ -1,6 +1,0 @@
-query getPersons {
-    persons {
-        id
-        name
-    }
-}

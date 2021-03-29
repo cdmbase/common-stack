@@ -5,6 +5,8 @@ import { renderRoutes, matchRoutes } from 'react-router-config';
 import { Feature } from '../connector';
 import { ConsoleLogger, IConsoleLoggerSettings } from '@cdm-logger/server';
 import { CdmLogger } from '@cdm-logger/core';
+import 'jest';
+
 export const logger: CdmLogger.ILogger = ConsoleLogger.create('test', { level: 'trace' });
 
 describe('renderRoutes', () => {

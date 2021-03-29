@@ -4,7 +4,7 @@ import { TestFeature } from './test-feature';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { Observable, ApolloLink, execute } from 'apollo-link';
-import { merge } from 'lodash';
+import 'jest';
 
 describe('client-state-params', () => {
   const schema = `

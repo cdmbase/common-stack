@@ -1,6 +1,4 @@
-///<reference types="webpack-env" />
-
-import * as express from 'express';
+import express from 'express';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
 import * as path from 'path';
@@ -17,6 +15,10 @@ import modules from './modules';
 let server;
 
 const app = express();
+
+
+app.use(corsMiddleware);
+app.options('*', corsMiddleware);
 
 for (const applyBeforeware of modules.beforewares) {
     applyBeforeware(app);
@@ -62,8 +64,8 @@ server.on('close', () => {
     server = undefined;
 });
 
-if (module.hot) {
-    module.hot.dispose(() => {
+if ((module as any).hot) {
+    (module as any).hot.dispose(() => {
         try {
             if (server) {
                 server.close();
@@ -72,11 +74,11 @@ if (module.hot) {
             logger.error(error.stack);
         }
     });
-    module.hot.accept(['./website'], () => {
+    (module as any).hot.accept(['./website'], () => {
         logger.debug('...reloading middleware');
     });
 
-    module.hot.accept();
+    (module as any).hot.accept();
 }
 
 

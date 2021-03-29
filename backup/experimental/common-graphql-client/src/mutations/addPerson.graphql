@@ -1,6 +1,0 @@
-mutation addPerson($name: String!, $sex: String!) {
-    addPerson(name: $name, sex: $sex) {
-        id
-        name
-    }
-}

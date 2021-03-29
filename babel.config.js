@@ -1,10 +1,20 @@
 module.exports = {
     compact: false,
-    presets: ['@babel/preset-typescript', '@babel/preset-react', ['@babel/preset-env', { modules: 'commonjs' }]],
+    presets: ['@babel/preset-typescript', '@babel/preset-react',
+        ['@babel/preset-env', 
+        {
+            "targets": {
+              "node": 4
+            },
+            "useBuiltIns": "usage",
+            "corejs": 3
+          }
+    ]],
     plugins: [
-          "react-hot-loader/babel",
+        "react-hot-loader/babel",
         '@babel/plugin-transform-modules-commonjs',
         '@babel/plugin-transform-destructuring',
+        "@babel/plugin-transform-for-of",
         '@babel/plugin-transform-regenerator',
         '@babel/plugin-transform-runtime',
         "@babel/plugin-syntax-dynamic-import",

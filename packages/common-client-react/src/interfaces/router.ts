@@ -1,4 +1,5 @@
 import { LoadingComponentProps } from 'react-loadable';
+import { any } from 'prop-types';
 // import { IRouteData as IOrigROuteData } from '@common-stack/client-core';
 // export { IMappedData } from '@common-stack/client-core';
 
@@ -12,10 +13,12 @@ export interface ICoreRouteData<T> {
 }
 
 export interface IMappedData {
-    component: any;
-    route: string;
+    path?: string;
+    component?: any;
+    route?: string;
     exact?: boolean;
     strict?: boolean;
+    [key: string]: any;
 }
 
 export interface IRouteData extends ICoreRouteData<React.ComponentType<LoadingComponentProps> | (() => null)> {

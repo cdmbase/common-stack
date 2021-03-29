@@ -10,19 +10,25 @@ Array [
       "url": "/pepper",
     },
     "route": Object {
+      "_pathPrefix": "",
       "component": [Function],
       "exact": false,
       "path": "/pepper",
+      "position": "MIDDLE",
       "routes": Array [
         Object {
+          "_pathPrefix": "",
           "component": [Function],
           "exact": false,
           "path": "/pepper/:type",
+          "position": "MIDDLE",
           "routes": Array [
             Object {
+              "_pathPrefix": "",
               "component": [Function],
               "exact": false,
               "path": "/pepper/:type/scoville",
+              "position": "MIDDLE",
             },
           ],
         },
@@ -39,14 +45,18 @@ Array [
       "url": "/pepper/jalepeno",
     },
     "route": Object {
+      "_pathPrefix": "",
       "component": [Function],
       "exact": false,
       "path": "/pepper/:type",
+      "position": "MIDDLE",
       "routes": Array [
         Object {
+          "_pathPrefix": "",
           "component": [Function],
           "exact": false,
           "path": "/pepper/:type/scoville",
+          "position": "MIDDLE",
         },
       ],
     },

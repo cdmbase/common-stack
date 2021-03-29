@@ -71,6 +71,7 @@
     "@common-stack/cache-api-server": "file:packages-modules/cache-api/server",
     "@common-stack/client-core": "file:packages/common-client-core",
     "@common-stack/client-react": "file:packages/common-client-react",
+    "@common-stack/client-react-native": "file:packages/common-client-react-native",
     "@common-stack/components": "file:packages-modules/components",
     "@common-stack/core": "file:packages/common-core",
     "@common-stack/server-core": "file:packages/common-server-core",

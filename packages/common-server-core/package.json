@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@common-stack/core": "file:../common-core"
+    "@common-stack/core": "^0.0.1"
   },
   "peerDependencies": {
     "@cdm-logger/core": ">=6.0.0"

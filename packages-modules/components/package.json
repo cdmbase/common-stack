@@ -21,9 +21,9 @@
     "watch": "npm run build:lib:watch"
   },
   "dependencies": {
-    "@common-stack/client-core": "file:../../packages/common-client-core",
-    "@common-stack/client-react": "file:../../packages/common-client-react",
-    "@common-stack/core": "file:../../packages/common-core",
+    "@common-stack/client-core": "^0.0.1",
+    "@common-stack/client-react": "^0.0.251",
+    "@common-stack/core": "^0.0.1",
     "antd": "^3.5.0"
   },
   "typescript": {

@@ -19,7 +19,7 @@
     "watch": "npm run build:lib:watch"
   },
   "dependencies": {
-    "@common-stack/core": "file:../common-core",
+    "@common-stack/core": "^0.0.1",
     "sequelize": "^5.21.3"
   },
   "publishConfig": {

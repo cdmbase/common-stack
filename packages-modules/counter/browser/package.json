@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@common-stack/client-react": "file:../../../packages/common-client-react",
+    "@common-stack/client-react": "^0.0.251",
     "antd": "^4.5.2"
   },
   "publishConfig": {

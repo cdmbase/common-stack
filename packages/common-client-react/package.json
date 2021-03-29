@@ -46,8 +46,8 @@
     }
   },
   "dependencies": {
-    "@common-stack/client-core": "file:../common-client-core",
-    "@common-stack/core": "file:../common-core",
+    "@common-stack/client-core": "^0.0.1",
+    "@common-stack/core": "^0.0.1",
     "@wordpress/hooks": "^2.10.0",
     "history-with-query": "^4.10.4",
     "sort-keys": "^4.1.0"

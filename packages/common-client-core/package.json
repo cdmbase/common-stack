@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-core",
-  "version": "0.0.1",
+  "version": "0.0.252-alpha.0",
   "description": "common core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@common-stack/core": "^0.0.1"
+    "@common-stack/core": "^0.0.252-alpha.0"
   },
   "publishConfig": {
     "access": "public"

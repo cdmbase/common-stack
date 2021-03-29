@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/components",
-  "version": "0.0.251",
+  "version": "0.0.252-alpha.0",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -21,9 +21,9 @@
     "watch": "npm run build:lib:watch"
   },
   "dependencies": {
-    "@common-stack/client-core": "^0.0.1",
-    "@common-stack/client-react": "^0.0.251",
-    "@common-stack/core": "^0.0.1",
+    "@common-stack/client-core": "^0.0.252-alpha.0",
+    "@common-stack/client-react": "^0.0.252-alpha.0",
+    "@common-stack/core": "^0.0.252-alpha.0",
     "antd": "^3.5.0"
   },
   "typescript": {

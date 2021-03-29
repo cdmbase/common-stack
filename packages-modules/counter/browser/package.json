@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/counter-module-browser",
-  "version": "0.0.1",
+  "version": "0.0.252-alpha.0",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@common-stack/client-react": "^0.0.251",
+    "@common-stack/client-react": "^0.0.252-alpha.0",
     "antd": "^4.5.2"
   },
   "publishConfig": {

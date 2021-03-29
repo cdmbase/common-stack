@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/store-mongo",
-  "version": "0.0.1",
+  "version": "0.0.252-alpha.0",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -19,7 +19,7 @@
     "watch": "npm run build:lib:watch"
   },
   "dependencies": {
-    "@common-stack/core": "^0.0.1",
+    "@common-stack/core": "^0.0.252-alpha.0",
     "sequelize": "^5.21.3"
   },
   "publishConfig": {

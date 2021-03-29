@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-react",
-  "version": "0.0.251",
+  "version": "0.0.252-alpha.0",
   "description": "browser plugin for git",
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -46,8 +46,8 @@
     }
   },
   "dependencies": {
-    "@common-stack/client-core": "^0.0.1",
-    "@common-stack/core": "^0.0.1",
+    "@common-stack/client-core": "^0.0.252-alpha.0",
+    "@common-stack/core": "^0.0.252-alpha.0",
     "@wordpress/hooks": "^2.10.0",
     "history-with-query": "^4.10.4",
     "sort-keys": "^4.1.0"

@@ -6,3 +6,4 @@ export * from './utils';
 export * from './interfaces';
 export * from './plugin-area';
 export * from './route-based-plugin-area';
+export * from './route/navigation';

@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-core",
-  "version": "0.0.1",
+  "version": "0.0.252",
   "description": "common core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",

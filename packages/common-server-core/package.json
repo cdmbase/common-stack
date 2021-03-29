@@ -1,59 +1,53 @@
 {
   "name": "@common-stack/server-core",
-  "version": "0.0.251",
-  "description": "xterm server services for Node",
+  "version": "0.0.1",
+  "description": "common core for higher packages to depend on",
+  "license": "ISC",
+  "author": "CDMBase LLC",
   "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "scripts": {
-    "jest": "./node_modules/.bin/jest",
-    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
-    "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch",
-    "prepublish": "npm run build",
-    "watch": "npm run build:lib:watch",
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
-    "build:lib:watch": "npm run build:lib -- --watch"
-  },
-  "publishConfig": {
-    "access": "public"
+    "build:lib:watch": "npm run build:lib -- --watch",
+    "jest": "./node_modules/.bin/jest",
+    "prepublish": "npm run build",
+    "test": "jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
+    "watch": "npm run build:lib:watch"
   },
   "jest": {
-    "testEnvironment": "node",
-    "roots": [
-      "src"
-    ],
-    "modulePaths": [
-      "node_modules"
-    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js",
       "json"
     ],
+    "modulePaths": [
+      "node_modules"
+    ],
+    "roots": [
+      "src"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cdmbase/fullstack-pro.git"
-  },
-  "author": "CDMBase LLC",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cdmbase/fullstack-pro/issues"
-  },
-  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "dependencies": {
-    "@cdm-logger/core": "6.0.0",
-    "@common-stack/core": "0.0.251"
+    "@common-stack/core": "file:../common-core"
   },
-  "typings": "lib/index.d.ts",
+  "peerDependencies": {
+    "@cdm-logger/core": ">=6.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "5eb5d6554be1ecbbf4b43bcde59b35e018fd0309",
   "typescript": {
     "definition": "lib/index.d.ts"
-  },
-  "gitHead": "5eb5d6554be1ecbbf4b43bcde59b35e018fd0309"
+  }
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getSortedRoutes, renderRoutes, getMenus } from '../utils';
-
+import 'jest';
 
 
 function MyComponent(props) {

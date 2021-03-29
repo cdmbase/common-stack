@@ -2,51 +2,59 @@
   "name": "@common-stack/client-react",
   "version": "0.0.251",
   "description": "browser plugin for git",
+  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
+  "bugs": {
+    "url": "https://github.com/cdmbase/fullstack-pro/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdmbase/fullstack-pro.git"
+  },
+  "license": "MIT",
+  "author": "CDMBase LLC",
   "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "scripts": {
-    "jest": "./node_modules/.bin/jest",
-    "test": "jest",
-    "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch",
-    "prepublish": "npm run build",
-    "watch": "npm run build:lib:watch",
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
-    "build:lib:watch": "npm run build:lib -- --watch"
-  },
-  "publishConfig": {
-    "access": "public"
+    "build:lib:watch": "npm run build:lib -- --watch",
+    "jest": "./node_modules/.bin/jest",
+    "prepublish": "npm run build",
+    "test": "jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
+    "watch": "npm run build:lib:watch"
   },
   "jest": {
-    "testEnvironment": "node",
-    "roots": [
-      "src"
-    ],
-    "modulePaths": [
-      "node_modules"
-    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js",
       "json"
     ],
+    "modulePaths": [
+      "node_modules"
+    ],
+    "roots": [
+      "src"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cdmbase/fullstack-pro.git"
+  "dependencies": {
+    "@common-stack/client-core": "file:../common-client-core",
+    "@common-stack/core": "file:../common-core",
+    "@wordpress/hooks": "^2.10.0",
+    "history-with-query": "^4.10.4",
+    "sort-keys": "^4.1.0"
   },
-  "author": "CDMBase LLC",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cdmbase/fullstack-pro/issues"
+  "devDependencies": {
+    "@umijs/route-utils": "^1.0.34"
   },
-  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "peerDependencies": {
     "apollo-client": ">=2.4.0",
     "react": ">=16.8.6",
@@ -55,16 +63,11 @@
     "react-router": ">=5.0.0",
     "redux": ">=4.0.1"
   },
-  "dependencies": {
-    "@common-stack/client-core": "0.0.251",
-    "@common-stack/core": "0.0.251",
-    "@wordpress/hooks": "^2.10.0",
-    "history-with-query": "^4.10.4",
-    "sort-keys": "^4.1.0"
+  "publishConfig": {
+    "access": "public"
   },
-  "typings": "lib/index.d.ts",
+  "gitHead": "5eb5d6554be1ecbbf4b43bcde59b35e018fd0309",
   "typescript": {
     "definition": "lib/index.d.ts"
-  },
-  "gitHead": "5eb5d6554be1ecbbf4b43bcde59b35e018fd0309"
+  }
 }

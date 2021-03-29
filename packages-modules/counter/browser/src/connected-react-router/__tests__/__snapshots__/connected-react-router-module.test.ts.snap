@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`connector modules module configuredRoutes 1`] = `
+Array [
+  Object {
+    "_pathPrefix": "",
+    "component": [Function],
+    "exact": false,
+    "icon": "export",
+    "key": "/connected-react-router",
+    "name": "Connected React Router",
+    "path": "/connected-react-router",
+    "position": "MIDDLE",
+    "routes": Array [
+      Object {
+        "_pathPrefix": "",
+        "component": Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(CounterComponent)",
+          "type": [Function],
+        },
+        "exact": true,
+        "icon": "export",
+        "key": "/connected-react-router/counter",
+        "name": "Counter",
+        "path": "/connected-react-router/counter",
+        "position": "MIDDLE",
+      },
+      Object {
+        "_pathPrefix": "",
+        "component": [Function],
+        "exact": true,
+        "icon": "export",
+        "key": "/connected-react-router/hello",
+        "name": "Hello",
+        "path": "/connected-react-router/hello",
+        "position": "MIDDLE",
+      },
+    ],
+  },
+]
+`;
+
+exports[`connector modules module routes 1`] = `
+<React.Fragment>
+  <Route
+    exact={false}
+    path="/connected-react-router"
+    render={[Function]}
+  />
+</React.Fragment>
+`;

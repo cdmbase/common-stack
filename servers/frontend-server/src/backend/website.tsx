@@ -3,8 +3,8 @@ import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { Html } from './ssr/html';
 import Helmet from 'react-helmet';
-import * as path from 'path';
-import * as fs from 'fs';
+import path from 'path';
+import fs from 'fs';
 import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
@@ -27,6 +27,7 @@ async function renderServerSide(req, res) {
         const renderer = createRenderer();
         const App = () =>
             clientModules.getWrappedRoot(
+                // tslint:disable-next-line:jsx-wrap-multiline
                 <ReduxProvider store={store} >
                     <ApolloProvider client={client}>
                         <ReactFela.Provider renderer={renderer} >
@@ -87,10 +88,13 @@ async function renderServerSide(req, res) {
 }
 export const websiteMiddleware = async (req, res, next) => {
     try {
-        if (req.url.indexOf('.') < 0 && __SSR__) {
-            return renderServerSide(req, res);
+        if (req.path.indexOf('.') < 0 && __SSR__) {
+            return await renderServerSide(req, res);
+        } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
+            logger.debug('FRONEND_BUILD_DIR with index.html')
+            res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));
         } else {
-            return next();
+            next();
         }
     } catch (e) {
         logger.error('RENDERING ERROR:', e);

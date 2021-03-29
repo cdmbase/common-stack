@@ -3,9 +3,9 @@ import 'jest';
 import { getRoutes } from '../utils';
 import { ConsoleLogger, IConsoleLoggerSettings } from '@cdm-logger/server';
 import { CdmLogger } from '@cdm-logger/core';
+
+
 export const logger: CdmLogger.ILogger = ConsoleLogger.create('test', { level: 'trace' });
-
-
 
 
 function MyComponent(props) {

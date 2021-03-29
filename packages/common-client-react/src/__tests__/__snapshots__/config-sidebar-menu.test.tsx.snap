@@ -252,16 +252,77 @@ Object {
 exports[`getMenu utility with connector with connector 1`] = `
 Array [
   Object {
+    "authority": "guest",
+    "children": Array [
+      Object {
+        "children": undefined,
+        "exact": true,
+        "icon": "1",
+        "name": "1",
+        "path": "/a/1",
+        "position": "MIDDLE",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "category": "middle",
+            "children": undefined,
+            "exact": true,
+            "icon": "a1",
+            "name": "a1",
+            "path": "/a/m/a1",
+            "position": "MIDDLE",
+          },
+          Object {
+            "category": "top",
+            "children": undefined,
+            "exact": true,
+            "icon": "a2",
+            "name": "a2",
+            "path": "/a/m/a2",
+            "position": "MIDDLE",
+          },
+        ],
+        "exact": false,
+        "icon": "m",
+        "name": "m",
+        "path": "/a/m",
+        "position": "MIDDLE",
+      },
+    ],
+    "exact": false,
+    "icon": "a",
+    "name": "a",
+    "path": "/a",
+    "position": "MIDDLE",
+  },
+  Object {
     "children": undefined,
     "exact": true,
     "icon": "b1",
     "name": "b1",
-    "path": "/test/b/b1",
+    "path": "/b/b1",
+    "position": "MIDDLE",
+  },
+  Object {
+    "children": undefined,
+    "exact": true,
+    "icon": "b2",
+    "name": "b2",
+    "path": "/b/b2",
     "position": "MIDDLE",
   },
   Object {
     "authority": "guest",
     "children": Array [
+      Object {
+        "children": undefined,
+        "exact": true,
+        "icon": "1",
+        "name": "1",
+        "path": "/test/a/1",
+        "position": "MIDDLE",
+      },
       Object {
         "children": Array [
           Object {
@@ -280,14 +341,6 @@ Array [
         "path": "/test/a/m",
         "position": "MIDDLE",
       },
-      Object {
-        "children": undefined,
-        "exact": true,
-        "icon": "1",
-        "name": "1",
-        "path": "/test/a/1",
-        "position": "MIDDLE",
-      },
     ],
     "exact": false,
     "icon": "a",
@@ -298,62 +351,9 @@ Array [
   Object {
     "children": undefined,
     "exact": true,
-    "icon": "b2",
-    "name": "b2",
-    "path": "/b/b2",
-    "position": "MIDDLE",
-  },
-  Object {
-    "children": undefined,
-    "exact": true,
     "icon": "b1",
     "name": "b1",
-    "path": "/b/b1",
-    "position": "MIDDLE",
-  },
-  Object {
-    "authority": "guest",
-    "children": Array [
-      Object {
-        "children": Array [
-          Object {
-            "category": "top",
-            "children": undefined,
-            "exact": true,
-            "icon": "a2",
-            "name": "a2",
-            "path": "/a/m/a2",
-            "position": "MIDDLE",
-          },
-          Object {
-            "category": "middle",
-            "children": undefined,
-            "exact": true,
-            "icon": "a1",
-            "name": "a1",
-            "path": "/a/m/a1",
-            "position": "MIDDLE",
-          },
-        ],
-        "exact": false,
-        "icon": "m",
-        "name": "m",
-        "path": "/a/m",
-        "position": "MIDDLE",
-      },
-      Object {
-        "children": undefined,
-        "exact": true,
-        "icon": "1",
-        "name": "1",
-        "path": "/a/1",
-        "position": "MIDDLE",
-      },
-    ],
-    "exact": false,
-    "icon": "a",
-    "name": "a",
-    "path": "/a",
+    "path": "/test/b/b1",
     "position": "MIDDLE",
   },
 ]

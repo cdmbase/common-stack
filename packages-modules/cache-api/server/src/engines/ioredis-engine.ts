@@ -3,7 +3,7 @@ import { ICacheEngine } from '../interfaces';
 const { promisify } = require('util');
 
 export class Redis implements ICacheEngine {
-    private client: IORedis.Redis;
+    private client: IORedis.Redis | IORedis.Cluster;
     private getAsync;
 
     constructor(options: IORedis.RedisOptions | IORedis.ClusterOptions, isCluster?: boolean, clusterNodes?: IORedis.ClusterNode[]) {

@@ -1,7 +1,7 @@
 /// <reference path='../../../../../typings/index.d.ts' />
 
 import * as React from 'react';
-import * as serialize from 'serialize-javascript';
+import serialize from 'serialize-javascript';
 import { HelmetData } from 'react-helmet';
 import { Store } from 'redux';
 import modules from '../../modules';
@@ -37,7 +37,7 @@ const Html = ({
                 <meta charSet="utf-8" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
                 {<link rel="stylesheet" type="text/css" href={`${assetMap['index.css']}`} />}
-                {<link rel="stylesheet" type="text/css" href={`${assetMap['vendor.css']}`} />}
+                {assetMap['vendor.css'] && <link rel="stylesheet" type="text/css" href={`${assetMap['vendor.css']}`} />}
                 <style id="font-stylesheet" />
                 {!!__DEV__ && (
                     <style

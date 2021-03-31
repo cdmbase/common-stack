@@ -5,12 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.0.253](https://github.com/cdmbase/fullstack-pro/compare/v0.0.252...v0.0.253) (2021-03-31)
 
-**Note:** Version bump only for package @common-stack/client-react
-
-
-
-
-
-## [0.0.252](https://github.com/cdmbase/fullstack-pro/compare/v0.0.251...v0.0.252) (2021-03-29)
-
-**Note:** Version bump only for package @common-stack/client-react
+**Note:** Version bump only for package @common-stack/client-react-native

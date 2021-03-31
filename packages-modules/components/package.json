@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/components",
-  "version": "0.0.253",
+  "version": "0.0.254",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",

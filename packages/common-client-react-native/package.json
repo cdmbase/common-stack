@@ -1,6 +1,6 @@
 {
-  "name": "@common-stack/client-react",
-  "version": "0.0.252",
+  "name": "@common-stack/client-react-native",
+  "version": "0.0.1",
   "description": "browser plugin for git",
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -49,7 +49,6 @@
     "@common-stack/client-core": "file:../common-client-core",
     "@common-stack/core": "file:../common-core",
     "@wordpress/hooks": "^2.10.0",
-    "browser-bunyan": "^1.6.3",
     "history-with-query": "^4.10.4",
     "sort-keys": "^4.1.0"
   },

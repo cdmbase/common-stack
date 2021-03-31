@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`integration generates the same matches in renderRoutes and matchRoutes 1`] = `
+Array [
+  Object {
+    "match": Object {
+      "isExact": false,
+      "params": Object {},
+      "path": "/pepper",
+      "url": "/pepper",
+    },
+    "route": Object {
+      "_pathPrefix": "",
+      "component": [Function],
+      "exact": false,
+      "path": "/pepper",
+      "position": "MIDDLE",
+      "routes": Array [
+        Object {
+          "_pathPrefix": "",
+          "component": [Function],
+          "exact": false,
+          "path": "/pepper/:type",
+          "position": "MIDDLE",
+          "routes": Array [
+            Object {
+              "_pathPrefix": "",
+              "component": [Function],
+              "exact": false,
+              "path": "/pepper/:type/scoville",
+              "position": "MIDDLE",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  Object {
+    "match": Object {
+      "isExact": true,
+      "params": Object {
+        "type": "jalepeno",
+      },
+      "path": "/pepper/:type",
+      "url": "/pepper/jalepeno",
+    },
+    "route": Object {
+      "_pathPrefix": "",
+      "component": [Function],
+      "exact": false,
+      "path": "/pepper/:type",
+      "position": "MIDDLE",
+      "routes": Array [
+        Object {
+          "_pathPrefix": "",
+          "component": [Function],
+          "exact": false,
+          "path": "/pepper/:type/scoville",
+          "position": "MIDDLE",
+        },
+      ],
+    },
+  },
+]
+`;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {AbstractFeature, IModuleShape} from '@common-stack/client-core';
-import * as Logger from 'browser-bunyan';
+import * as Logger from 'bunyan';
 import {IReactFeature, IReactModuleShape} from '../interfaces';
 import {getMenus, getSortedRoutes, renderRoutes} from '../utils';
 import {castArray, map, union, without, sortBy} from 'lodash';

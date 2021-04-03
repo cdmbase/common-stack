@@ -22,6 +22,11 @@
   },
   "dependencies": {
     "@cdm-logger/client": "^5.0.7",
+    "@common-stack/client-core": "file:../../packages/common-client-core",
+    "@common-stack/client-react": "file:../../packages/common-client-react",
+    "@common-stack/client-react-native": "file:../../packages/common-client-react-native",
+    "@common-stack/core": "file:../../packages/common-core",
+    "@common-stack/counter-module-browser": "file:../../packages-modules/counter/browser",
     "@expo/samples": "^3.0.3",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/masked-view": "0.1.10",

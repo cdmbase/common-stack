@@ -30,7 +30,7 @@
     "packages-modules/**", 
     "packages/**", 
     "servers/*", 
-    "portable-devices/desktop"
+    "portable-devices/*"
   ],
   "version": "0.0.1"
 }

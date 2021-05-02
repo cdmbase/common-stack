@@ -19,6 +19,10 @@ Object {
       "foo2": [Function],
     },
   },
+  "retryLinkAttemptFuncs": Array [
+    [Function],
+    [Function],
+  ],
   "typeDefs": "type Bar1 {
         bar1: Boolean
       }

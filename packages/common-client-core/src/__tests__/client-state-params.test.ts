@@ -98,17 +98,27 @@ describe('client-state-params', () => {
     `;
 
   const module1 = new TestFeature({
-    clientStateParams: [{ resolvers: resolvers1, defaults: defaults1, typeDefs: typeDefs1 }],
+    clientStateParams: [{
+      resolvers: resolvers1, defaults: defaults1,
+      typeDefs: typeDefs1,
+      retryLinkAttemptFuncs: () => {
+        return true;
+      }
+    } as any],
   });
 
   const module2 = new TestFeature({
-    clientStateParams: [{ resolvers: resolvers2, defaults: defaults2, typeDefs: typeDefs2 }],
+    clientStateParams: [{
+      resolvers: resolvers2, defaults: defaults2, typeDefs: typeDefs2, retryLinkAttemptFuncs: () => {
+        return false;
+      }
+    }],
   });
 
   const finalModule = new TestFeature(module1, module2, new TestFeature({ clientStateParams: [{ typeDefs: schema }] }));
 
   it('merge client-state', () => {
-    expect({ ...finalModule.getStateParams() }).toMatchSnapshot();
+    expect(finalModule.getStateParams()).toMatchSnapshot();
   });
 
   it('writes defaults to the cache upon initialization', () => {
@@ -128,6 +138,15 @@ describe('client-state-params', () => {
     expect(moduleNoTypedef.getStateParams().typeDefs).toBe('');
   });
 
+  it('checks that retryLinkAttemptFuncs is not empty', () => {
+    expect(finalModule.getStateParams().retryLinkAttemptFuncs).toHaveLength(2);
+  });
+
+  it('checks that retryLinkAttemptFuncs is a collection of functions', () => {
+    const collection = finalModule.getStateParams().retryLinkAttemptFuncs;
+    const res = collection.every((item) => typeof item === 'function');
+    expect(res).toBeTruthy;
+  });
   it('concatenates schema strings if typeDefs are passed in as an array', () => {
     const anotherSchema = `
       type Foo {
@@ -151,7 +170,7 @@ describe('client-state-params', () => {
     const client = new ApolloClient({
       cache,
       resolvers: finalModule.getStateParams().resolvers,
-      typeDefs:  schema.concat(finalModule.getStateParams().typeDefs as string),
+      typeDefs: schema.concat(finalModule.getStateParams().typeDefs as string),
     });
 
 
@@ -161,6 +180,8 @@ describe('client-state-params', () => {
         expect(data).toMatchObject({ foo1: { bar1: true, __typename: 'Bar1' } });
       });
   });
+
+
 
   // TODO
   // describe('fragment matcher', () => {

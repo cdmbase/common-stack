@@ -169,6 +169,7 @@ export abstract class AbstractFeature implements IFeature {
     public getStateParams(args: { resolverContex?: any } = {}) {
         return this.clientStateParams.reduce<IClientState>(function (acc, curr) {
             const defs = curr.typeDefs ? Array.isArray(curr.typeDefs) ? curr.typeDefs : [curr.typeDefs] : [];
+            const attemptFuncAccumulator = acc.retryLinkAttemptFuncs || [];
             const schema = defs.map(typeDef => {
                 if (typeof typeDef === 'string') {
                     return typeDef;
@@ -179,10 +180,10 @@ export abstract class AbstractFeature implements IFeature {
                 .join('\n');
             const typeDefs = acc.typeDefs ? acc.typeDefs.concat('\n', schema) : schema;
             const defaults = merge(acc.defaults, curr.defaults);
-
             const resolvers = merge(acc.resolvers, consoldidatedResolvers(curr.resolvers, args.resolverContex)) as Resolvers;
             const fragmentMatcher = merge(acc.fragmentMatcher, curr.fragmentMatcher);
-            return { defaults, resolvers, typeDefs, fragmentMatcher };
+            const retryLinkAttemptFuncs = attemptFuncAccumulator.concat(curr.retryLinkAttemptFuncs || []);
+            return { defaults, resolvers, typeDefs, fragmentMatcher, retryLinkAttemptFuncs };
         }, {} as IClientState);
     }
 
@@ -259,8 +260,8 @@ function consoldidatedResolvers(resolvers: ResolverType, context): Resolvers {
     if (Array.isArray(resolvers)) {
         const resolverObject = (resolvers as (object[])).map(resolver => {
             return typeof resolver === 'function'
-            ? resolver(context)
-            : resolver;
+                ? resolver(context)
+                : resolver;
         });
         finalResolvers = merge({}, ...resolverObject);
     } else {

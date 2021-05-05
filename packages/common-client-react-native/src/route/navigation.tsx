@@ -1,73 +1,12 @@
-import React, { ComponentType, useEffect, Component } from 'react';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { matchRoutes, Redirect } from 'react-router-config';
-import { NavigationHelpers, Route } from '@react-navigation/native';
-import { nanoid } from 'nanoid/non-secure';
 import { createHistoryNavigator } from './create-history-navigator';
-import { IRouteComponentProps } from '../interfaces/new-router';
-import { IRoute as IRouteProps } from '../interfaces';
-import { History } from 'history';
 import { matchPath, __RouterContext as RouterContext } from 'react-router';
+import { INavigationProps } from '../interfaces';
+import { flattenRoutes  } from './utils';
 
 const { Navigator, Screen } = createHistoryNavigator();
-
-interface INavigationProps {
-    routes: IRouteProps[];
-    history: History<any>;
-    defaultTitle?: string;
-    initialRouteName: string;
-    screenOptions: any;
-    [key: string]: any;
-}
-
-interface IScreen {
-    key: string;
-    name: string;
-    component: ComponentType<any>;
-    options: {
-        routeMatchOpts: IRouteProps;
-        sensitive?: boolean;
-        title?: string;
-        [key: string]: any;
-    };
-}
-
-export interface IScreenComponentProps extends IRouteComponentProps {
-    screen: Route<any>;
-    navigation: NavigationHelpers<any, any>;
-}
-
-
-function flattenRoutes(routes?: IRouteProps[], parent?: IScreen): IScreen[] {
-    if (!Array.isArray(routes)) return [];
-    const screens: IScreen[] = [];
-    for (let idx = 0; idx < routes.length; idx++) {
-        const route = routes[idx];
-        const { key: routeKey, path, exact, component, strict, redirect, routes: children, ...options } = route;
-        const screenKey = routeKey || nanoid();
-        const screen: IScreen = {
-            key: screenKey,
-            name: path || '/',
-            component: function ScreenComponent(props) {
-                if (redirect) {
-                    return <Redirect from={path} to={redirect} exact={exact} strict={strict} />;
-                }
-                const children = component ? React.createElement(component, props) : null;
-                return parent && parent.component ? React.createElement(parent.component, props, children) : children;
-            },
-            options: {
-                ...options,
-                routeMatchOpts: route,
-            },
-        };
-        if (Array.isArray(children) && children.length > 0) {
-            screens.push(...flattenRoutes(children, screen));
-        } else {
-            screens.push(screen);
-        }
-    }
-    return screens;
-}
 
 export function Navigation(props: INavigationProps): JSX.Element {
     const { history, routes, defaultTitle, ...rest } = props;

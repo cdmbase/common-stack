@@ -1,16 +1,22 @@
 // tslint:disable:max-line-length
-
+import { Operation } from 'apollo-link';
 import { LocalStateFragmentMatcher, Resolvers } from 'apollo-client';
 import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 import { IdGetterObj } from 'apollo-cache-inmemory';
+import { RetryLink } from "apollo-link-retry";
+
 
 export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) | ((service: any) => Resolvers)[] | ((service: any) => any) | ((service: any) => any)[];
+
+type IretryLinkAttemptFuncs = (count: number, operation: Operation, error: any) => boolean | Promise<boolean>;
 export interface IClientStateConfig {
     resolvers?: ResolverType; // don't need `Resolvers` type as it may conflict with the usage
     defaults?: object;
     typeDefs?: string | string[];
     fragmentMatcher?: LocalStateFragmentMatcher;
+    // retries the request if function returns true
+    retryLinkAttemptFuncs?: IretryLinkAttemptFuncs
 }
 
 export interface IClientState {
@@ -18,6 +24,7 @@ export interface IClientState {
     defaults?: object;
     typeDefs?: string | string[];
     fragmentMatcher?: LocalStateFragmentMatcher;
+    retryLinkAttemptFuncs?: IretryLinkAttemptFuncs[]
 }
 
 /**

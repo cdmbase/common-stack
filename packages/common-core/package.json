@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/core",
-  "version": "0.0.255",
+  "version": "0.0.256",
   "description": "Common core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",

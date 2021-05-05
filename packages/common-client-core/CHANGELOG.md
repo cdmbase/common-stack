@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.256](https://github.com/cdmbase/common-stack/compare/v0.0.255...v0.0.256) (2021-05-05)
+
+
+### Features
+
+* added support for retry-link-func-attempt for client-core Feature ([50038e1](https://github.com/cdmbase/common-stack/commit/50038e1aa99b86fa6364e20480dbea20a217d2a1))
+
+
+
+
+
 ## [0.0.255](https://github.com/cdmbase/common-stack/compare/v0.0.254...v0.0.255) (2021-04-03)
 
 **Note:** Version bump only for package @common-stack/client-core

@@ -7,3 +7,9 @@ export const ClientTypes = {
     InMemoryCache: Symbol.for('InMemoryCache'),
     UtilityClass: Symbol.for('UtilityClass'),
 };
+
+export const ElectronTypes = {
+    MainWindow: Symbol.for('MainWindow'),
+    AboutWindow: Symbol.for('AboutWindow'),
+    TrayWindow: Symbol.for('TrayWindow'),
+}

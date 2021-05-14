@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.258](https://github.com/cdmbase/common-stack/compare/v0.0.257...v0.0.258) (2021-05-14)
+
+**Note:** Version bump only for package @common-stack/core
+
+
+
+
+
 ## [0.0.257](https://github.com/cdmbase/common-stack/compare/v0.0.256...v0.0.257) (2021-05-05)
 
 **Note:** Version bump only for package @common-stack/core

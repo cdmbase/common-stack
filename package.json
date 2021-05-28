@@ -75,6 +75,7 @@
     "@common-stack/components": "file:packages-modules/components",
     "@common-stack/core": "file:packages/common-core",
     "@common-stack/server-core": "file:packages/common-server-core",
+    "@common-stack/graphql-api": "file:packages/common-graphql-api",
     "@common-stack/store-mongo-mongo": "file:packages/common-store-mongo",
     "common-stack-backend-server": "file:servers/backend-server",
     "common-stack-desktop": "file:portable-devices/desktop",

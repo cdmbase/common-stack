@@ -1,0 +1,55 @@
+{
+  "name": "@common-stack/graphql-api",
+  "version": "0.0.1",
+  "description": "graphql api for higher packages to depend on",
+  "license": "ISC",
+  "author": "CDMBase LLC",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "webpack",
+    "build:lib:watch": "npm run build:lib -- --watch",
+    "jest": "./node_modules/.bin/jest",
+    "prepublish": "npm run build",
+    "test": "jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
+    "watch": "npm run build:lib:watch"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "modulePaths": [
+      "node_modules"
+    ],
+    "roots": [
+      "src"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    }
+  },
+  "dependencies": {
+    "@cdmbase/graphql-type-uri": "^1.1.0",
+    "graphql-type-json": "^0.3.2",
+    "graphql-iso-date": "^3.6.1"
+  },
+  "peerDependencies": {
+    "@cdm-logger/core": ">=6.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "5eb5d6554be1ecbbf4b43bcde59b35e018fd0309",
+  "typescript": {
+    "definition": "lib/index.d.ts"
+  }
+}

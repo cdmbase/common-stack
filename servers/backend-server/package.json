@@ -60,6 +60,7 @@
   "dependencies": {
     "@cdm-logger/server": "^6.0.0",
     "@common-stack/core": "file:../../packages/common-core",
+    "@common-stack/graphql-api": "file:../../packages/common-graphql-api",
     "@common-stack/counter-module-server": "file:../../packages-modules/counter/server",
     "@common-stack/server-core": "file:../../packages/common-server-core",
     "apollo-datasource": "^0.7.0",

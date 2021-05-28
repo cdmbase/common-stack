@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.260](https://github.com/cdmbase/common-stack/compare/v0.0.259...v0.0.260) (2021-05-28)
+
+**Note:** Version bump only for package @common-stack/counter-module-server
+
+
+
+
+
 ## [0.0.259](https://github.com/cdmbase/common-stack/compare/v0.0.258...v0.0.259) (2021-05-28)
 
 **Note:** Version bump only for package @common-stack/counter-module-server

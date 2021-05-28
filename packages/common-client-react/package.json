@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/client-react",
-  "version": "0.0.258",
+  "version": "0.0.259",
   "description": "browser plugin for git",
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {

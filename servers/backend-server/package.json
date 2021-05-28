@@ -61,6 +61,7 @@
     "@cdm-logger/server": "^6.0.0",
     "@common-stack/server-core": "file:../../packages/common-server-core",
     "@common-stack/core": "file:../../packages/common-core",
+    "@common-stack/graphql-api": "file:../../packages/common-graphql-api",
     "@common-stack/counter-module-server": "file:../../packages-modules/counter/server",
     "apollo-datasource": "^0.7.0",
     "apollo-datasource-rest": "^0.8.0",

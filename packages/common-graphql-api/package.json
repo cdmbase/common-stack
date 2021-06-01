@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@cdmbase/graphql-type-uri": "^1.1.0",
+    "@cdmbase/graphql-type-uri": "^2.0.0",
     "graphql-type-json": "^0.3.2",
     "graphql-iso-date": "^3.6.1"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/graphql-api",
-  "version": "0.0.260",
+  "version": "0.0.261",
   "description": "graphql api for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -39,8 +39,8 @@
   },
   "dependencies": {
     "@cdmbase/graphql-type-uri": "^2.0.0",
-    "graphql-type-json": "^0.3.2",
-    "graphql-iso-date": "^3.6.1"
+    "graphql-iso-date": "^3.6.1",
+    "graphql-type-json": "^0.3.2"
   },
   "peerDependencies": {
     "@cdm-logger/core": ">=6.0.0"

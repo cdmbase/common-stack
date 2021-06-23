@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.262](https://github.com/cdmbase/common-stack/compare/v0.0.261...v0.0.262) (2021-06-23)
+
+
+### Features
+
+* added redux persist transform support in Feature class ([09ffe62](https://github.com/cdmbase/common-stack/commit/09ffe62d1dc619a9e30e7c1faeed3d3f4d484d2e))
+
+
+
+
+
 ## [0.0.261](https://github.com/cdmbase/common-stack/compare/v0.0.260...v0.0.261) (2021-06-01)
 
 **Note:** Version bump only for package @common-stack/client-core

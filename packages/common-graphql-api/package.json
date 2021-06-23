@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/graphql-api",
-  "version": "0.0.261",
+  "version": "0.0.262",
   "description": "graphql api for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",

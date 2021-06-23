@@ -6,6 +6,7 @@ import { ErrorLink } from 'apollo-link-error';
 import { ReducersMapObject } from 'redux';
 import { interfaces, Container } from 'inversify';
 import { IdGetterObj } from 'apollo-cache-inmemory';
+import { PersistConfig } from "redux-persist";
 
 const combine = (features, extractor) => without(union(...map(features, res => castArray(extractor(res)))), undefined);
 export const featureCatalog = {};
@@ -42,6 +43,8 @@ export abstract class AbstractFeature implements IFeature {
     public leftFooterItems: any;
     public rightFooterItems: any;
     public middleLowerPanelItems: any;
+    public reduxPersistTransforms: any[];
+
 
     private container: interfaces.Container;
     private services;
@@ -106,6 +109,7 @@ export abstract class AbstractFeature implements IFeature {
         // TODO: Use React Helmet for those. Low level DOM manipulation
         this.stylesInsert = combine(arguments, (arg: IModuleShape) => arg.stylesInsert);
         this.scriptsInsert = combine(arguments, (arg: IModuleShape) => arg.scriptsInsert);
+        this.reduxPersistTransforms = combine(arguments, (arg: IModuleShape) => arg.reduxPersistTransforms);
 
 
         // Shared modules data
@@ -238,6 +242,10 @@ export abstract class AbstractFeature implements IFeature {
 
     get middleLowerPanel() {
         return merge({}, ...(this.middleLowerPanelItems || []));
+    }
+
+    get reduxPersistStateTransformers() {
+        return this.reduxPersistTransforms
     }
 
     public getDataIdFromObject(result: { [key: string]: string | number, __typename?: string } | IdGetterObj) {

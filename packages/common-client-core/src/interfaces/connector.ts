@@ -6,7 +6,6 @@ import { ErrorLink } from 'apollo-link-error';
 import { IdGetterObj } from 'apollo-cache-inmemory';
 import { RetryLink } from "apollo-link-retry";
 
-
 export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) | ((service: any) => Resolvers)[] | ((service: any) => any) | ((service: any) => any)[];
 
 type IretryLinkAttemptFuncs = (count: number, operation: Operation, error: any) => boolean | Promise<boolean>;
@@ -144,6 +143,8 @@ export interface IModuleShape {
      * @param middleLowerPanelItems Components that will be placed below middle panel
      */
     readonly middleLowerPanelItems?: any;
+
+    readonly reduxPersistTransforms?: any[];
 
 }
 

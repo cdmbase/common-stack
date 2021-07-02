@@ -1,13 +1,15 @@
 import * as React from 'react';
-import {AbstractFeature, IModuleShape} from '@common-stack/client-core';
+import { AbstractFeature, IModuleShape } from '@common-stack/client-core';
 // import { makeLogger } from '@cdm-logger/client';
-import {IReactFeature, IReactModuleShape} from '../interfaces';
-import {getMenus, getSortedRoutes, renderRoutes} from '../utils';
-import {castArray, map, union, without, sortBy} from 'lodash';
-import {registerPlugin, getPlugins, getPlugin} from '../plugin-area';
+import { IReactFeature, IReactModuleShape } from '../interfaces';
+import { getMenus, getSortedRoutes, renderRoutes } from '../utils';
+import { castArray, map, union, without, sortBy, filter, find } from 'lodash';
+import { registerPlugin, getPlugins, getPlugin } from '../plugin-area';
 
 const combine = (features, extractor) => without(union(...map(features,
-        res => castArray(extractor(res)))), undefined);
+    res => castArray(extractor(res)))), undefined);
+
+const getFirst = (features, extractor) => extractor(find(features, (res) => extractor(res)) || {});
 
 type FeatureParam = IModuleShape & IReactModuleShape;
 
@@ -19,6 +21,8 @@ export class Feature extends AbstractFeature implements IReactFeature {
     public route: any;
     public routeConfig: any;
     public menuConfig: any;
+    public authWrapper: (ele: React.ReactElement) => void;
+
     constructor(
         feature?: FeatureParam,
         // tslint:disable:trailing-comma
@@ -39,6 +43,8 @@ export class Feature extends AbstractFeature implements IReactFeature {
 
         this.componentFillPlugins = this.registerComponentFillPlugins(combine(arguments,
             (arg: FeatureParam) => arg.componentFillPlugins));
+
+        this.authWrapper = getFirst(arguments, (arg: FeatureParam) => arg.authWrapper)
     }
 
     /* tslint:disable:jsx-no-lambda */
@@ -50,7 +56,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
     public getRoutes(searchPath?: any) {
         const configuredRoutes = this.getConfiguredRoutes(searchPath);
         const solidRoutes = this.route.map((component: React.ReactElement<any>, idx: number) =>
-            React.cloneElement(component, {key: component.props.path}));
+            React.cloneElement(component, { key: component.props.path }));
         return this.renderRoutes(configuredRoutes, solidRoutes);
     }
 
@@ -68,7 +74,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
      * TODO: Find a way to warn when there are duplicate keys.
      */
     public getConfiguredRoutes(searchPath = '/') {
-        return getSortedRoutes(searchPath, Object.assign({}, ...this.routeConfig));
+        return getSortedRoutes(searchPath, Object.assign({}, ...this.routeConfig), this.authWrapper);
     }
 
 
@@ -79,7 +85,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
      */
     public getConfiguredMenus(searchPath = '/') {
         const routes = Object.assign({}, ...this.menuConfig);
-        return getMenus(searchPath, {...routes});
+        return getMenus(searchPath, { ...routes });
     }
 
     get navItems() {
@@ -122,7 +128,7 @@ export class Feature extends AbstractFeature implements IReactFeature {
 
     private registerComponentFillPlugins(plugins): void {
         plugins.forEach((i) => {
-            const {name} = i;
+            const { name } = i;
             const isFound = !!getPlugin(name);
             if (!isFound) {
                 registerPlugin(name, i);

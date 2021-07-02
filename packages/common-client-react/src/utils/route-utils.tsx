@@ -76,10 +76,10 @@ const formatSlash = (route) => {
   return {
     path: route.replace(startWithMoreThanOneSlash, '/'),
     _pathPrefix: (route.match(/^\/(\/{1,})/) || ['', ''])[1],
-  } 
+  }
 }
 
-export function getRoutes(path: string, routeData: IRouteData) {
+export function getRoutes(path: string, routeData: IRouteData, authWrapper: (ele) => void) {
   if (!path.startsWith('/')) {
     throw new Error('Invalid path!');
   }
@@ -133,20 +133,24 @@ export function getRoutes(path: string, routeData: IRouteData) {
     if (!lastNode.routes) {
       lastNode.routes = [];
     }
-    const { route: ignore, ...rest } = routeItem;
+    const { route: ignore, auth, ...rest } = routeItem;
     const pathParams = formatSlash(routeItem.route);
+
     lastNode.routes.push({
       ...rest,
       // path: formatSlash(routeItem.route),
       // path: routeItem.route,
       ...pathParams,
       exact: routeData[routeItem.route].hasOwnProperty('exact') ? routeData[routeItem.route].exact : true,
-      component: routeItem.component,
+      component: auth && authWrapper
+        ? () => authWrapper(routeItem.component)
+        : routeItem.component
     });
   });
 
   return root.routes;
 }
+
 export function getMenus(path: string, menuData: IMenuData) {
   if (!path.startsWith('/')) {
     throw new Error('Invalid path!');
@@ -219,8 +223,8 @@ export const renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps =
               route.render ? (
                 route.render({ ...props, ...extraProps, route: route })
               ) : (
-                  <route.component {...props} {...extraProps} route={route} />
-                )
+                <route.component {...props} {...extraProps} route={route} />
+              )
             }
           />
         )),
@@ -229,10 +233,11 @@ export const renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps =
   ) : null;
 
 
-export const getSortedRoutes = (path: string, routeData: IRouteData) => {
+export const getSortedRoutes = (path: string, routeData: IRouteData, authWrapper: (ele: React.ReactElement) => void) => {
   const sortedRoutes = sortKeys(routeData, { compare });
-  return getRoutes(path, sortedRoutes);
+  return getRoutes(path, sortedRoutes, authWrapper);
 };
+
 const compare = ((a, b) => {
   const aStr = String(a).toLowerCase();
   const bStr = String(b).toLowerCase();
@@ -241,8 +246,8 @@ const compare = ((a, b) => {
   const aIsAlphanumeric = notStartWithColon(aStr);
   const bIsAlphanumeric = notStartWithColon(bStr);
   if (aIsAlphanumeric + bIsAlphanumeric !== -2) {
-    if(aIsAlphanumeric * bIsAlphanumeric > 0){
-      if (aIsAlphanumeric === bIsAlphanumeric){
+    if (aIsAlphanumeric * bIsAlphanumeric > 0) {
+      if (aIsAlphanumeric === bIsAlphanumeric) {
         return aStr.localeCompare(bStr);
       }
       return aIsAlphanumeric - bIsAlphanumeric;

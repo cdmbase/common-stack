@@ -5,6 +5,7 @@ import { ReducersMapObject } from 'redux';
 import { ErrorLink } from 'apollo-link-error';
 import { IdGetterObj } from 'apollo-cache-inmemory';
 import { RetryLink } from "apollo-link-retry";
+import { ReactElement } from 'react';
 
 export type ResolverType = Resolvers | Resolvers[] | ((service: any) => Resolvers) | ((service: any) => Resolvers)[] | ((service: any) => any) | ((service: any) => any)[];
 
@@ -146,6 +147,7 @@ export interface IModuleShape {
 
     readonly reduxPersistTransforms?: any[];
 
+    readonly authWrapper?: (ele: ReactElement) => void
 }
 
 

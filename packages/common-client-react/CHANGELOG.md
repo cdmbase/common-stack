@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.263](https://github.com/cdmbase/fullstack-pro/compare/v0.0.262...v0.0.263) (2021-07-03)
+
+
+### Features
+
+* added support for auth wrapper ([2749172](https://github.com/cdmbase/fullstack-pro/commit/2749172303f2b35d56fa4e79aabc88beae24d280)), closes [#1208](https://github.com/cdmbase/fullstack-pro/issues/1208)
+
+
+
+
+
 ## [0.0.262](https://github.com/cdmbase/fullstack-pro/compare/v0.0.261...v0.0.262) (2021-06-23)
 
 **Note:** Version bump only for package @common-stack/client-react

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import  { useEffect, useState, createElement } from 'react';
+import { useEffect, useState, createElement } from 'react';
 // import { Plugin, ApplyPluginsType } from '@umijs/runtime';
 import { IRoute, IComponent } from '../interfaces/new-router';
 import { Switch, Route, Redirect } from 'react-router';
@@ -13,6 +13,8 @@ interface IOpts {
   isServer?: boolean;
   ssrProps?: object;
   rootRoutes?: IRoute[];
+  auth?: boolean,
+  authWrapper?: () => void;
 }
 
 interface IGetRouteElementOpts {

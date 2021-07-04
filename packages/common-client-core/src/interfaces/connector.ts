@@ -147,7 +147,9 @@ export interface IModuleShape {
 
     readonly reduxPersistTransforms?: any[];
 
-    readonly authWrapper?: (ele: ReactElement) => void
+    readonly authWrapper?: (
+        ele: ReactElement,
+        props: Record<string, any>) => void
 }
 
 

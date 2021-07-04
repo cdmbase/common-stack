@@ -1,6 +1,6 @@
 {
   "name": "common-stack-moleculer-server",
-  "version": "0.0.263",
+  "version": "0.0.264",
   "private": true,
   "description": "My Moleculer microservices project",
   "keywords": [

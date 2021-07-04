@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.264](https://github.com/cdmbase/common-stack/compare/v0.0.263...v0.0.264) (2021-07-04)
+
+
+### Bug Fixes
+
+* props not being sent as argument to auth wrapper ([46efc87](https://github.com/cdmbase/common-stack/commit/46efc874c5bf60050cb42a0418ed0739451ba370))
+
+
+
+
+
 ## [0.0.263](https://github.com/cdmbase/common-stack/compare/v0.0.262...v0.0.263) (2021-07-03)
 
 

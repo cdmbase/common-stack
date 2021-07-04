@@ -1,6 +1,6 @@
 {
   "name": "@common-stack/counter-module-browser",
-  "version": "0.0.263",
+  "version": "0.0.264",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",

@@ -79,7 +79,7 @@ const formatSlash = (route) => {
   }
 }
 
-export function getRoutes(path: string, routeData: IRouteData, authWrapper: (ele) => void) {
+export function getRoutes(path: string, routeData: IRouteData, authWrapper: (ele, props) => void) {
   if (!path.startsWith('/')) {
     throw new Error('Invalid path!');
   }
@@ -142,8 +142,15 @@ export function getRoutes(path: string, routeData: IRouteData, authWrapper: (ele
       // path: routeItem.route,
       ...pathParams,
       exact: routeData[routeItem.route].hasOwnProperty('exact') ? routeData[routeItem.route].exact : true,
+      /**
+       * Here we are checking whether auth property is being 
+       * set by this route and if authWrapper is declared
+       * which is a high order component that can take a component
+       * and its props as argument then perform some 
+       * computation and return a component
+       */
       component: auth && authWrapper
-        ? () => authWrapper(routeItem.component)
+        ? (props) => authWrapper(routeItem.component, props)
         : routeItem.component
     });
   });
@@ -233,7 +240,10 @@ export const renderRoutes = (routes, solidRoutes, extraProps = {}, switchProps =
   ) : null;
 
 
-export const getSortedRoutes = (path: string, routeData: IRouteData, authWrapper: (ele: React.ReactElement) => void) => {
+export const getSortedRoutes = (path: string, routeData: IRouteData, authWrapper: (
+  ele: React.ReactElement,
+  props: Record<string, any>
+) => void) => {
   const sortedRoutes = sortKeys(routeData, { compare });
   return getRoutes(path, sortedRoutes, authWrapper);
 };

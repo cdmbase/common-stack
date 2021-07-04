@@ -21,7 +21,9 @@ export class Feature extends AbstractFeature implements IReactFeature {
     public route: any;
     public routeConfig: any;
     public menuConfig: any;
-    public authWrapper: (ele: React.ReactElement) => void;
+    public authWrapper: (
+        ele: React.ReactElement,
+        props: Record<string, any>) => void;
 
     constructor(
         feature?: FeatureParam,
